@@ -1,0 +1,91 @@
+#categories{
+	padding-top: 5vh;
+	padding-bottom: 5vh;
+	background: #ffffe0;
+}
+
+#categories .item *{
+	color: black;
+}
+
+#categories .item h1{
+	font-size: 1rem;
+	text-align: center;
+}
+
+#categories .item h2{
+	font-size: 2rem;
+	text-align: center;
+}
+
+.light-blue-background{
+	background: #1670f0;
+}
+
+.light-yellow-color{
+	color: #fff23b;
+}
+
+#referrals{
+	margin: 10px 10%;
+}
+
+#referrals h1{
+	text-align: center;
+}
+
+#referrals .item{
+	background: #1670f0;
+	margin: 5px 0;
+	padding: 5px 0;
+	border-radius: 20px;
+}
+
+#referrals .item p{
+	text-align: justify;
+}
+
+#referrals .image img{
+	height: inherit;
+	width: inherit;
+	border-radius: 25px;
+
+}
+
+#referrals .item .person{
+	height: 70px;
+	width: 70px;
+	object-fit: cover;
+	margin: 0 23%;
+	border-radius: 50px;
+	border: 3px solid #fff23b;
+}
+
+#title-bar #hive{
+	font-size: 5vw;
+}
+
+#title-bar h1{
+	text-align: center;
+}
+
+#title-bar h2{
+	text-align: center;
+}
+
+#title-bar form{
+	margin: 0 30%;
+}
+
+#title-bar{
+	padding-top: 15vh;
+	height: 60vh;
+}
+
+.verical-center{
+	margin: 45% 0;
+}
+
+#welcome-to{
+	font-size: 20px;
+}

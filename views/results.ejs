@@ -1,0 +1,50 @@
+<%- include('./partials/header') %>
+
+<div class="page-container">
+	<div id="left-panel">
+		
+	</div>
+	<div id="right-panel">
+		<div id="search-bar">
+			<form action="/searchResult" method="GET">
+				<input type="text" class="form-control" id="search" placeholder="Musician, Comedian, Artist" name="search">
+				<input style="display: none" id="find-talent" class="btn btn-primary" type="submit" value="Find Talent" name="">
+		</form>
+		</div>
+
+		<hr>
+
+		<div id="result-grid">
+			<div class="row">
+				<div class="col-lg-4 item">
+					<img src="">
+					<div class="row">
+						<div class="col">
+							<h1>John Miller</h1>
+							<h2>Singer & Songwritter</h2>
+						</div>
+						<div class="col">
+							<h2>Price</h2>
+							<h3>Rating</h3>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+	var input = $('#search');
+
+	input.on("keyup", function(event) {
+    if (event.keyCode === 13) {
+        event.preventDefault();
+        document.getElementById("find-talent").click();
+    }
+});
+</script>
+
+
+<%- include('./partials/footer') %>

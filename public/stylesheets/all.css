@@ -1,0 +1,45 @@
+#bottom{
+	background: lightgrey;
+	padding: 30px;
+}
+
+#bottom h1{
+	font-size: 15px;
+}
+
+#bottom a{
+	color: black;
+}
+
+#bottom .social-links h1{
+	font-size: 30px;
+}
+
+#top-bar{
+	background: black;
+	padding: 0 30px;
+	height: 60px;
+}
+
+#top-bar #logo h1{
+	color: #fff23b;
+	margin-top: 1%;
+}
+
+#top-bar #logo a:hover{
+	text-decoration: none;
+}
+
+#top-bar #signup h1{
+	color: white;
+	text-align: right;
+	font-size: 25px;
+	margin-top: 6%;
+}
+
+#top-bar #login h1{
+	font-size: 15px;
+	color: white;
+	margin-top: 25%;
+	text-align: right;
+}

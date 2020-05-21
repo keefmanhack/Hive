@@ -1,0 +1,160 @@
+<%- include('./partials/header') %>
+
+<div class="page-container">
+	<div class="light-blue-background" id="title-bar">
+		<h1 class="light-yellow-color" id="welcome-to">Welcome to</h1>
+		<h1 id="hive">H<span class="light-yellow-color">i</span>v<span class="light-yellow-color">e</span></h1>
+
+		<form action="/searchResult" method="GET">
+			<input type="text" class="form-control" id="search" placeholder="Musician, Comedian, Artist" name="search">
+			<input style="display: none" id="find-talent" class="btn btn-primary" type="submit" value="Find Talent" name="">
+		</form>
+		<h2>This is going to be some fancy text</h2>
+	</div>
+	<div id="categories">
+		<div class="row">
+			<div class="col item">
+				<a href="">
+					<h1>Musician</h1>
+					<h2><i class="fas fa-music"></i></h2>
+					
+				</a>
+			</div>
+			<div class="col item">
+				<a href="">
+					<h1>Comedian</h1>
+					<h2><i class="far fa-theater-masks"></i></h2>
+				</a>
+			</div>
+			<div class="col item">
+				<a href="">
+					<h1>Tutor</h1>
+					<h2><i class="fas fa-books"></i></h2>
+				</a>
+			</div>
+			<div class="col item">
+				<a href="">
+					<h1>Developer</h1>
+					<h2><i class="fas fa-laptop-code"></i></h2>
+				</a>
+			</div>
+			<div class="col item">
+				<a href="">
+					<h1>Copy Writter</h1>
+					<h2><i class="fas fa-align-justify"></i></h2>
+				</a>
+			</div>
+			<div class="col item">
+				<a href="">
+					<h1>Nature Guide</h1>
+					<h2><i class="fas fa-hiking"></i></h2>
+				</a>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col item">
+				<a href="">
+					<h1>Personal Trainer</h1>
+					<h2><i class="fas fa-running"></i></h2>
+				</a>
+			</div>
+			<div class="col item">
+				<a href="">
+					<h1>Fashion Designer</h1>
+					<h2><i class="fas fa-tshirt"></i></h2>
+				</a>
+			</div>
+			<div class="col item">
+				<a href="">
+					<h1>Graphic Designer</h1>
+					<h2><i class="fab fa-adobe"></i></h2>
+				</a>
+			</div>
+			<div class="col item">
+				<a href="">
+					<h1>Artist</h1>
+					<h2><i class="fas fa-palette"></i></h2>
+				</a>
+			</div>
+			<div class="col item">
+				<a href="">
+					<h1>Boat Rental</h1>
+					<h2><i class="fas fa-ship"></i></h2>
+				</a>
+			</div>
+			<div class="col item">
+				<a href="">
+					<h1>Photographer</h1>
+					<h2><i class="fas fa-camera"></i></h2>
+				</a>
+			</div>
+		</div>
+	</div>
+	<div id='referrals'>
+		<h1>We have People Buzzing</h1>
+		<div class="row">
+			<div class="col">
+				<div class="row item">
+					<div class="col">
+						<img class="person" src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg">
+						<h2>Mr. Smith | Pittsburgh, P.A.</h2>
+						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+						tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+						quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+						</p>
+					</div>
+					<div class="col image">
+						<img src="https://images.pexels.com/photos/1370545/pexels-photo-1370545.jpeg">
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col">
+				<div class="row item">
+					<div class="col image">
+						<img src="https://images.pexels.com/photos/1365425/pexels-photo-1365425.jpeg">
+					</div>
+					<div class="col">
+						<img class="person" src="https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg">
+						<h2>Mrs. Lady | Miami, F.L.</h2>
+						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+						tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+						quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col">
+				<div class="row item">
+					<div class="col">
+						<img class="person" src="https://images.pexels.com/photos/1065084/pexels-photo-1065084.jpeg">
+						<h2>Mr. Hippie | Los Angelos, C.A.</h2>
+						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+						tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+						quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+						</p>
+					</div>
+					<div class="col image">
+						<img src="https://images.pexels.com/photos/6224/hands-people-woman-working.jpg">
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+	var input = $('#search');
+
+	input.on("keyup", function(event) {
+    if (event.keyCode === 13) {
+        event.preventDefault();
+        document.getElementById("find-talent").click();
+    }
+});
+</script>
+
+<%- include('./partials/footer') %>
