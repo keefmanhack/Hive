@@ -9,41 +9,43 @@ var express 			= require("express"),
 
 var indexRoutes			= require('./routes/index');
 
+var User = require("./models/user");
 
 
-// //Mongoose random things
-// mongoose.set('useNewUrlParser', true);
-// mongoose.set('useFindAndModify', false);
-// mongoose.set('useCreateIndex', true);
-// mongoose.set('useUnifiedTopology', true);
 
-// let mongoUrl = process.env.PROFICIENT_MONGO_DB;
+//Mongoose random things
+mongoose.set('useNewUrlParser', true);
+mongoose.set('useFindAndModify', false);
+mongoose.set('useCreateIndex', true);
+mongoose.set('useUnifiedTopology', true);
 
-// mongoose.connect(mongoUrl);
+let mongoUrl = process.env.HYVE_MONGO_DB;
 
-// //passport configuration
-// app.use(require("express-session")({
-// 	secret: "I want a cat",
-// 	resave: false,
-// 	saveUninitialized: false
-// }));
+mongoose.connect(mongoUrl);
 
-// app.use(passport.initialize());
-// app.use(passport.session());
+//passport configuration
+app.use(require("express-session")({
+	secret: "I want a cat",
+	resave: false,
+	saveUninitialized: false
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(bodyParser.urlencoded({extended:true}));
 
-// passport.use(new LocalStrategy(User.authenticate()));
-// passport.serializeUser(User.serializeUser());
-// passport.deserializeUser(User.deserializeUser());
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
-// app.use(flash());
+app.use(flash());
 
-// app.use(function(req, res, next){
-// 	res.locals.currentUser = req.user;
-// 	res.locals.error = req.flash("error");
-// 	res.locals.success = req.flash("success");
-// 	next();
-// });
+app.use(function(req, res, next){
+	res.locals.currentUser = req.user;
+	res.locals.error = req.flash("error");
+	res.locals.success = req.flash("success");
+	next();
+});
 
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + '/public')); //for js scripts

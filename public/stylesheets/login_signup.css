@@ -1,0 +1,33 @@
+a{
+	color: white;
+}
+
+body{
+	background: rgb(250,196,98);
+}
+
+button.btn{
+	background: rgb(250,196,98);
+	width: 100%;
+	color: black;
+	border:none;
+}
+
+form{
+	padding: 10px;
+	background: black;
+	border-radius: 25px;
+}
+
+h1{
+	text-align: center;
+	color: white;
+}
+
+.login{
+	margin: 0 35%;
+}
+
+img{
+	margin: 0 30%;
+}

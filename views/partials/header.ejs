@@ -11,23 +11,60 @@
 	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-	<title>Hive</title>
+	<title>HYVE</title>
 </head>
 <body>
 	<div id="top-bar">
 		<div class="row">
 			<div id="logo" class="col-sm-2">
-				<a href="/"><h1><i class="fas fa-bug"></i> Hive</h1></a>
+				<a href="/">
+					<img src="/photos/logo_invert.jpeg">
+				</a>
 			</div>
-			<div class="col-sm-7">
+			<div class="col-sm-4">
+				<form id="search" action="/searchResult" method="GET">
+					<input type="text" class="form-control" id="search" placeholder="Musician, Comedian, Artist" name="search">
+					<input style="display: none" id="find-talent" class="btn btn-primary" type="submit" value="Find Talent" name="">
+				</form>
+			</div>
+			<%if(currentUser){%>
+				<div class="col-sm-4">
 				
-			</div>
-			<div id="signup" class="col-sm-2">
-				<a href="/signup"><h1><i class="fas fa-user-plus"></i> Signup</h1></a>
-			</div>
-			<div id="login" class="col-sm-1">
-				<a class="center" href="/login"><h1><i class="fas fa-sign-in-alt"></i> Login</h1></a>
-			</div>
+				</div>
+				<div class="col-sm-2">
+					<div class="row" id="user">
+						<div class="col">
+								<img id="user-image" src="https://images.pexels.com/photos/977971/pexels-photo-977971.jpeg">
+						</div>
+						<div id="drop-down" class="col">
+							<button>
+								<i class="fas fa-caret-down"></i>
+							</button>							
+						</div>
+					</div>
+				</div>
+			<%}else{%>
+				<div class="col-sm-3">
+				
+				</div>
+				<div id="signup" class="col-sm-2">
+					<a href="/signup"><h1><i class="fas fa-user-plus"></i> Signup</h1></a>
+				</div>
+				<div id="login" class="col-sm-1">
+					<a class="center" href="/login"><h1><i class="fas fa-sign-in-alt"></i> Login</h1></a>
+				</div>
+			<%}%>
 		</div>
 	</div>
+
+	<script type="text/javascript">
+		var input = $('#search');
+
+		input.on("keyup", function(event) {
+		    if (event.keyCode === 13) {
+		        event.preventDefault();
+		        document.getElementById("find-talent").click();
+		    }
+		});
+	</script>
 

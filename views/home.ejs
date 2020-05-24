@@ -5,10 +5,7 @@
 		<h1 class="light-yellow-color" id="welcome-to">Welcome to</h1>
 		<h1 id="hive">H<span class="light-yellow-color">i</span>v<span class="light-yellow-color">e</span></h1>
 
-		<form action="/searchResult" method="GET">
-			<input type="text" class="form-control" id="search" placeholder="Musician, Comedian, Artist" name="search">
-			<input style="display: none" id="find-talent" class="btn btn-primary" type="submit" value="Find Talent" name="">
-		</form>
+		
 		<h2>This is going to be some fancy text</h2>
 	</div>
 	<div id="categories">
@@ -146,15 +143,6 @@
 	</div>
 </div>
 
-<script type="text/javascript">
-	var input = $('#search');
 
-	input.on("keyup", function(event) {
-    if (event.keyCode === 13) {
-        event.preventDefault();
-        document.getElementById("find-talent").click();
-    }
-});
-</script>
 
 <%- include('./partials/footer') %>
