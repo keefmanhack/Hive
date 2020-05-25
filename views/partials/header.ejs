@@ -11,6 +11,9 @@
 	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+
+
 	<title>HYVE</title>
 </head>
 <body>
@@ -31,40 +34,46 @@
 				<div class="col-sm-4">
 				
 				</div>
-				<div class="col-sm-2">
-					<div class="row" id="user">
+				<div class="col-sm-2 logged-in" id="user">
+					<div class="row" id="drop-down">
 						<div class="col">
-								<img id="user-image" src="https://images.pexels.com/photos/977971/pexels-photo-977971.jpeg">
+							<img id="user-image" src="https://images.pexels.com/photos/977971/pexels-photo-977971.jpeg">
 						</div>
-						<div id="drop-down" class="col">
-							<button>
-								<i class="fas fa-caret-down"></i>
-							</button>							
+						<div class="col" id="hello-user">
+							<h5>Hello,</h5>
+							<h2 class="truncate"><%=currentUser.firstName%> <i class="fas fa-caret-down"></i></h2>								
 						</div>
+					</div>
+					<div class="row arrow-up white on-top"></div>
+					<div class="row" id="drop-down-menu">
+						<ul>
+							<li><a href="/user/<%=currentUser._id%>">Edit Profile</a></li>
+							<li><a href="/sign_out">Sign Out</a></li>
+						</ul>
 					</div>
 				</div>
 			<%}else{%>
-				<div class="col-sm-3">
+				<div class="col-sm-4">
 				
 				</div>
-				<div id="signup" class="col-sm-2">
-					<a href="/signup"><h1><i class="fas fa-user-plus"></i> Signup</h1></a>
-				</div>
-				<div id="login" class="col-sm-1">
-					<a class="center" href="/login"><h1><i class="fas fa-sign-in-alt"></i> Login</h1></a>
+				<div class="col-sm-2" id="user">
+					<div class="row" id="drop-down">
+						<div class="col">
+							<h5>Hello, Sign in </h5>
+							<h2>Account <i class="fas fa-caret-down"></i></h2>								
+						</div>
+					</div>
+					<div class="row arrow-up white on-top"></div>
+					<div class="row" id="drop-down-menu">
+						<div class="col">
+							<ul>
+								<li><a id="login" class="btn btn-primary orange-background" href="/login">Login In</a></li>
+								<li><p id="sign-up">Not a HYVER? <a href="/signup" style="color: rgb(250,196,98);">Join Now</a></p></li>
+							</ul>
+						</div>
+					</div>
 				</div>
 			<%}%>
 		</div>
 	</div>
-
-	<script type="text/javascript">
-		var input = $('#search');
-
-		input.on("keyup", function(event) {
-		    if (event.keyCode === 13) {
-		        event.preventDefault();
-		        document.getElementById("find-talent").click();
-		    }
-		});
-	</script>
 

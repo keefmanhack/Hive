@@ -1,3 +1,33 @@
+.arrow-up {
+  width: 0; 
+  height: 0;
+  color: inherit; 
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 10px solid white;
+  z-index: 2;
+}
+
+.arrow-up.row{
+	display: none;
+}
+
+.arrow-up.row.show{
+	display: -webkit-box;
+	display: flex;
+
+}
+
+body{
+	z-index: 0;
+}
+
+body #drop-down-menu.show{
+	display: block;
+}
+
+
+
 #bottom{
 	background: lightgrey;
 	padding: 30px;
@@ -16,6 +46,12 @@
 	font-size: 30px;
 }
 
+#drop-down{
+	margin: 7px 0;
+	border: 1px solid transparent;
+	width: 115px;
+}
+
 #drop-down button{
 	color: white;
     font-size: 30px;
@@ -24,34 +60,95 @@
     border: none;
 }
 
-#drop-down button:hover{
-	cursor: pointer;
-}
+
 
 #drop-down button:focus{
 	outline: none !important;
 }
 
-#drop-down.col{
+#drop-down h2{
+	color: white;
+    font-size: 17px;
+    width: 82px;
+}
+
+#drop-down h5{
+	font-size: 12px;
+	color: lightgrey;
+	margin-bottom: 0;
+}
+
+
+#drop-down-menu{
+    border-radius: 0.5rem;
+    top: -24px;
+    display: none;
+    z-index: 1;
+    opacity: 1;
+    position: relative;
+    background: white;
+    border: 1px solid lightgrey;
+}
+
+#drop-down-menu > .col{
+	padding: 0;
+}
+
+#drop-down-menu ul li{
+	list-style: none;
 	padding-left: 0;
+	padding-left: 2px;
+}
+
+#drop-down-menu ul{
+	padding: 10px;
+}
+
+.grey-out{
+	opacity: .6;
+}
+
+#hello-user{
+	margin: 10px 0 0 -20px;
+	padding: 0;
+}
+
+#login{
+	width: 100%;
+	background-color: rgb(250,196,98);
+	border: none;
 }
 
 #logo img{
-	height: 60px;
+	height: 70px;
     width: 92px;
     object-fit: cover;
     padding: 5px;
     border-radius: 25px;
 }
 
+.orange-background{
+	background-color: rgb(250,196,98);
+}
+
+.on-top{
+	position: relative;
+    top: -23px;
+   	left: 94.9px;
+}
+
 #search{
-	margin-top: 10px;
+	margin-top: 15px;
+}
+
+#sign-up{
+	font-size: 12px;
 }
 
 #top-bar{
 	background: black;
 	padding: 0 30px;
-	height: 60px;
+	height: 70px;
 }
 
 #top-bar #logo h1{
@@ -94,6 +191,38 @@
     margin: 5px;
 }
 
-#user > .col{
-	padding-right: 0;
+#user{
+	margin: 5px 0;
+    padding: 0 5px;
+}
+
+#user:hover > #drop-down{
+	border: 1px solid white;
+}
+
+#user a{
+	color: black;
+}
+
+.logged-in #drop-down{
+	width: 160px;
+	margin: 0;
+}
+
+.logged-in .arrow-up{
+	border-left: 20px solid transparent;
+    border-right: 20px solid transparent;
+    border-bottom: 20px solid white;
+}
+
+.logged-in .on-top{
+	left: 140.9px;
+}
+
+.logged-in #drop-down{
+	width: 168px;
+}
+
+.white{
+	color: white;
 }

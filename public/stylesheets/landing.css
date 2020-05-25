@@ -1,7 +1,11 @@
+.page-container{
+	background: rgb(230,230,230);
+}
+
 #categories{
 	padding-top: 5vh;
 	padding-bottom: 5vh;
-	background: #ffffe0;
+	background: white;
 }
 
 #categories .item *{
@@ -27,7 +31,7 @@
 }
 
 #referrals{
-	margin: 10px 10%;
+	margin: 10px 10% 0 10%;
 }
 
 #referrals h1{
@@ -35,7 +39,7 @@
 }
 
 #referrals .item{
-	background: #1670f0;
+	/*background: #1670f0;*/
 	margin: 5px 0;
 	padding: 5px 0;
 	border-radius: 20px;
@@ -78,8 +82,13 @@
 }
 
 #title-bar{
-	padding-top: 15vh;
-	height: 60vh;
+	padding-top: 5vh;
+	height: 50vh;
+}
+
+#title-bar img{
+	margin: 0px 42%;
+    height: 200px;
 }
 
 .verical-center{

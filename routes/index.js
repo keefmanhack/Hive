@@ -10,6 +10,17 @@ router.get('/', function(req, res){
 
 router.get('/searchResult', function(req, res){
 	res.render('results');
+});
+
+router.get('/user/:id', function(req, res){
+	User.findById(req.params.id, function(err, foundUser){
+		if(err){
+			flash('error', 'Can not find user');
+			res.redirect('/');
+		}else{
+			res.render('profile', {user: foundUser});
+		}
+	})
 })
 
 router.get('/signup', function(req, res){
@@ -54,6 +65,11 @@ router.post("/login", passport.authenticate("local", {
 	successFlash: 'Welcome!'
 }), function(req, res){
 
+});
+
+router.get('/sign_out', function(req, res){
+	req.logout();
+	res.redirect('/');
 });
 
 module.exports = router;
