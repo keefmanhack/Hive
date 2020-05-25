@@ -4,6 +4,7 @@
 	<link rel="stylesheet" type="text/css" href="/stylesheets/landing.css">
 	<link rel="stylesheet" type="text/css" href="/stylesheets/all.css">
 	<link rel="stylesheet" type="text/css" href="/stylesheets/results.css">
+	<link rel="stylesheet" type="text/css" href="/stylesheets/profile.css">
 
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 	<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
@@ -32,12 +33,17 @@
 			</div>
 			<%if(currentUser){%>
 				<div class="col-sm-4">
-				
+
 				</div>
 				<div class="col-sm-2 logged-in" id="user">
 					<div class="row" id="drop-down">
 						<div class="col">
 							<img id="user-image" src="https://images.pexels.com/photos/977971/pexels-photo-977971.jpeg">
+							<!-- <%if(currentUser.profile_img){%>
+								<img src="<%=currentUser.profile_img.path%>">	
+							<%}else{%> -->
+								
+							<!-- <%}%> -->
 						</div>
 						<div class="col" id="hello-user">
 							<h5>Hello,</h5>

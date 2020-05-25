@@ -1,0 +1,40 @@
+.active{
+	background: rgb(210,210,210);
+    width: 100%;
+    border-radius: 14px;
+}
+
+#left-section{
+	width: 15%;
+	padding: 0 20px;
+	float: left;
+	background: rgb(230,230,230);
+}
+
+#left-section h1{
+	font-size: 30px;
+}
+
+#left-section li{
+	height: 45px;
+    padding: 6% 10px;
+    cursor: pointer;
+}
+
+#left-section li:hover:not(.active){
+	background: rgb(220,220,220);
+    width: 100%;
+    border-radius: 14px;
+}
+
+#left-section ul{
+	list-style: none;
+	padding-left: 0;
+}
+
+#right-section{
+	float: right;
+	width: 85%;
+	padding: 10px 20px;
+}
+

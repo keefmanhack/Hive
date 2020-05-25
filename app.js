@@ -5,7 +5,8 @@ var express 			= require("express"),
     LocalStrategy		= require('passport-local'),
     bodyParser			= require('body-parser'),
     methodOverride  	= require('method-override'),
-    flash				= require('connect-flash');
+    flash				= require('connect-flash'),
+    multer				= require('multer');
 
 var indexRoutes			= require('./routes/index');
 
@@ -46,6 +47,7 @@ app.use(function(req, res, next){
 	res.locals.success = req.flash("success");
 	next();
 });
+
 
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + '/public')); //for js scripts

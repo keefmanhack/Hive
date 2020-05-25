@@ -1,6 +1,9 @@
 var express = require('express'),
 	router	= express(),
-	passport = require('passport');
+	passport = require('passport'),
+	multer	 = require('multer'),
+	upload   = multer({storage: multer.memoryStorage()}),
+	fs 		 = require('fs');
 
 var User = require("../models/user");
 
@@ -19,6 +22,42 @@ router.get('/user/:id', function(req, res){
 			res.redirect('/');
 		}else{
 			res.render('profile', {user: foundUser});
+		}
+	})
+});
+
+router.post('/user/:id/edit', upload.single('profile_pic'), function(req, res){
+	User.findById(req.params.id, function(err, foundUser){
+		if(err){
+			flash('error', 'Can not find user');
+			res.redirect('/');
+		}else{
+			var img = req.file.buffer.toString('base64')
+			var data = img.replace(/^data:image\/\w+;base64,/, "");
+			var buf = new Buffer(data, 'base64');
+			console.log(img);
+
+
+			var directory = 'uploads/profiles/' + foundUser._id;
+			var path = 'uploads/profiles/' + foundUser._id +'/profile.jpg';
+
+			if (!fs.existsSync(directory)){
+				fs.mkdir(directory, { recursive: true }, (err) => {
+	  				if (err) throw err;
+				});
+			}
+
+			fs.writeFileSync(path, buf, (err) => {
+				if(err){
+					console.log(err);
+				}
+			});
+
+			foundUser.profile_img.path = path;
+			foundUser.profile_img.contentType = req.file.mimetype;
+			foundUser.save();
+			res.redirect('/user/' + foundUser._id);
+
 		}
 	})
 })

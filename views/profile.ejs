@@ -1,0 +1,39 @@
+<%- include('./partials/header')%>
+
+<div class="page-container" id="profile-page">
+	<div id="left-section">
+		<h1>Settings</h1>
+		<ul>
+			<li class="active">Account</li>
+			<li>Setting 2</li>
+			<li>Setting 3</li>
+		</ul>
+	</div>
+	<div id="right-section">
+		<div class="row">
+			<div class="col-md-8">
+				<h1>Account</h1>
+				<h2>Explanation of this tab</h2>
+				<p>Signed in as <%=currentUser.email%></p>
+			</div>
+			<div class="col-md-4">
+				<img src="/photos/logo.jpeg">
+			</div>
+		</div>
+		<hr>
+		<h2>Your Profile</h2>
+		<div class="row">
+			<div class="col">
+				<h3>Edit Profile Image</h3>
+			</div>
+			<div class="col">
+				<form action="/user/<%=currentUser._id%>/edit" method="POST" enctype="multipart/form-data">
+					<input type="file" name="profile_pic">
+					<button>Submit</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+<%- include('./partials/footer')%>
