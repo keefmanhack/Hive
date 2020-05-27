@@ -131,6 +131,10 @@ body #drop-down-menu.show{
 	background-color: rgb(250,196,98);
 }
 
+.orange-color{
+	color: rgb(250,196,98);
+}
+
 .on-top{
 	position: relative;
     top: -23px;

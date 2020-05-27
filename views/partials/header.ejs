@@ -35,29 +35,30 @@
 				<div class="col-sm-4">
 
 				</div>
-				<div class="col-sm-2 logged-in" id="user">
-					<div class="row" id="drop-down">
-						<div class="col">
-							<img id="user-image" src="https://images.pexels.com/photos/977971/pexels-photo-977971.jpeg">
-							<!-- <%if(currentUser.profile_img){%>
-								<img src="<%=currentUser.profile_img.path%>">	
-							<%}else{%> -->
-								
-							<!-- <%}%> -->
+				<a href="/user/<%=currentUser._id%>">
+					<div class="col-sm-2 logged-in" id="user">
+						<div class="row" id="drop-down">
+							<div class="col">
+								<%if(currentUser.profile_img && currentUser.profile_img.path){%>
+									<img id="user-image" src="<%=currentUser.profile_img.path%>" style='left:<%=currentUser.profile_img.orient.left%>; top:<%=currentUser.profile_img.orient.top%>; width:<%=currentUser.profile_img.orient.dimension%>; height:<%=currentUser.profile_img.orient.height%>;'>	
+								<%}else{%>
+									<img id="user-image" src="/photos/generic_person.jpg">
+								<%}%>
+							</div>
+							<div class="col" id="hello-user">
+								<h5>Hello,</h5>
+								<h2 class="truncate"><%=currentUser.firstName%> <i class="fas fa-caret-down"></i></h2>								
+							</div>
 						</div>
-						<div class="col" id="hello-user">
-							<h5>Hello,</h5>
-							<h2 class="truncate"><%=currentUser.firstName%> <i class="fas fa-caret-down"></i></h2>								
+						<div class="row arrow-up white on-top"></div>
+						<div class="row" id="drop-down-menu">
+							<ul>
+								<li><a href="/user/<%=currentUser._id%>">View Profile</li>
+								<li><a href="/sign_out">Sign Out</a></li>
+							</ul>
 						</div>
 					</div>
-					<div class="row arrow-up white on-top"></div>
-					<div class="row" id="drop-down-menu">
-						<ul>
-							<li><a href="/user/<%=currentUser._id%>">Edit Profile</a></li>
-							<li><a href="/sign_out">Sign Out</a></li>
-						</ul>
-					</div>
-				</div>
+				</a>
 			<%}else{%>
 				<div class="col-sm-4">
 				

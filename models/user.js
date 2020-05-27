@@ -9,7 +9,16 @@ var UserSchema = new mongoose.Schema({
 	email: {type: String, unique: true, required: true},
 	resetPasswordToken: String,
 	resetPasswordExpires: Date,
-	profile_img: { path: String, contentType: String }
+	profile_image: { 
+		path_original: String,
+		path_cropped: String, 
+		contentType: String,
+		orient: {
+			dimension: String,
+			top: String,
+			left: String
+		}
+	}
 });
 
 UserSchema.plugin(passportLocalMongoose);
