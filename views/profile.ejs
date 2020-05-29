@@ -11,7 +11,7 @@
 				<%}%>	
 			</div>
 			<i class="fas fa-camera"></i>
-			<h1 class="orange-color"><strong><%=currentUser.firstName%> <%=currentUser.lastName%></strong></h1>
+			<h1 ><strong><%=currentUser.firstName%> <%=currentUser.lastName%></strong></h1>
 		</div>
 
 		<hr>
@@ -87,7 +87,11 @@
 			<button id="new-photo" class="btn btn-primary">+  Upload New Photo</button>
 		</div>
 		<div class="col">
-			<button class="btn btn-primary"><i class="fas fa-pen"></i></button>
+			<% if (currentUser.profile_image && currentUser.profile_image.cropped_profile_path) { -%>
+				<button onclick="editPhoto(<%=currentUser.profile_image%>);" id="edit-photo" class="btn btn-primary"><i class="fas fa-pen"></i></button>
+			<% } else { -%>
+				<button id="edit-photo" class="btn btn-primary" disabled><i class="fas fa-pen"></i></button>
+			<% } -%>
 		</div>
 
 	</div>
@@ -116,13 +120,32 @@
 			<div class="cut-out">
 				
 			</div>
+			<div class="loader">
+				<ul>
+					<li>
+						<i id=one class="far fa-circle"></i>
+					</li>
+					<li>
+						<i id=two class="far fa-circle"></i>
+					</li>
+					<li>
+						<i id=three class="far fa-circle"></i>
+					</li>
+					<li>
+						<i id=four class="far fa-circle"></i>
+					</li>
+					<li>
+						<i id=five class="far fa-circle"></i>
+					</li>
+				</ul>
+			</div>
 	</div>
 	<div class="slidecontainer">
   		<input type="range" min="50" max="200" value="50" class="slider" id="myRange">
 	</div>
 	<hr>
 	<div class="row">
-		<div class="col-lg-8">
+		<div class="col-lg-6">
 			
 		</div>
 		<div class="col-lg-2">
@@ -134,7 +157,7 @@
 				<input type="hidden" name="orient[top]" id="top_id">
 				<input type="hidden" name="orient[left]" id="left_id">
 				<input type="file" accept="image/x-png,image/gif,image/jpeg" onchange="readURL(this);" name="profile_image" id="profile_pic" style="display: none;">
-				<button onclick="changeVals()" class="btn btn-primary">Save</button>
+				<button onclick="changeVals()" style="width: 100%;" class="btn btn-primary">Save</button>
 			</div>
 		</div>
 	</div>
@@ -142,6 +165,8 @@
 
 
 <script type="text/javascript">
+	var editMode = false;
+
 	$('#user-info i').on('click', function(){
 		$('.page-container').addClass('hide');
 		$('#photo-new-or-edit').addClass('show');
@@ -151,106 +176,88 @@
 		showMainPage();
 	});
 
+	$('#new-photo').on('click', function(){
+		var input = $(document.getElementById("profile_pic"));
+        input.trigger("click"); // opening dialog
+        return false;
+	});
+
+	$('.slidecontainer input').on('input', function(){
+		$('#photo-editor img').attr('height', this.value + '%');
+	});
+
 	function showMainPage(){
 		$('.page-container').removeClass('hide');
 		$('.photo-selector').removeClass('show');
 		$('#photo-editor').removeClass('show');
 	}
 
+	function editPhoto(imageData){
+		editMode = true;
+		$('#photo-editor').toggleClass('show');
+	  	$('#photo-editor img').attr('height', imageData.orient.dimension);
+		document.getElementById("profile_img").style.left = imageData.orient.left;
+		document.getElementById("profile_img").style.top = imageData.orient.top;
+		$('.slidecontainer input').val(parseInt(imageData.orient.dimension.substring(0, imageData.orient.dimension.length-1)));
 
-	var profileImage;
+		// $("#profile_pic").val(imageData.profile_path);
+		// document.getElementById('profile_pic').files[0] = imageData.profile_path;
+		$('.loader').addClass('hide');
+		$('#profile_img').attr('src', imageData.profile_path);
+
+	}
+
+	//create event listeners for drag event
+	dragElement(document.getElementById("photo"),document.getElementById("profile_img"));
+
+
 	function changeVals(){
 		var reader = new FileReader();
-		var imageProp = document.getElementById("profile_img").style;
 		var image = new Image();
 		image = document.getElementById('profile_img');
   		var canvas = document.createElement('canvas');
- 		var ctx = canvas.getContext('2d');
-
+  		var profile_pic = document.getElementById('profile_pic').files[0];
+ 		
        	canvas.height = 250;
     	canvas.width = 250;
 
-    	
+    	cropImage(canvas, image);
 
-    	var widthFactor = image.naturalWidth / image.width;
+    	if(editMode){
+    		var data = {
+    			'orient[dimension]': $('#profile_img').attr('height'),
+				'orient[top]': image.style.top,
+				'orient[left]': image.style.left,
+				'cropped_profile_image': canvas.toDataURL('image/png')
+    		}
+    		sendImage(data);
+    	}else{
+    		reader.readAsDataURL(profile_pic);
+
+			reader.onload = function (e) {
+				var data = {
+					'orient[dimension]': $('#profile_img').attr('height'),
+					'orient[top]': image.style.top,
+					'orient[left]': image.style.left,
+					'cropped_profile_image': canvas.toDataURL('image/png'),
+					'profile_image': e.target.result
+				}
+				sendImage(data);
+		    };
+    	}
+	}
+
+	function cropImage(canvas, image){
+		var ctx = canvas.getContext('2d');
+		var imageProp = image.style;
+
+		var widthFactor = image.naturalWidth / image.width;
     	var heightFactor = image.naturalHeight / image.height;
     	var topMove = parseInt(imageProp.top.substring(0, imageProp.top.length-2));
     	var leftMove = parseInt(imageProp.left.substring(0, imageProp.left.length-2));
-    	console.log(leftMove);
-    	console.log(topMove);
-    	console.log(widthFactor);
-    	console.log(heightFactor);
 
-		ctx.drawImage(image, (95 * widthFactor) - (leftMove * widthFactor), (37 * heightFactor) - (topMove * heightFactor), 250 * widthFactor, 250 * heightFactor,0,0,250,250);
-		// drawImageProp(ctx, image, 0,0, 250,250);
-		//100 37
-
-		var profile_pic = document.getElementById('profile_pic').files[0];
-		
-		
-		
-		reader.readAsDataURL(profile_pic);
-
-		reader.onload = function (e) {
-			var data = {
-				'orient[dimension]': $('#profile_img').attr('height'),
-				'orient[top]': imageProp.top,
-				'orient[left]': imageProp.left,
-				'cropped_profile_image': canvas.toDataURL('image/jpeg'),
-				'profile_image': e.target.result
-			}
-			sendImage(data);
-
-	    };
-		showMainPage();
+		ctx.drawImage(image, (100 * widthFactor) - (leftMove * widthFactor), (37 * heightFactor) - (topMove * heightFactor), image.naturalWidth * widthFactor * (250/image.naturalHeight), 250 * heightFactor,0,0,image.naturalWidth * (250/image.naturalHeight), 250);
 	}
-	function drawImageProp(ctx, img, x, y, w, h, offsetX, offsetY) {
-
-    if (arguments.length === 2) {
-        x = y = 0;
-        w = ctx.canvas.width;
-        h = ctx.canvas.height;
-    }
-
-    // default offset is center
-    offsetX = typeof offsetX === "number" ? offsetX : 0.5;
-    offsetY = typeof offsetY === "number" ? offsetY : 0.5;
-
-    // keep bounds [0.0, 1.0]
-    if (offsetX < 0) offsetX = 0;
-    if (offsetY < 0) offsetY = 0;
-    if (offsetX > 1) offsetX = 1;
-    if (offsetY > 1) offsetY = 1;
-
-    var iw = img.naturalWidth,
-        ih = img.naturalHeight,
-        r = Math.min(w / iw, h / ih),
-        nw = iw * r,   // new prop. width
-        nh = ih * r,   // new prop. height
-        cx, cy, cw, ch, ar = 1;
-
-    // decide which gap to fill    
-    if (nw < w) ar = w / nw;                             
-    if (Math.abs(ar - 1) < 1e-14 && nh < h) ar = h / nh;  // updated
-    nw *= ar;
-    nh *= ar;
-
-    // calc source rectangle
-    cw = iw / (nw / w);
-    ch = ih / (nh / h);
-
-    cx = (iw - cw) * offsetX;
-    cy = (ih - ch) * offsetY;
-
-    // make sure source rectangle is valid
-    if (cx < 0) cx = 0;
-    if (cy < 0) cy = 0;
-    if (cw > iw) cw = iw;
-    if (ch > ih) ch = ih;
-
-    // fill image in dest. rectangle
-    ctx.drawImage(img, cx, cy, cw, ch,  x, y, w, h);
-}
 
 	function sendImage(data) {
 	  let urlEncodedData = "",
@@ -274,42 +281,39 @@
 	  ajax.open("POST", "/user/<%=currentUser._id%>/edit/");
 	  ajax.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 
+	  $('.loader').removeClass('hide');
 	  ajax.onreadystatechange = function() {
-	    
-	  }
+		    if (this.readyState == 4 && this.status == 200) {
+		      showMainPage();
+		      location.reload();
+		    }
+  	  };
+
 	  ajax.send(urlEncodedData);
 	}
 
-	$('#new-photo').on('click', function(){
-		var input = $(document.getElementById("profile_pic"));
-        input.trigger("click"); // opening dialog
-        return false;
-	});
+
 
 	function readURL(input) {
+		editMode = false;
 	  if (input.files && input.files[0]) {
 	  	$('#photo-editor').toggleClass('show');
 	  	$('#photo-editor img').attr('height', '50%');
-		$('#photo-editor img').attr('width', '50%');
+
 		document.getElementById("profile_img").style.left = '0px';
 		document.getElementById("profile_img").style.top = '0px';
+
 	    var reader = new FileReader();
 	    reader.onload = function (e) {
 	      $('#profile_img')
 	        .attr('src', e.target.result);
+
+	      $('.loader').addClass('hide');
 	    };
 
-	    profileImage=input.files;
 	    reader.readAsDataURL(input.files[0]);
 	  }
 	}
-
-	$('.slidecontainer input').on('input', function(){
-		$('#photo-editor img').attr('height', this.value + '%');
-		$('#photo-editor img').attr('width', this.value + '%');
-	});
-
-	dragElement(document.getElementById("photo"),document.getElementById("profile_img"));
 
 function dragElement(cover, elmnt) {
   var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
@@ -351,7 +355,6 @@ function dragElement(cover, elmnt) {
     document.onmousemove = null;
   }
 }
-
 </script>
 
 <%- include('./partials/footer')%>

@@ -38,14 +38,13 @@ router.post('/user/:id/edit', function(req, res){
 			res.redirect('/');
 		}else{
 			var cropped_data = req.body.cropped_profile_image.replace(/^data:image\/\w+;base64,/, "");
-			var profile_data = req.body.profile_image.replace(/^data:image\/\w+;base64,/, "");
+			
 			
 
 			var directory = 'public/uploads/profiles/' + foundUser._id;
 			var cropped_path = 'public/uploads/profiles/' + foundUser._id +'/cropped_profile.jpg';
 			var cropped_mongoPath = '/uploads/profiles/' + foundUser._id +'/cropped_profile.jpg';
-			var profile_path = 'public/uploads/profiles/' + foundUser._id +'/profile.jpg';
-			var profile_mongoPath = '/uploads/profiles/' + foundUser._id +'/profile.jpg';
+
 
 			if (!fs.existsSync(directory)){
 				fs.mkdir(directory, { recursive: true }, (err) => {
@@ -60,21 +59,33 @@ router.post('/user/:id/edit', function(req, res){
 				}
 			});
 
-			var buf = new Buffer(profile_data, 'base64');
-			fs.writeFileSync(profile_path, buf, (err) => {
-				if(err){
-					console.log(err);
-				}
-			});
+			//in case of edit mode
+			if( req.body && req.body.profile_image){
+				var profile_data = req.body.profile_image.replace(/^data:image\/\w+;base64,/, "");
+				var profile_path = 'public/uploads/profiles/' + foundUser._id +'/profile.jpg';
+				var profile_mongoPath = '/uploads/profiles/' + foundUser._id +'/profile.jpg';
 
-			foundUser.profile_image.profile_path = profile_mongoPath;
+				var buf = new Buffer(profile_data, 'base64');
+				fs.writeFileSync(profile_path, buf, (err) => {
+					if(err){
+						console.log(err);
+					}
+				});
+				foundUser.profile_image.profile_path = profile_mongoPath;
+			}
+
+			
 			foundUser.profile_image.cropped_profile_path = cropped_mongoPath;
 			foundUser.profile_image.orient = req.body.orient;
-			foundUser.save();
-			res.redirect('/user/' + foundUser._id);
-
+			foundUser.save(function(err){
+				if(err){
+					console.log(err)
+				}
+				res.redirect('/user/' + foundUser._id);
+			});
+			
 		}
-	})
+	});
 });
 
 router.get('/signup', function(req, res){

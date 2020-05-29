@@ -150,7 +150,7 @@ body #drop-down-menu.show{
 }
 
 #top-bar{
-	background: black;
+	background: rgb(30,30,30);;
 	padding: 0 30px;
 	height: 70px;
 }
