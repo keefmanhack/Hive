@@ -153,6 +153,7 @@
 
 #top-section #user-info h1{
 	text-align: center;
+	margin-top: -35px;
 }
 
 #top-section #user-info i{
@@ -161,10 +162,10 @@
     color: white;
     font-size: 26px;
     border-radius: 34px;
-    position: absolute;
+    position: relative;
     z-index: 2;
-    top: 33%;
-    left: 54%;
+    top: -59px;
+    left: 383px;
     cursor: pointer;
 }
 
@@ -187,6 +188,9 @@
 #user-info #profile-image img{
 	position: absolute;
 	object-fit: cover;
+	height: 200px;
+    width: 200px;
+    left: -4px;
 }
 
 
@@ -205,11 +209,20 @@
 
 
 .cut-out{
-	position:relative;
+	position: unset;
     width: inherit;
     height: inherit;
-    margin:0 auto;
-    overflow:hidden;
+    margin: 0 auto;
+    overflow: hidden;
+    top: -321px;
+}
+
+canvas{
+/*	height: inherit;
+    width: inherit;
+    position: relative;
+    background: red;
+    z-index: 1;*/
 }
 
 

@@ -39,8 +39,8 @@
 					<div class="col-sm-2 logged-in" id="user">
 						<div class="row" id="drop-down">
 							<div class="col">
-								<%if(currentUser.profile_img && currentUser.profile_img.path){%>
-									<img id="user-image" src="<%=currentUser.profile_img.path%>" style='left:<%=currentUser.profile_img.orient.left%>; top:<%=currentUser.profile_img.orient.top%>; width:<%=currentUser.profile_img.orient.dimension%>; height:<%=currentUser.profile_img.orient.height%>;'>	
+								<%if(currentUser.profile_image && currentUser.profile_image.cropped_profile_path){%>
+									<img id="user-image" src="<%=currentUser.profile_image.cropped_profile_path%>">
 								<%}else{%>
 									<img id="user-image" src="/photos/generic_person.jpg">
 								<%}%>

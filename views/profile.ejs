@@ -4,13 +4,13 @@
 	<div id="top-section">
 		<div id="user-info">
 			<div id="profile-image">
-				<%if(currentUser.profile_img && currentUser.profile_img.path){%>
-					<img src="/photos/generic_person.jpg">
+				<%if(currentUser.profile_image && currentUser.profile_image.cropped_profile_path){%>
+					<img src="<%=currentUser.profile_image.cropped_profile_path%>">
 				<%}else{%>
 					<img src="/photos/generic_person.jpg">
-				<%}%>
-				<i class="fas fa-camera"></i>
+				<%}%>	
 			</div>
+			<i class="fas fa-camera"></i>
 			<h1 class="orange-color"><strong><%=currentUser.firstName%> <%=currentUser.lastName%></strong></h1>
 		</div>
 
@@ -116,7 +116,6 @@
 			<div class="cut-out">
 				
 			</div>
-		<canvas id="myCanvas" width="inherit" height="inherit"></canvas>
 	</div>
 	<div class="slidecontainer">
   		<input type="range" min="50" max="200" value="50" class="slider" id="myRange">
@@ -130,17 +129,17 @@
 			<button class="btn btn-primary">Cancel</button>
 		</div>
 		<div class="col-lg-4">
-			<form action="/user/<%=currentUser._id%>/edit" method="POST" onsubmit="changeVals();" enctype="multipart/form-data">
+			<div onsubmit="changeVals()" id="myform">
 				<input type="hidden" name="orient[dimension]" id="dimension">
 				<input type="hidden" name="orient[top]" id="top_id">
 				<input type="hidden" name="orient[left]" id="left_id">
 				<input type="file" accept="image/x-png,image/gif,image/jpeg" onchange="readURL(this);" name="profile_image" id="profile_pic" style="display: none;">
-				<input type="file" name="profile_image" id="cropped_image" style="display: none;">
-				<button class="btn btn-primary">Save</button>
-			</form>
+				<button onclick="changeVals()" class="btn btn-primary">Save</button>
+			</div>
 		</div>
 	</div>
 </div>
+
 
 <script type="text/javascript">
 	$('#user-info i').on('click', function(){
@@ -161,19 +160,124 @@
 
 	var profileImage;
 	function changeVals(){
+		var reader = new FileReader();
 		var imageProp = document.getElementById("profile_img").style;
 		var image = new Image();
-		image = document.getElementById('profile_img'),
-  		canvas = document.getElementById('myCanvas'),
-    	ctx = canvas.getContext('2d');
-		ctx.drawImage(image,100, 37, 250, 250,0,0,50,50);
+		image = document.getElementById('profile_img');
+  		var canvas = document.createElement('canvas');
+ 		var ctx = canvas.getContext('2d');
 
-		$('input#dimension').val($('#profile_img').attr('height'));
-		$('input#left_id').val(imageProp.left);
-		$('input#top_id').val(imageProp.top);
-		document.getElementById('#cropped_image').value = canvas.toDataURL('image/png');
+       	canvas.height = 250;
+    	canvas.width = 250;
 
+    	
+
+    	var widthFactor = image.naturalWidth / image.width;
+    	var heightFactor = image.naturalHeight / image.height;
+    	var topMove = parseInt(imageProp.top.substring(0, imageProp.top.length-2));
+    	var leftMove = parseInt(imageProp.left.substring(0, imageProp.left.length-2));
+    	console.log(leftMove);
+    	console.log(topMove);
+    	console.log(widthFactor);
+    	console.log(heightFactor);
+
+		ctx.drawImage(image, (95 * widthFactor) - (leftMove * widthFactor), (37 * heightFactor) - (topMove * heightFactor), 250 * widthFactor, 250 * heightFactor,0,0,250,250);
+		// drawImageProp(ctx, image, 0,0, 250,250);
+		//100 37
+
+		var profile_pic = document.getElementById('profile_pic').files[0];
+		
+		
+		
+		reader.readAsDataURL(profile_pic);
+
+		reader.onload = function (e) {
+			var data = {
+				'orient[dimension]': $('#profile_img').attr('height'),
+				'orient[top]': imageProp.top,
+				'orient[left]': imageProp.left,
+				'cropped_profile_image': canvas.toDataURL('image/jpeg'),
+				'profile_image': e.target.result
+			}
+			sendImage(data);
+
+	    };
 		showMainPage();
+	}
+	function drawImageProp(ctx, img, x, y, w, h, offsetX, offsetY) {
+
+    if (arguments.length === 2) {
+        x = y = 0;
+        w = ctx.canvas.width;
+        h = ctx.canvas.height;
+    }
+
+    // default offset is center
+    offsetX = typeof offsetX === "number" ? offsetX : 0.5;
+    offsetY = typeof offsetY === "number" ? offsetY : 0.5;
+
+    // keep bounds [0.0, 1.0]
+    if (offsetX < 0) offsetX = 0;
+    if (offsetY < 0) offsetY = 0;
+    if (offsetX > 1) offsetX = 1;
+    if (offsetY > 1) offsetY = 1;
+
+    var iw = img.naturalWidth,
+        ih = img.naturalHeight,
+        r = Math.min(w / iw, h / ih),
+        nw = iw * r,   // new prop. width
+        nh = ih * r,   // new prop. height
+        cx, cy, cw, ch, ar = 1;
+
+    // decide which gap to fill    
+    if (nw < w) ar = w / nw;                             
+    if (Math.abs(ar - 1) < 1e-14 && nh < h) ar = h / nh;  // updated
+    nw *= ar;
+    nh *= ar;
+
+    // calc source rectangle
+    cw = iw / (nw / w);
+    ch = ih / (nh / h);
+
+    cx = (iw - cw) * offsetX;
+    cy = (ih - ch) * offsetY;
+
+    // make sure source rectangle is valid
+    if (cx < 0) cx = 0;
+    if (cy < 0) cy = 0;
+    if (cw > iw) cw = iw;
+    if (ch > ih) ch = ih;
+
+    // fill image in dest. rectangle
+    ctx.drawImage(img, cx, cy, cw, ch,  x, y, w, h);
+}
+
+	function sendImage(data) {
+	  let urlEncodedData = "",
+      urlEncodedDataPairs = [],
+      name;
+
+      for( name in data ) {
+    		urlEncodedDataPairs.push( encodeURIComponent( name ) + '=' + encodeURIComponent( data[name] ) );
+  	  }
+   	  urlEncodedData = urlEncodedDataPairs.join( '&' ).replace( /%20/g, '+' );
+
+	  var xmlHttpReq = false;
+
+	  if (window.XMLHttpRequest) {
+	    ajax = new XMLHttpRequest();
+	  }
+	  else if (window.ActiveXObject) {
+	    ajax = new ActiveXObject("Microsoft.XMLHTTP");
+	  }
+
+	  ajax.open("POST", "/user/<%=currentUser._id%>/edit/");
+	  ajax.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+	  ajax.onreadystatechange = function() {
+	    
+	  }
+	  ajax.send(urlEncodedData);
 	}
 
 	$('#new-photo').on('click', function(){
@@ -187,6 +291,8 @@
 	  	$('#photo-editor').toggleClass('show');
 	  	$('#photo-editor img').attr('height', '50%');
 		$('#photo-editor img').attr('width', '50%');
+		document.getElementById("profile_img").style.left = '0px';
+		document.getElementById("profile_img").style.top = '0px';
 	    var reader = new FileReader();
 	    reader.onload = function (e) {
 	      $('#profile_img')

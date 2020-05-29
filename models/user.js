@@ -10,9 +10,8 @@ var UserSchema = new mongoose.Schema({
 	resetPasswordToken: String,
 	resetPasswordExpires: Date,
 	profile_image: { 
-		path_original: String,
-		path_cropped: String, 
-		contentType: String,
+		profile_path: String,
+		cropped_profile_path: String,
 		orient: {
 			dimension: String,
 			top: String,
