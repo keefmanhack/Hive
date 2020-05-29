@@ -88,6 +88,17 @@ router.post('/user/:id/edit', function(req, res){
 	});
 });
 
+router.post('/user/:id/edit/about', function(req, res){
+	User.findByIdAndUpdate(req.params.id, req.body, function(err, updatingUser){
+		if(err){
+			console.log(err);
+			req.flash('error', 'Could not update bio');
+			
+		}
+		res.redirect('back');
+	})
+})
+
 router.get('/signup', function(req, res){
 	res.render('signup');
 });

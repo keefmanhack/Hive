@@ -17,6 +17,9 @@ var UserSchema = new mongoose.Schema({
 			top: String,
 			left: String
 		}
+	},
+	about: {
+		bio: String
 	}
 });
 

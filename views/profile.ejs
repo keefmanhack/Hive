@@ -15,57 +15,56 @@
 		</div>
 
 		<hr>
-		<div class="row">
-			<div class="col">
-				<button class="btn btn-primary">Show 1</button>
+		<div class="row" id='profile-nav'>
+			<div class="col-auto">
+				<button id="talents-button" class="active btn btn-primary">Talents</button>
 			</div>
-			<div class="col">
-				<button class='btn btn-primary'>Show 2</button>
+			<div class="col-auto">
+				<button id="about-button" class='btn btn-primary'>About</button>
 			</div>
-			<div class="col">
-				<button class='btn btn-primary'>Show 3</button>
+			<div class="col-auto">
+				<button class='btn btn-primary'>Your Hive</button>
 			</div>
-			<div class="col">
-				<button class='btn btn-primary'>Show 4</button>
+			<div class="col-auto">
+				<button class='btn btn-primary'>Financials</button>
 			</div>
-			<div class="col">
-				<button class='btn btn-primary'>Show 5</button>
-			</div>
-			<div class="col">
-				<button class='btn btn-primary'>Edit Profile</button>
-			</div>			
+			<div class="col-auto">
+				<button class='btn btn-primary'>More info</button>
+			</div>		
 		</div>
 	</div>
-	<div id="left-section">
-		<h1>Settings</h1>
-		<ul>
-			<li class="active">Account</li>
-			<li>Setting 2</li>
-			<li>Setting 3</li>
-		</ul>
-	</div>
-	<div id="right-section">
-		<div class="row">
-			<div class="col-md-8">
-				<h1>Account</h1>
-				<h2>Explanation of this tab</h2>
-				<p>Signed in as <%=currentUser.email%></p>
-			</div>
-			<div class="col-md-4">
-				<img src="/photos/logo.jpeg">
-			</div>
-		</div>
-		<hr>
-		<h2>Your Profile</h2>
-		<div class="row">
-			<div class="col">
-				<h3>Edit Profile Image</h3>
-			</div>
-			<div class="col">
-				<form action="/user/<%=currentUser._id%>/edit" method="POST" enctype="multipart/form-data">
-					<input type="file" name="profile_pic">
-					<button>Submit</button>
-				</form>
+	<div class="content-section">
+		<div id="about">
+			<div class="row">
+				<div class="col-lg-3 left">
+					<h1>About</h1>
+					<ul>
+						<li class="active">Bio</li>
+						<li>Work</li>
+						<li>Eduation</li>
+					</ul>
+				</div>
+				<div class="col right">
+					<div id="bio">
+						<form on action="/user/<%=currentUser._id%>/edit/about" method="POST">
+							<textarea name="about[bio]"><% if (currentUser && currentUser.about && currentUser.about.bio){%><%=currentUser.about.bio%><%}%></textarea>
+							<div class="row">
+								<div class="col-lg-3">
+									<button type="button" onclick="bioEditable();" id="edit" class="strip btn btn-primary">Edit</button>
+								</div>
+								<div class="col-lg-5">
+									<!-- Im empty on purpose -->
+								</div>
+								<div class="col-lg-2">
+									<button type="button" onclick="bioNotEditable();" id="cancel" class="strip btn btn-primary">Cancel</button>
+								</div>
+								<div class="col-lg-2">
+									<button id="save" class="strip btn btn-primary">Save</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -166,6 +165,30 @@
 
 <script type="text/javascript">
 	var editMode = false;
+	$('#about .right #bio textarea').prop('disabled', true); 
+
+	function bioEditable(){
+		$('#about .right #bio #edit').addClass('hide');
+		$('#about .right #bio #cancel').addClass('show');
+		$('#about .right #bio #save').addClass('show');
+
+		$('#about .right #bio textarea').addClass('enabled');
+		$('#about .right #bio textarea').prop('disabled', false); 
+
+	}
+
+	function bioNotEditable(){
+		$('#about .right #bio #edit').removeClass('hide');
+		$('#about .right #bio #cancel').removeClass('show');
+		$('#about .right #bio #save').removeClass('show');
+
+		$('#about .right #bio textarea').removeClass('enabled');
+		location.reload();
+		// $('#about .right #bio textarea').prop('disabled', true); 
+
+	}
+
+
 
 	$('#user-info i').on('click', function(){
 		$('.page-container').addClass('hide');

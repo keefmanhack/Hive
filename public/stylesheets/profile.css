@@ -1,138 +1,154 @@
+#about{
+	background: rgb(50,50,50);
+    border-radius: 1.25rem;
+    padding: 0 10px;
+}
+#about h1{
+	font-size: 2rem;
+    display: inline;
+    color: rgb(235,235,235);
+}
+
+#about .left{
+	border-right: 1px solid;
+}
+
+#about .left ul{
+	list-style: none;
+    padding-left: 0;
+}
+
+#about .left ul li{
+	background: inherit;
+    padding: 5px;
+    border-radius: .5rem;
+    font-size: 20px;
+    margin: 5px;
+    color:  rgb(215,215,215);
+    cursor: pointer;
+}
+
+#about .left ul li:hover{
+	background: rgb(60,60,60);
+	color: rgb(250,196,98);
+	transition: .3s;
+}
+
+#about .left ul li.active{
+	background: rgb(60,60,60);
+	color: rgb(250,196,98);
+}
+
+#about .right #bio textarea{
+	margin-top: 10px;
+    width: 100%;
+    font-size: 20px;
+    height: 114px;
+    resize: none;
+    border-radius: 19px;
+    background: rgb(220,220,220);
+    color: black;
+    padding: 10px;
+    border: 2px solid transparent;
+}
+
+#about .right #bio textarea:focus{
+	outline: none !important;
+}
+
+#about .right #bio textarea.enabled{
+	border: 2px solid rgb(250,196,98);
+	background: rgb(240,240,240);
+}
+
+
+#about .right #bio button.strip{
+	background: none;
+    border: none;
+    padding-top: 0;
+}
+
+#about .right #bio button:focus{
+	outline: transparent;
+	border:transparent;
+}
+
+#about .right #bio #edit:hover{
+	color: #62a9fa;
+	transition: .2s;
+}
+
+#about .right #bio #cancel:hover{
+	color: orange;
+	transition: .2s;
+}
+
+#about .right #bio #save:hover{
+	color: #62a9fa;
+	transition: .2s;
+}
+
+#about .right #bio #edit{
+	display: block;
+}
+
+#about .right #bio #edit.hide{
+	display: none;
+}
+
+#about .right #bio #cancel{
+	display: none;
+}
+
+#about .right #bio #cancel.show{
+	display: block;
+}
+
+#about .right #bio #save{
+	display: none;
+}
+
+#about .right #bio #save.show{
+	display: block;
+}
+
 .active{
 	background: rgb(210,210,210);
     width: 100%;
     border-radius: 14px;
 }
 
-#left-section{
-	width: 15%;
-	padding: 0 20px;
-	float: left;
-	background: rgb(230,230,230);
+.content-section{
+	padding: 20px 18%;
+    background: white;
 }
 
-#left-section h1{
-	font-size: 30px;
-}
-
-#left-section li{
-	height: 45px;
-    padding: 6% 10px;
-    cursor: pointer;
-}
-
-#left-section li:hover:not(.active){
-	background: rgb(220,220,220);
-    width: 100%;
-    border-radius: 14px;
-}
-
-#left-section ul{
-	list-style: none;
-	padding-left: 0;
-}
 
 .page-container.hide{
 	opacity: .2;
 }
 
-.photo-selector{
-	z-index: 3;
-    position: absolute;
-    background: #424242;
-    top: 25%;
-    left: 36%;
-    padding: 20px;
-    border-radius: 25px;
-    border: 2px solid;
-    display: none;
+#profile-nav{
+	margin: 0px 150px;
+    padding-bottom: 10px;
 }
 
-.photo-selector.show{
-	display: block;
+#profile-nav button{
+	background: transparent;
+    border: none;
+    color: black;
+    font-weight: 600;
 }
 
-.photo-selector h1{
-	color: white;
-    font-size: 25px;
+#profile-nav button:hover{
+	background: white;
+	transition: .3s;
 }
 
-.photo-selector h1 i{
-	color: rgba(255,255,255,.6);
-	cursor: pointer;
+#profile-nav button.active{
+	border-bottom: 3px solid black;
 }
 
-#photo-editor{
-	display: none;
-	width: 40vw;
-    left: 30%;
-}
-
-#photo-editor img{
-	object-fit: contain;
-	position: absolute;
-}
-
-#photo-editor.show{
-	display: block;
-}
-
-#photo-editor #photo{
-	height: 315px;
-	overflow: hidden;
-	background: #616161;
-	position: relative;
-	cursor: move;
-}
-
-#right-section{
-	float: right;
-	width: 85%;
-	padding: 10px 20px;
-}
-
-.slidecontainer {
-  width: 100%; /* Width of the outside container */
-  margin: 10px 5px;
-}
-
-/* The slider itself */
-.slider {
-  -webkit-appearance: none;  /* Override default CSS styles */
-  appearance: none;
-  width: 98%; /* Full-width */
-  height: 7px; /* Specified height */
-  background: #d3d3d3; /* Grey background */
-  outline: none; /* Remove outline */
-  opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
-  -webkit-transition: .2s; /* 0.2 seconds transition on hover */
-  transition: opacity .2s;
-  border-radius: 5px;
-}
-
-/* Mouse-over effects */
-.slider:hover {
-  opacity: 1; /* Fully shown on mouse-over */
-}
-
-/* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
-.slider::-webkit-slider-thumb {
-  -webkit-appearance: none; /* Override default look */
-  appearance: none;
-  width: 25px; /* Set a specific slider handle width */
-  height: 25px; /* Slider handle height */
-  border-radius: 100%;
-  background: rgb(250,196,98);
-  cursor: pointer; /* Cursor on hover */
-}
-
-.slider::-moz-range-thumb {
-  width: 25px; /* Set a specific slider handle width */
-  height: 25px; /* Slider handle height */
-  border-radius: 100%;
-  background: rgb(250,196,98);
-  cursor: pointer; /* Cursor on hover */
-}
 
 #top-section{
 	background: rgb(255,255,255);
@@ -192,30 +208,6 @@ filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ffffff",endCo
 	object-fit: cover;
 	height: 250px;
     width: 250px;
-}
-
-
-
-.cut-out:after{
-	content: '';
-    position: absolute;
-    left: 22%;
-    top: 12%;
-    border-radius: 100%;
-    height: 250px;
-    width: 250px;
-    border: 4px solid white;
-    box-shadow: 0px 0px 0px 600px rgba(0,0,0,.5);
-}
-
-
-.cut-out{
-	position: unset;
-    width: inherit;
-    height: inherit;
-    margin: 0 auto;
-    overflow: hidden;
-    top: -321px;
 }
 
 .loader{
