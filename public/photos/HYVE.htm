@@ -1,35 +1,98 @@
-<%- include('./partials/header')%>
+<!DOCTYPE html>
+<!-- saved from url=(0051)http://localhost:3000/user/5ecbd77f626231786fd338ee -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<link rel="stylesheet" type="text/css" href="./HYVE_files/landing.css">
+	<link rel="stylesheet" type="text/css" href="./HYVE_files/all.css">
+	<link rel="stylesheet" type="text/css" href="./HYVE_files/results.css">
+	<link rel="stylesheet" type="text/css" href="./HYVE_files/profile.css">
+	<link rel="stylesheet" type="text/css" href="./HYVE_files/photo-editor.css">
+	<link rel="stylesheet" type="text/css" href="./HYVE_files/photo-selector.css">
+
+	<link rel="stylesheet" href="./HYVE_files/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<link rel="stylesheet" href="./HYVE_files/all(1).css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous">
+
+	<script src="./HYVE_files/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+	<script src="./HYVE_files/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+	<script src="./HYVE_files/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+
+
+	<title>HYVE</title>
+</head>
+<body>
+	<div id="top-bar">
+		<div class="row">
+			<div id="logo" class="col-sm-2">
+				<a href="http://localhost:3000/">
+					<img src="./HYVE_files/logo_invert.jpeg">
+				</a>
+			</div>
+			<div class="col-sm-4">
+				<form id="search" action="http://localhost:3000/searchResult" method="GET">
+					<input type="text" class="form-control" id="search" placeholder="Musician, Comedian, Artist" name="search">
+					<input style="display: none" id="find-talent" class="btn btn-primary" type="submit" value="Find Talent" name="">
+				</form>
+			</div>
+			
+				<div class="col-sm-4">
+
+				</div>
+				<a href="http://localhost:3000/user/5ecbd77f626231786fd338ee">
+					</a><div class="col-sm-2 logged-in" id="user"><a href="http://localhost:3000/user/5ecbd77f626231786fd338ee">
+						<div class="row" id="drop-down">
+							<div class="col">
+								
+									<img id="user-image" src="./HYVE_files/cropped_profile.jpg">
+								
+							</div>
+							<div class="col" id="hello-user">
+								<h5>Hello,</h5>
+								<h2 class="truncate">Keefer <i class="fas fa-caret-down"></i></h2>								
+							</div>
+						</div>
+						<div class="row arrow-up white on-top"></div>
+						</a><div class="row" id="drop-down-menu"><a href="http://localhost:3000/user/5ecbd77f626231786fd338ee">
+							</a><ul><a href="http://localhost:3000/user/5ecbd77f626231786fd338ee">
+								</a><li><a href="http://localhost:3000/user/5ecbd77f626231786fd338ee"></a><a href="http://localhost:3000/user/5ecbd77f626231786fd338ee">View Profile</a></li><a href="http://localhost:3000/user/5ecbd77f626231786fd338ee">
+								</a><li><a href="http://localhost:3000/user/5ecbd77f626231786fd338ee"></a><a href="http://localhost:3000/sign_out">Sign Out</a></li>
+							</ul>
+						</div>
+					</div>
+				
+			
+		</div>
+	</div>
+
+
 
 <div class="page-container" id="profile-page">
 	<div id="top-section">
 		<div id="user-info">
 			<div id="profile-image">
-				<%if(currentUser.profile_image && currentUser.profile_image.cropped_profile_path){%>
-					<img src="<%=currentUser.profile_image.cropped_profile_path%>">
-				<%}else{%>
-					<img src="/photos/generic_person.jpg">
-				<%}%>	
+				
+					<img src="./HYVE_files/cropped_profile.jpg">
+					
 			</div>
 			<i class="fas fa-camera"></i>
-			<h1 ><strong><%=currentUser.firstName%> <%=currentUser.lastName%></strong></h1>
+			<h1><strong>Keefer Gregoire</strong></h1>
 		</div>
 
 		<hr>
-		<div class="row" id='profile-nav'>
+		<div class="row" id="profile-nav">
 			<div class="col-auto">
 				<button id="talents-button" class="active btn btn-primary">Talents</button>
 			</div>
 			<div class="col-auto">
-				<button id="about-button" class='btn btn-primary'>About</button>
+				<button id="about-button" class="btn btn-primary">About</button>
 			</div>
 			<div class="col-auto">
-				<button class='btn btn-primary'>Your Hive</button>
+				<button class="btn btn-primary">Your Hive</button>
 			</div>
 			<div class="col-auto">
-				<button class='btn btn-primary'>Financials</button>
+				<button class="btn btn-primary">Financials</button>
 			</div>
 			<div class="col-auto">
-				<button class='btn btn-primary'>More info</button>
+				<button class="btn btn-primary">More info</button>
 			</div>		
 		</div>
 	</div>
@@ -39,15 +102,15 @@
 				<div class="col-lg-3 left">
 					<h1>About</h1>
 					<ul>
-						<li onclick="menuChange(this);" class="active">Bio</li>
-						<li onclick="menuChange(this);">Work</li>
-						<li onclick="menuChange(this);">Eduation</li>
+						<li onclick="menuChange(this);" class="">Bio</li>
+						<li onclick="menuChange(this);" class="">Work</li>
+						<li onclick="menuChange(this);" class="active">Eduation</li>
 					</ul>
 				</div>
 				<div class="col right">
 					<div id="bio" class="active">
-						<form on action="/user/<%=currentUser._id%>/edit/about" method="POST">
-							<textarea name="about[bio]"><% if (currentUser && currentUser.about && currentUser.about.bio){%><%=currentUser.about.bio%><%}%></textarea>
+						<form on="" action="http://localhost:3000/user/5ecbd77f626231786fd338ee/edit/about" method="POST">
+							<textarea name="about[bio]" disabled="">This is the bio</textarea>
 							<div class="row">
 								<div class="col-lg-3">
 									<button type="button" onclick="bioEditable();" id="edit" class="strip btn btn-primary">Edit</button>
@@ -64,114 +127,27 @@
 							</div>
 						</form>
 					</div>
-					<div id="work" class="item">
-						<button class="btn btn-primary strip orange-color"><i style="color:inherit;" class="fas fa-plus-circle"></i>   Add a workplace</button>
-						<form action="" method="POST">
-							<div class="row form-group">
-								<div class="col">
-									<input type="text" class="form-control" name="company" placeholder="Company">
-								</div>
-								<div class="col">
-									<input type="text" class="form-control" name="position" placeholder="Position">
-								</div>
-							</div>
-							<div class="row form-group">
-								<div class="col">
-									<input type="text" class="form-control" name="location" placeholder="City/Town">
-								</div>
-							</div>
-							<div class="row">
-								<div class="col">
-									<textarea class="form-control" name="Description"></textarea>
-								</div>
-							</div>
-							<div class="row form-group">
-								<div class="col">
-									<h2>Time Period</h2>
-								</div>
-							</div>
-							<div class="row form-group">
-								<div class="col form-check">
-									<input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-  									<label class="form-check-label" for="defaultCheck1">I currently work here</label>
-								</div>
-							</div>
-							<div class="row form-group">
-								<div class="col">
-									<select class="form-control" name="from" id="exampleFormControlSelect1">
-								      <option>1</option>
-								      <option>2</option>
-								      <option>3</option>
-								      <option>4</option>
-								      <option>5</option>
-								    </select>
-								</div>
-								<div class="col">
-									<label>to</label>
-								</div>
-								<div class="col">
-									<select class="form-control" name="to" id="exampleFormControlSelect1">
-								      <option>1</option>
-								      <option>2</option>
-								      <option>3</option>
-								      <option>4</option>
-								      <option>5</option>
-								    </select>
-								</div>
-							</div>
-							<hr>
-							<button type="button" class="btn btn-primary">Cancel</button>
-							<button class="btn btn-primary">Save</button>
-						</form>
+					<div id="work">
+						<h2>Work</h2>
+						<button>Add a workplace</button>
 						<ul>
 							<li>
-								<div class="row workplace">
-									<div class="col-lg-1">
-										<img src="/photos/generic_person.jpg">
-									</div>
-									<div class="col-lg-9">
-										<div class="row">
-											<div class="col">
-												<h2>Postion at Company</h2>
-											</div>
-										</div>
-										<div class="row">
-											<div class="col">
-												<p>I worked here from b to c</p>
-											</div>
-										</div>
-									</div>
-									<div class="col-lg-2">
-										<i class="fas fa-ellipsis-h"></i>
-									</div>
-								</div>
+								work 1
 							</li>
 							<li>
-								<div class="row workplace">
-									<div class="col-lg-1">
-										<img src="/photos/generic_person.jpg">
-									</div>
-									<div class="col-lg-9">
-										<div class="row">
-											<div class="col">
-												<h2>Postion at Company</h2>
-											</div>
-										</div>
-										<div class="row">
-											<div class="col">
-												<p>I worked here from b to c</p>
-											</div>
-										</div>
-									</div>
-									<div class="col-lg-2">
-										<i class="fas fa-ellipsis-h"></i>
-									</div>
-								</div>
+								Work 2
 							</li>
 						</ul>
-					</div>
-					<div id="education">
-						
+						<h2>Education</h2>
+						<button>Add a school</button>
+						<ul>
+							<li>
+								School 1
+							</li>
+							<li>
+								School 2
+							</li>
+						</ul>
 					</div>
 				</div>
 			</div>
@@ -195,12 +171,10 @@
 			<button id="new-photo" class="btn btn-primary">+  Upload New Photo</button>
 		</div>
 		<div class="col">
-			<% if (currentUser.profile_image && currentUser.profile_image.cropped_profile_path) { -%>
-				<button onclick="editPhoto(<%=currentUser.profile_image%>);" id="edit-photo" class="btn btn-primary"><i class="fas fa-pen"></i></button>
-			<% } else { -%>
-				<button id="edit-photo" class="btn btn-primary" disabled><i class="fas fa-pen"></i></button>
-			<% } -%>
-		</div>
+							<button onclick="editPhoto({ orient: { dimension: &#39;79%&#39;, top: &#39;44px&#39;, left: &#39;-21px&#39; },
+  cropped_profile_path: &#39;/uploads/profiles/5ecbd77f626231786fd338ee/cropped_profile.jpg&#39;,
+  profile_path: &#39;/uploads/profiles/5ecbd77f626231786fd338ee/profile.jpg&#39; });" id="edit-photo" class="btn btn-primary"><i class="fas fa-pen"></i></button>
+					</div>
 
 	</div>
 	<div class="row">
@@ -223,7 +197,7 @@
 	<hr>
 	<div id="photo">
 		
-			<img id="profile_img" src="">
+			<img id="profile_img" src="http://localhost:3000/user/5ecbd77f626231786fd338ee">
 
 			<div class="cut-out">
 				
@@ -231,19 +205,19 @@
 			<div class="loader">
 				<ul>
 					<li>
-						<i id=one class="far fa-circle"></i>
+						<i id="one" class="far fa-circle"></i>
 					</li>
 					<li>
-						<i id=two class="far fa-circle"></i>
+						<i id="two" class="far fa-circle"></i>
 					</li>
 					<li>
-						<i id=three class="far fa-circle"></i>
+						<i id="three" class="far fa-circle"></i>
 					</li>
 					<li>
-						<i id=four class="far fa-circle"></i>
+						<i id="four" class="far fa-circle"></i>
 					</li>
 					<li>
-						<i id=five class="far fa-circle"></i>
+						<i id="five" class="far fa-circle"></i>
 					</li>
 				</ul>
 			</div>
@@ -275,30 +249,31 @@
 <script type="text/javascript">
 	var editMode = false;
 	var aboutRelation = {
-		bio:{
-			li: document.querySelectorAll('#about .left ul li')[0],
-			section: document.querySelector('#about .right #bio')
-		},
-		work:{
-			li: document.querySelectorAll('#about .left ul li')[1],
-			section: document.querySelector('#about .right #work')
-		},
-		education:{
-			li: document.querySelectorAll('#about .left ul li')[2],
-			section: document.querySelector('#about .right #education')
-		}
-	} 
+			bio:{
+				li: document.querySelectorAll('#about .left ul li')[0],
+				section: $('#about .right #bio').slice(0,1)
+			},
+			work:{
+				li: document.querySelectorAll('#about .left ul li')[1],
+				section: $('#about .right #work').slice(0,1)
+			},
+			education:{
+				li: document.querySelectorAll('#about .left ul li')[2],
+				section: $('#about .right #education').slice(0,1)
+			}
+		} 
 
 
 	function menuChange(li){
 		$('#about .left li').removeClass('active');
 		li.classList.add('active');
-		
-		for(var x in aboutRelation){
-			if(aboutRelation[x].li === li){
-				aboutRelation[x].section.classList.add('active');
+
+		for(x in aboutRelation){
+			console.log(x.li);
+			if(x.li === li){
+				x.section.addClass('active');
 			}else{
-				aboutRelation[x].section.classList.remove('active');
+				x.section.removeClass('active');
 			}
 		}
 	}
@@ -443,7 +418,7 @@
 	    ajax = new ActiveXObject("Microsoft.XMLHTTP");
 	  }
 
-	  ajax.open("POST", "/user/<%=currentUser._id%>/edit/");
+	  ajax.open("POST", "/user/5ecbd77f626231786fd338ee/edit/");
 	  ajax.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 
 	  $('.loader').removeClass('hide');
@@ -522,4 +497,55 @@ function dragElement(cover, elmnt) {
 }
 </script>
 
-<%- include('./partials/footer')%>
+<div id="bottom">
+	<div class="row">
+		<div class="col">
+			<h1><a href="http://localhost:3000/user/5ecbd77f626231786fd338ee">Page 1</a></h1>
+		</div>
+		<div class="col">
+			<h1><a href="http://localhost:3000/user/5ecbd77f626231786fd338ee">Page 2</a></h1>
+		</div>
+		<div class="col">
+			<h1><a href="http://localhost:3000/user/5ecbd77f626231786fd338ee">Page 3</a></h1>
+		</div>
+		<div class="col">
+			<h1><a href="http://localhost:3000/user/5ecbd77f626231786fd338ee">Page 4</a></h1>
+		</div>
+		<div class="col">
+			<h1><a href="http://localhost:3000/user/5ecbd77f626231786fd338ee">Page 5</a></h1>
+		</div>
+	</div>
+	<div class="row social-links">
+		<div class="col-sm-1">
+			<a href="http://localhost:3000/user/5ecbd77f626231786fd338ee"><h1><i class="fab fa-instagram"></i></h1></a>
+		</div>
+		<div class="col-sm-1">
+			<a href="http://localhost:3000/user/5ecbd77f626231786fd338ee"><h1><i class="fab fa-facebook"></i></h1></a>
+		</div>
+		<div class="col-sm-1">
+			<a href="http://localhost:3000/user/5ecbd77f626231786fd338ee"><h1><i class="fab fa-twitter"></i></h1></a>
+		</div>
+	</div>
+</div>
+
+	<script type="text/javascript">
+		var input = $('#search');
+
+		input.on("keyup", function(event) {
+		    if (event.keyCode === 13) {
+		        event.preventDefault();
+		        document.getElementById("find-talent").click();
+		    }
+		});
+	</script>
+
+	<script type="text/javascript">
+		$('#user').on('mouseenter mouseleave', function(){
+			$('.arrow-up').toggleClass('show');
+			$('#drop-down-menu').toggleClass('show');
+			$('#top-bar').next().toggleClass('grey-out');
+		})
+	</script>
+
+
+</body></html>

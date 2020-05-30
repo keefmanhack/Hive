@@ -39,21 +39,6 @@
 	color: rgb(250,196,98);
 }
 
-#about .right{
-	margin: 10px 0;
-}
-
-#about .right *{
-	color: white;
-}
-
-#about .right .item{
-	/*background: rgb(150,150,150);*/
-    width: 100%;
-    border-radius: 14px;
-    padding: 10px;
-}
-
 #about .right #bio{
 	display: none;
 }
@@ -71,12 +56,14 @@
 }
 
 #about .right #bio textarea{
+	margin-top: 10px;
     width: 100%;
     font-size: 20px;
     height: 114px;
     resize: none;
     border-radius: 19px;
-    background: rgb(150,150,150);
+    background: rgb(220,220,220);
+    color: black;
     padding: 10px;
     border: 2px solid transparent;
 }
@@ -88,11 +75,10 @@
 #about .right #bio textarea.enabled{
 	border: 2px solid rgb(250,196,98);
 	background: rgb(240,240,240);
-	color: black;
 }
 
 
-#about .right button.strip{
+#about .right #bio button.strip{
 	background: none;
     border: none;
     padding-top: 0;
@@ -142,42 +128,11 @@
 	display: block;
 }
 
-#about .right #work button{
-    font-size: 22px;
-    padding: 0;
-    color: rgb(250,196,98);
-    font-weight: 800;
+.active{
+	background: rgb(210,210,210);
+    width: 100%;
+    border-radius: 14px;
 }
-
-#about .right #work button:hover{
-	text-decoration: underline;
-}
-
-#about .right #work ul{
-	list-style: none;
-	padding: 0;
-}
-
-#about .right #work .workplace img{
-	height: 50px;
-    width: 75;
-    width: 50px;
-    object-fit: contain;
-    border-radius: 100%;
-}
-
-#about .right #work .workplace i{
-	background: rgb(50,50,50);
-    padding: 15px;
-    border-radius: 100%;
-    font-size: 25px;
-    cursor: pointer;
-}
-
-#about .right #work .workplace i:hover{
-	background: rgb(70,70,70);
-}
-
 
 .content-section{
 	padding: 20px 13%;
