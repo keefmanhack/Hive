@@ -3,7 +3,8 @@ var express = require('express'),
 	passport = require('passport'),
 	multer	 = require('multer'),
 	upload   = multer({storage: multer.memoryStorage()}),
-	fs 		 = require('fs');
+	fs 		 = require('fs'),
+	clearbit = require('clearbit')('sk_ef5a2ccffe2f8e4e0a3aa0dd59e0df9d');
 
 var User = require("../models/user");
 
