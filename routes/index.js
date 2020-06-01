@@ -35,7 +35,7 @@ router.post('/user/:id/new/work', function(req, res){
 		}else{
 			foundUser.about.work.push(req.body);
 			foundUser.save(function(err){
-				res.redirect('back');
+				res.redirect('/user/' + foundUser._id);
 			});
 		}
 		
@@ -51,7 +51,7 @@ router.post('/user/:id/edit/bio', function(req, res){
 		}else{
 			foundUser.about.bio.text = req.body.text;
 			foundUser.save(function(err){
-				res.redirect('back');
+				res.redirect('/user/' + foundUser._id);
 			});
 		}
 		
