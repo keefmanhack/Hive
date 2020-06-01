@@ -61,7 +61,7 @@
 }
 
 #about .right #bio.active{
-	display: contents;
+	display: block;
 }
 
 #about .right #work{
@@ -81,7 +81,7 @@
     background: rgb(150,150,150);
     padding: 10px;
     border: 2px solid transparent;
-    color: white;
+    color: aliceblue;
 }
 
 #about .right #bio textarea:focus{
