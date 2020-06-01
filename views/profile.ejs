@@ -393,11 +393,15 @@
 	}
 
 	function requestCities(input){
-		var requestUrl = 'http://api.geonames.org/searchJSON?q=' + input.value + '&maxRows=5&fuzzy=.8&username=keefmanjack';
+		var requestUrl = 'https://maps.googleapis.com/maps/api/place/autocomplete/json?input=' + input.value + '&key=' + 'AIzaSyAzmt_OlSBL4auTSYvK7FdR7tYZg2_04js';
 
-		$.get(requestUrl).done(function(data){
-	   		createCityDropDown(input, data.geonames);
-		});
+		var xhr = new XMLHttpRequest();
+		xhr.open('GET', requestUrl);
+		xhr.setRequestHeader('Access-Control-Allow-Origin', '*')
+		xhr.onload = function(){
+			console.log('data');
+		}
+		xhr.send();
 	}
 
 	function toggleFromTo(checkbox){
