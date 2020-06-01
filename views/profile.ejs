@@ -384,7 +384,7 @@
 	}
 
 	function requestPositions(input){
-		var requestUrl = 'https://api.dataatwork.org/v1/jobs/autocomplete?begins_with="' + input.value + '"';
+		var requestUrl = 'api.dataatwork.org/v1/jobs/autocomplete?begins_with="' + input.value + '"';
 
 	   $.get(requestUrl).done(function(data){
 	   		createPositionDropDown(input, data);
@@ -392,7 +392,7 @@
 	}
 
 	function requestCities(input){
-		var requestUrl = 'https://api.geonames.org/searchJSON?q=' + input.value + '&maxRows=5&fuzzy=.8&username=keefmanjack';
+		var requestUrl = 'api.geonames.org/searchJSON?q=' + input.value + '&maxRows=5&fuzzy=.8&username=keefmanjack';
 		$.get(requestUrl).done(function(data){
 	   		createCityDropDown(input, data);
 		});
