@@ -145,6 +145,10 @@
 	display: block;
 }
 
+#about .right ul *{
+	color: white;
+}
+
 #about .right #work button{
     font-size: 22px;
     padding: 0;

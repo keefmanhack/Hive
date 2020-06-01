@@ -3,7 +3,7 @@
 	<div id="top-section">
 		<div id="user-info">
 			<div id="profile-image">
-				<%if(currentUser.profile_image && currentUser.profile_image.cropped_profile_path){%>
+				<%if(currentUser && currentUser.profile_image && currentUser.profile_image.cropped_profile_path){%>
 					<img src="<%=currentUser.profile_image.cropped_profile_path%>">
 				<%}else{%>
 					<img src="/photos/generic_person.jpg">
@@ -45,8 +45,8 @@
 				</div>
 				<div class="col right">
 					<div id="bio" class="active">
-						<form on action="/user/<%=currentUser._id%>/edit" method="POST">
-							<textarea name="about[bio][text]"><% if (currentUser && currentUser.about && currentUser.about.bio){%><%=currentUser.about.bio.text%><%}%></textarea>
+						<form on action="/user/<%=currentUser._id%>/edit/bio" method="POST">
+							<textarea name="text"><% if (currentUser && currentUser.about && currentUser.about.bio){%><%=currentUser.about.bio.text%><%}%></textarea>
 							<div class="row">
 								<div class="col-lg-3">
 									<button type="button" onclick="bioEditable();" id="edit" class="strip btn btn-primary">Edit</button>
@@ -67,10 +67,10 @@
 						<button onclick="showAddWorkForm()" id="add-work-place" class="btn btn-primary strip orange-color"><i style="color:inherit; margin-bottom:20px;" class="fas fa-plus-circle"></i>   Add a workplace</button>
 						<form  onsubmit="event.preventDefault(); checkForm(this);" action="/user/<%=currentUser._id%>/new/work" method="POST" autocomplete="off" id="new-work" novalidate>
 							<img id='selected-company' src="">
-							<input type="hidden" id="selected-company-hidden-input" name="about[work][companyLogo]">
+							<input type="hidden" id="selected-company-hidden-input" name="companyLogo">
 							<div class="row form-group">
 								<div class="col autocomplete">
-									<input oninput="requestLogos(this);" id="company" type="text" class="form-control" name="about[work][company]" placeholder="Company" required>
+									<input oninput="requestLogos(this);" id="company" type="text" class="form-control" name="company" placeholder="Company" required>
 									<div class="invalid-feedback">
 			 							<i class="fas fa-exclamation-circle"></i>
 									</div>
@@ -79,7 +79,7 @@
 									</div>
 								</div>
 								<div class="col autocomplete">
-									<input type="text" oninput="requestPositions(this)" id="position" class="form-control" name="about[work][position]" placeholder="Position" required>
+									<input type="text" oninput="requestPositions(this)" id="position" class="form-control" name="position" placeholder="Position" required>
 									<div class="invalid-feedback">
 			 							<i class="fas fa-exclamation-circle"></i>
 									</div>
@@ -90,7 +90,7 @@
 							</div>
 							<div class="row form-group">
 								<div class="col">
-									<input type="text" oninput="requestCities(this)" id="city" class="form-control" name="about[work][city]" placeholder="City/Town" required>
+									<input type="text" oninput="requestCities(this)" id="city" class="form-control" name="city" placeholder="City/Town" required>
 									<div class="invalid-feedback">
 			 							<i class="fas fa-exclamation-circle"></i>
 									</div>
@@ -101,7 +101,7 @@
 							</div>
 							<div class="row">
 								<div class="col">
-									<textarea class="form-control" name="about[work][description]" placeholder="Description"></textarea>
+									<textarea class="form-control" name="description" placeholder="Description"></textarea>
 								</div>
 							</div>
 							<div class="row form-group">
@@ -111,13 +111,13 @@
 							</div>
 							<div class="row form-group">
 								<div class="col form-check">
-									<input class="form-check-input" onchange="toggleFromTo(this)" type="checkbox" name="about[work][currentlyWorking]" value="" id="defaultCheck1">
+									<input class="form-check-input" onchange="toggleFromTo(this)" type="checkbox" name="currentlyWorking" value="" id="defaultCheck1">
   									<label class="form-check-label" style="color: white;" for="defaultCheck1">I currently work here</label>
 								</div>
 							</div>
 							<div class="row form-group timeFrame">
 								<div class="col-lg-2">
-									<select class="form-control" id="from" name="about[work][from]"></select>
+									<select class="form-control" id="from" name="from"></select>
 									<div class="valid-feedback">
         								Looks good!
       								</div>
@@ -129,7 +129,7 @@
 									<label style="color: white;">to</label>
 								</div>
 								<div class="col-lg-2">
-									<select class="form-control" id="to" name="about[work][to]"></select>
+									<select class="form-control" id="to" name="to"></select>
 								</div>
 								<div class="col-lg-7">
 									
@@ -140,7 +140,7 @@
 							<button class="btn btn-primary save">Save</button>
 						</form>
 						<ul>
-							<% if(currentUser && currrentUser.about && currentUser.work){%>
+							<% if(currentUser && currentUser.about && currentUser.about.work){%>
 								<%currentUser.about.work.forEach(function(o){%>
 									<li>
 										<div class="row workplace">

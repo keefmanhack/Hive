@@ -34,20 +34,27 @@ router.post('/user/:id/new/work', function(req, res){
 			req.flash('error', 'Could not add this new workplace');
 		}else{
 			foundUser.about.work.push(req.body);
+			foundUser.save(function(err){
+				res.redirect('back');
+			});
 		}
-		res.redirect('back');
+		
 		
 	})
 })
 
-router.post('/user/:id/edit', function(req, res){
-	User.findByIdAndUpdate(req.params.id, req.body, function(err, updatingUser){
+router.post('/user/:id/edit/bio', function(req, res){
+	User.findById(req.params.id, function(err, foundUser){
 		if(err){
 			console.log(err);
-			req.flash('error', 'Could not update user');
-			
+			req.flash('error', 'Could not update user');	
+		}else{
+			foundUser.about.bio.text = req.body.text;
+			foundUser.save(function(err){
+				res.redirect('back');
+			});
 		}
-		res.redirect('back');
+		
 	})
 })
 

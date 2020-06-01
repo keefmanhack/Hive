@@ -42,7 +42,7 @@
 					<div class="col-sm-2 logged-in" id="user">
 						<div class="row" id="drop-down">
 							<div class="col">
-								<%if(currentUser.profile_image && currentUser.profile_image.cropped_profile_path){%>
+								<%if(currentUser && currentUser.profile_image && currentUser.profile_image.cropped_profile_path){%>
 									<img id="user-image" src="<%=currentUser.profile_image.cropped_profile_path%>">
 								<%}else{%>
 									<img id="user-image" src="/photos/generic_person.jpg">
