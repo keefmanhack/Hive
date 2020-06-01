@@ -181,6 +181,10 @@
 	background: rgb(70,70,70);
 }
 
+#add-work-place.hide{
+	display: none;
+}
+
 .autocomplete {
   /*the container must be positioned relative:*/
   position: relative;
@@ -206,6 +210,13 @@
   border-bottom: 1px solid #d4d4d4;
 }
 
+.autocomplete-items div img{
+	height: 50px;
+    width: 50px;
+    margin-right: 20px;
+    border-radius: 100%;
+}
+
 .autocomplete-items div strong{
 	color: black;
 }
@@ -226,6 +237,47 @@
     background: white;
 }
 
+#new-work{
+	margin: 0 0 30px 0;
+    background: rgb(100,100,100);
+    padding: 20px;
+    border-radius: 25px;
+    display: none;
+}
+
+#new-work.show{
+	display: block;
+}
+
+#new-work h2{
+	color: white;
+    margin: 15px 0 0 0;
+}
+
+#new-work .form-check{
+	padding-left: 37px;
+    color: white;
+}
+
+#about .right #work #new-work button.btn.cancel{
+	background: transparent;
+    border: none;
+    color: white;
+    font-size: 15px;
+    margin-right: 20px;
+    font-weight: 400;
+    text-decoration: none;
+}
+
+#about .right #work #new-work button.btn.save{
+	color: white;
+    width: 100px;
+    background: rgb(250,196,98);
+    border: none;
+    text-decoration: none;
+    font-size: 30px;
+    font-weight: 600;
+}
 
 .page-container.hide{
 	opacity: .2;
@@ -250,6 +302,11 @@
 
 #profile-nav button.active{
 	border-bottom: 3px solid black;
+}
+
+#selected-company{
+	margin: 10px 40%;
+    border-radius: 100%;
 }
 
 

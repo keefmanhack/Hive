@@ -45,8 +45,8 @@
 				</div>
 				<div class="col right">
 					<div id="bio" class="active">
-						<form on action="/user/<%=currentUser._id%>/edit/about" method="POST">
-							<textarea name="about[bio]"><% if (currentUser && currentUser.about && currentUser.about.bio){%><%=currentUser.about.bio%><%}%></textarea>
+						<form on action="/user/<%=currentUser._id%>/edit" method="POST">
+							<textarea name="about[bio][text]"><% if (currentUser && currentUser.about && currentUser.about.bio){%><%=currentUser.about.bio.text%><%}%></textarea>
 							<div class="row">
 								<div class="col-lg-3">
 									<button type="button" onclick="bioEditable();" id="edit" class="strip btn btn-primary">Edit</button>
@@ -64,24 +64,44 @@
 						</form>
 					</div>
 					<div id="work" class="item">
-						<button class="btn btn-primary strip orange-color"><i style="color:inherit;" class="fas fa-plus-circle"></i>   Add a workplace</button>
-						<form action="" method="POST" autocomplete="off">
+						<button onclick="showAddWorkForm()" id="add-work-place" class="btn btn-primary strip orange-color"><i style="color:inherit; margin-bottom:20px;" class="fas fa-plus-circle"></i>   Add a workplace</button>
+						<form  onsubmit="event.preventDefault(); checkForm(this);" action="/user/<%=currentUser._id%>/new/work" method="POST" autocomplete="off" id="new-work" novalidate>
+							<img id='selected-company' src="">
+							<input type="hidden" id="selected-company-hidden-input" name="about[work][companyLogo]">
 							<div class="row form-group">
 								<div class="col autocomplete">
-									<input onfocusout="hideAllLists(this);"  oninput="requestLogos(this);" id="company" type="text" class="form-control" name="company" placeholder="Company">
+									<input oninput="requestLogos(this);" id="company" type="text" class="form-control" name="about[work][company]" placeholder="Company" required>
+									<div class="invalid-feedback">
+			 							<i class="fas fa-exclamation-circle"></i>
+									</div>
+									<div class="valid-feedback">
+									 	<i class="fas fa-check"></i>
+									</div>
 								</div>
 								<div class="col autocomplete">
-									<input type="text" class="form-control" name="position" placeholder="Position">
+									<input type="text" oninput="requestPositions(this)" id="position" class="form-control" name="about[work][position]" placeholder="Position" required>
+									<div class="invalid-feedback">
+			 							<i class="fas fa-exclamation-circle"></i>
+									</div>
+									<div class="valid-feedback">
+									 	<i class="fas fa-check"></i>
+									</div>
 								</div>
 							</div>
 							<div class="row form-group">
 								<div class="col">
-									<input type="text" class="form-control" name="location" placeholder="City/Town">
+									<input type="text" oninput="requestCities(this)" id="city" class="form-control" name="about[work][city]" placeholder="City/Town" required>
+									<div class="invalid-feedback">
+			 							<i class="fas fa-exclamation-circle"></i>
+									</div>
+									<div class="valid-feedback">
+									 	<i class="fas fa-check"></i>
+									</div>
 								</div>
 							</div>
 							<div class="row">
 								<div class="col">
-									<textarea class="form-control" name="Description"></textarea>
+									<textarea class="form-control" name="about[work][description]" placeholder="Description"></textarea>
 								</div>
 							</div>
 							<div class="row form-group">
@@ -91,82 +111,66 @@
 							</div>
 							<div class="row form-group">
 								<div class="col form-check">
-									<input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-  									<label class="form-check-label" for="defaultCheck1">I currently work here</label>
+									<input class="form-check-input" onchange="toggleFromTo(this)" type="checkbox" name="about[work][currentlyWorking]" value="" id="defaultCheck1">
+  									<label class="form-check-label" style="color: white;" for="defaultCheck1">I currently work here</label>
 								</div>
 							</div>
-							<div class="row form-group">
-								<div class="col">
-									<select class="form-control" name="from" id="exampleFormControlSelect1">
-								      <option>1</option>
-								      <option>2</option>
-								      <option>3</option>
-								      <option>4</option>
-								      <option>5</option>
-								    </select>
+							<div class="row form-group timeFrame">
+								<div class="col-lg-2">
+									<select class="form-control" id="from" name="about[work][from]"></select>
+									<div class="valid-feedback">
+        								Looks good!
+      								</div>
+      								<div class="invalid-feedback">
+        								Start date can't be before end date
+      								</div>
 								</div>
-								<div class="col">
-									<label>to</label>
+								<div class="col-lg-1">
+									<label style="color: white;">to</label>
 								</div>
-								<div class="col">
-									<select class="form-control" name="to" id="exampleFormControlSelect1">
-								      <option>1</option>
-								      <option>2</option>
-								      <option>3</option>
-								      <option>4</option>
-								      <option>5</option>
-								    </select>
+								<div class="col-lg-2">
+									<select class="form-control" id="to" name="about[work][to]"></select>
+								</div>
+								<div class="col-lg-7">
+									
 								</div>
 							</div>
 							<hr>
-							<button type="button" class="btn btn-primary">Cancel</button>
-							<button class="btn btn-primary">Save</button>
+							<button onclick="hideAddWorkForm();" type="button" class="btn btn-primary cancel">Cancel</button>
+							<button class="btn btn-primary save">Save</button>
 						</form>
 						<ul>
-							<li>
-								<div class="row workplace">
-									<div class="col-lg-1">
-										<img src="/photos/generic_person.jpg">
-									</div>
-									<div class="col-lg-9">
-										<div class="row">
-											<div class="col">
-												<h2>Postion at Company</h2>
+							<% if(currentUser && currrentUser.about && currentUser.work){%>
+								<%currentUser.about.work.forEach(function(o){%>
+									<li>
+										<div class="row workplace">
+											<div class="col-lg-1">
+												<img src="<%=o.companyLogo%>">
+											</div>
+											<div class="col-lg-9">
+												<div class="row">
+													<div class="col">
+														<h2><%=o.position%></h2>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col">
+														<%if(o.currentlyWorking){%>
+															<p>Since <%=o.from%></p>
+														<%}else{%>
+															<p>From <%=o.from%> to <%=o.to%></p>
+														<%}%>
+														
+													</div>
+												</div>
+											</div>
+											<div class="col-lg-2">
+												<i class="fas fa-ellipsis-h"></i>
 											</div>
 										</div>
-										<div class="row">
-											<div class="col">
-												<p>I worked here from b to c</p>
-											</div>
-										</div>
-									</div>
-									<div class="col-lg-2">
-										<i class="fas fa-ellipsis-h"></i>
-									</div>
-								</div>
-							</li>
-							<li>
-								<div class="row workplace">
-									<div class="col-lg-1">
-										<img src="/photos/generic_person.jpg">
-									</div>
-									<div class="col-lg-9">
-										<div class="row">
-											<div class="col">
-												<h2>Postion at Company</h2>
-											</div>
-										</div>
-										<div class="row">
-											<div class="col">
-												<p>I worked here from b to c</p>
-											</div>
-										</div>
-									</div>
-									<div class="col-lg-2">
-										<i class="fas fa-ellipsis-h"></i>
-									</div>
-								</div>
-							</li>
+									</li>
+								<%});%>
+							<%}%>
 						</ul>
 					</div>
 					<div id="education">
@@ -272,10 +276,10 @@
 
 
 <script type="text/javascript">
-	initializeAutoFillEvenListeners(document.getElementById('company'));
 	var arr;
 	var editMode = false;
 	var currentFocus =-1;
+	var years = buildYears();
 	var aboutRelation = {
 		bio:{
 			li: document.querySelectorAll('#about .left ul li')[0],
@@ -290,13 +294,131 @@
 			section: document.querySelector('#about .right #education')
 		}
 	}
+	initializeAutoFillEvenListeners(document.getElementById('company'));
+	initializeAutoFillEvenListeners(document.getElementById('position'));
+	initializeAutoFillEvenListeners(document.getElementById('city'));
+
+
+	addYearsToDropDown(document.getElementById('from'));
+	addYearsToDropDown(document.getElementById('to'));
+
+	function checkForm(form){
+		var selectors = document.querySelectorAll('select');
+		var company = document.getElementById('company');
+		var position = document.getElementById('position');
+		var city = document.getElementById('city');
+		var returnVal = true;
+
+		removePreviousClassList(company, position, city, selectors[0]);
+
+		if(company.value === ''){
+			company.classList.add('is-invalid');
+			returnVal = false;
+		}else{
+			company.classList.add('is-valid');
+		}
+
+		if(city.value === ''){
+			city.classList.add('is-invalid');
+			returnVal = false;
+		}else{
+			city.classList.add('is-valid');
+		}
+
+		if(position.value === ''){
+			position.classList.add('is-invalid');
+			returnVal = false;
+		}else{
+			position.classList.add('is-valid');
+		}
+
+		if (selectors[0].style.display !== 'none'){
+			if(parseInt(selectors[0].value) > parseInt(selectors[1].value)){
+				selectors[0].classList.add('is-invalid');
+				returnVal = false;
+			}else{
+				selectors[0].classList.add('is-valid');
+			}
+		}
+
+		if(returnVal===true){
+			form.submit();
+		}
+
+		return returnVal;
+	}
+
+	function removePreviousClassList(company, position, city, selector){
+		company.classList.remove('is-valid');
+		company.classList.remove('is-invalid');
+		position.classList.remove('is-valid');
+		position.classList.remove('is-invalid');
+		city.classList.remove('is-valid');
+		city.classList.remove('is-invalid');
+		selector.classList.remove('is-valid');
+		selector.classList.remove('is-invalid');
+	}
+
+	function showAddWorkForm(){
+		$('#add-work-place').addClass('hide');
+		$('#new-work').addClass('show');
+	}
+
+	function hideAddWorkForm(){
+		$('#add-work-place').removeClass('hide');
+		$('#new-work').removeClass('show');
+	}
+
+	function addYearsToDropDown(dropDown){
+		years.forEach(function(year){
+			dropDown.innerHTML += "<option>" + year + "</option>"
+		});
+	}
 
 	function requestLogos(input){
 	  var requestUrl = 'https://autocomplete.clearbit.com/v1/companies/suggest?query=:' + input.value;
 
 	   $.ajax({url: requestUrl, success: function(result){
-    		createDropDown(input, result);
+    		createCompanyDropDown(input, result);
   		}});
+	}
+
+	function requestPositions(input){
+		var requestUrl = 'http://api.dataatwork.org/v1/jobs/autocomplete?begins_with="' + input.value + '"';
+
+	   $.ajax({url: requestUrl, success: function(result){
+	   		createPositionDropDown(input, result);
+  		}, error: function (xhr, ajaxOptions, thrownError){
+  			if(xhr.status==404){
+  				console.log('No position for ' + input.value);
+  			}
+  		}});
+	}
+
+	function requestCities(input){
+		var requestUrl = 'http://api.geonames.org/searchJSON?q=' + input.value + '&maxRows=5&fuzzy=.8&username=keefmanjack';
+
+	   $.ajax({url: requestUrl, success: function(result){
+	   		createCityDropDown(input, result.geonames);
+  		}, error: function (xhr, ajaxOptions, thrownError){
+  			if(xhr.status==404){
+  				console.log('No city for ' + input.value);
+  			}
+  		}});
+	}
+
+	function toggleFromTo(checkbox){
+
+		if(checkbox.checked){
+			document.querySelector('select').style.display = 'none';
+			document.querySelectorAll('label')[1].innerHTML = 'from';
+		}else{
+			document.querySelector('select').style.display = 'block';
+			document.querySelectorAll('label')[1].innerHTML = 'to';
+		}
+
+		document.querySelector('select').classList.remove('is-valid');
+		document.querySelector('select').classList.remove('is-invalid');
 	}
 
 
@@ -314,7 +436,19 @@
 		}
 	}
 
-	function createDropDown(input, arr){
+	function buildYears(){
+		var currentDate = new Date();
+		var currentYear = currentDate.getFullYear();
+		var output = [];
+
+		for(var i = currentYear; i > 1800; i--){
+			output.push(i);
+		}
+
+		return output;
+	}
+
+	function createCityDropDown(input, arr){
 		var a, b, i, val = input.value;
 		currentFocus=-1;
 		/*close any already open lists of autocompleted values*/
@@ -330,16 +464,97 @@
 		/*for each item in the array...*/
 		for (i = 0; i < arr.length; i++) {
 		  /*create a DIV element for each matching element:*/
-		  b = document.createElement("DIV");
+		  	b = document.createElement("DIV");
 		  /*make the matching letters bold:*/
 		  b.innerHTML = "<strong>" + arr[i].name.substr(0, val.length) + "</strong>";
+		  b.innerHTML += arr[i].name.substr(val.length) + ', ' + arr[i].adminName1;
+		  /*insert a input field that will hold the current array item's value:*/
+		  b.innerHTML += "<input type='hidden' value='" + arr[i].name + ', ' + arr[i].adminName1 + "'>";
+		  /*execute a function when someone clicks on the item value (DIV element):*/
+		      b.addEventListener("click", function(e) {
+		      /*insert the value for the autocomplete text field:*/
+		      input.value = this.childNodes[2].value;
+		      /*close the list of autocompleted values,
+		      (or any other open lists of autocompleted values:*/
+		      closeAllLists(input);
+		  });
+		  a.appendChild(b);
+		}
+	}
+
+	function createPositionDropDown(input, arr){
+		var a, b, i, val = input.value;
+		currentFocus=-1;
+		/*close any already open lists of autocompleted values*/
+		closeAllLists(input);
+		if (!val) { return false;}
+		currentFocus = -1;
+
+		a = document.createElement("DIV");
+		a.setAttribute("id", input.id + "autocomplete-list");
+		a.setAttribute("class", "autocomplete-items");
+
+		input.parentNode.appendChild(a);
+		/*for each item in the array...*/
+		for (i = 0; i < arr.length; i++) {
+		  /*create a DIV element for each matching element:*/
+		  	b = document.createElement("DIV");
+		  /*make the matching letters bold:*/
+		  arr[i].normalized_job_title = capitalizeFirstLetter(arr[i].normalized_job_title);
+		  b.innerHTML = "<strong>" + arr[i].normalized_job_title.substr(0, val.length) + "</strong>";
+		  b.innerHTML += arr[i].normalized_job_title.substr(val.length);
+		  /*insert a input field that will hold the current array item's value:*/
+		  b.innerHTML += "<input type='hidden' value='" + arr[i].normalized_job_title + "'>";
+		  /*execute a function when someone clicks on the item value (DIV element):*/
+		      b.addEventListener("click", function(e) {
+		      /*insert the value for the autocomplete text field:*/
+		      input.value = this.childNodes[2].value;
+		      /*close the list of autocompleted values,
+		      (or any other open lists of autocompleted values:*/
+		      closeAllLists(input);
+		  });
+		  a.appendChild(b);
+		}
+	}
+
+	function capitalizeFirstLetter(str){
+		var returnStr = '';
+		str.split(" ").forEach(function(o){
+			returnStr += o.substring(0,1).toUpperCase() + o.substring(1, o.length) + ' ';
+		});
+
+		return returnStr.trim();
+	}
+
+	function createCompanyDropDown(input, arr){
+		var a, b, i, val = input.value;
+		currentFocus=-1;
+		/*close any already open lists of autocompleted values*/
+		closeAllLists(input);
+		if (!val) { return false;}
+		currentFocus = -1;
+
+		a = document.createElement("DIV");
+		a.setAttribute("id", input.id + "autocomplete-list");
+		a.setAttribute("class", "autocomplete-items");
+
+		input.parentNode.appendChild(a);
+		/*for each item in the array...*/
+		for (i = 0; i < arr.length; i++) {
+		  /*create a DIV element for each matching element:*/
+		  	b = document.createElement("DIV");
+		  	b.innerHTML = "<img src=" + arr[i].logo + " onError=this.src='/photos/blankPhoto.png'>"
+		  /*make the matching letters bold:*/
+		  b.innerHTML += "<strong>" + arr[i].name.substr(0, val.length) + "</strong>";
 		  b.innerHTML += arr[i].name.substr(val.length);
 		  /*insert a input field that will hold the current array item's value:*/
 		  b.innerHTML += "<input type='hidden' value='" + arr[i].name + "'>";
 		  /*execute a function when someone clicks on the item value (DIV element):*/
 		      b.addEventListener("click", function(e) {
 		      /*insert the value for the autocomplete text field:*/
-		      input.value = this.value;
+		      input.value = this.childNodes[3].value;
+		      document.getElementById('selected-company').src = this.childNodes[0].src;
+		      document.getElementById('selected-company-hidden-input').value = this.childNodes[0].src;
 		      /*close the list of autocompleted values,
 		      (or any other open lists of autocompleted values:*/
 		      closeAllLists(input);
@@ -356,7 +571,6 @@
 	        /*If the arrow DOWN key is pressed,
 	        increase the currentFocus variable:*/
 	        currentFocus++;
-	        console.log(currentFocus)
 	        /*and and make the current item more visible:*/
 	        addActive(x);
 	      } else if (e.keyCode == 38) { //up
@@ -403,15 +617,6 @@
 		}
 	}
 
-	function hideAllLists(elmnt, inp){
-		var x = document.getElementsByClassName("autocomplete-items");
-		for (var i = 0; i < x.length; i++) {
-		  	if (elmnt != x[i] && elmnt != inp) {
-		  		for(var j =0; j<x[i].childNodes.length; j++){
-		  			x[i].parentNode.childNodes[j].style.display = 'none';
-		  		}			}
-		}
-	}
 
 	document.addEventListener("click", function (e) {
 	    closeAllLists(e.target);
@@ -557,7 +762,7 @@
 	    ajax = new ActiveXObject("Microsoft.XMLHTTP");
 	  }
 
-	  ajax.open("POST", "/user/<%=currentUser._id%>/edit/");
+	  ajax.open("POST", "/user/<%=currentUser._id%>/edit_profile_image/");
 	  ajax.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 
 	  $('.loader').removeClass('hide');
@@ -634,6 +839,26 @@ function dragElement(cover, elmnt) {
     document.onmousemove = null;
   }
 }
+
+// (function() {
+//   'use strict';
+//   window.addEventListener('load', function() {
+//     // Fetch all the forms we want to apply custom Bootstrap validation styles to
+//     var forms = document.getElementsByClassName('needs-validation');
+//     // Loop over them and prevent submission
+//     var validation = Array.prototype.filter.call(forms, function(form) {
+//       form.addEventListener('submit', function(event) {
+//       	if (checkTime()) {
+// 	        if (form.checkValidity() === false) {
+// 	          event.preventDefault();
+// 	          event.stopPropagation();
+// 	        }
+// 	        form.classList.add('was-validated');
+// 	    }
+//       }, false);
+//     });
+//   }, false);
+// })();
 </script>
 
 <%- include('./partials/footer')%>

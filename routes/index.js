@@ -27,12 +27,31 @@ router.get('/user/:id', function(req, res){
 	})
 });
 
-// router.post('/user/:id/edit/profile_image_cropped', upload.single('profile_image_cropped'), function(req, res){
-// 	console.log(req.body);
-// 	console.log('triggered');
-// })
+router.post('/user/:id/new/work', function(req, res){
+	User.findById(req.params.id, function(err, foundUser){
+		if (err){
+			console.log(err);
+			req.flash('error', 'Could not add this new workplace');
+		}else{
+			foundUser.about.work.push(req.body);
+		}
+		res.redirect('back');
+		
+	})
+})
 
 router.post('/user/:id/edit', function(req, res){
+	User.findByIdAndUpdate(req.params.id, req.body, function(err, updatingUser){
+		if(err){
+			console.log(err);
+			req.flash('error', 'Could not update user');
+			
+		}
+		res.redirect('back');
+	})
+})
+
+router.post('/user/:id/edit_profile_image', function(req, res){
 	User.findById(req.params.id, function(err, foundUser){
 		if(err){
 			flash('error', 'Can not find user');
@@ -40,8 +59,6 @@ router.post('/user/:id/edit', function(req, res){
 		}else{
 			var cropped_data = req.body.cropped_profile_image.replace(/^data:image\/\w+;base64,/, "");
 			
-			
-
 			var directory = 'public/uploads/profiles/' + foundUser._id;
 			var cropped_path = 'public/uploads/profiles/' + foundUser._id +'/cropped_profile.jpg';
 			var cropped_mongoPath = '/uploads/profiles/' + foundUser._id +'/cropped_profile.jpg';
@@ -89,16 +106,16 @@ router.post('/user/:id/edit', function(req, res){
 	});
 });
 
-router.post('/user/:id/edit/about', function(req, res){
-	User.findByIdAndUpdate(req.params.id, req.body, function(err, updatingUser){
-		if(err){
-			console.log(err);
-			req.flash('error', 'Could not update bio');
+// router.post('/user/:id/edit/about', function(req, res){
+// 	User.findByIdAndUpdate(req.params.id, req.body, function(err, updatingUser){
+// 		if(err){
+// 			console.log(err);
+// 			req.flash('error', 'Could not update bio');
 			
-		}
-		res.redirect('back');
-	})
-})
+// 		}
+// 		res.redirect('back');
+// 	})
+// })
 
 router.get('/signup', function(req, res){
 	res.render('signup');

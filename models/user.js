@@ -19,7 +19,19 @@ var UserSchema = new mongoose.Schema({
 		}
 	},
 	about: {
-		bio: String
+		bio: {
+			text: String
+		},
+		work: [{
+			company: String,
+			companyLogo: String,
+			position: String,
+			city: String,
+			description: String,
+			currentlyWorking: Boolean,
+			from: Number,
+			to: Number
+		}]
 	}
 });
 
