@@ -378,33 +378,24 @@
 	function requestLogos(input){
 	  var requestUrl = 'https://autocomplete.clearbit.com/v1/companies/suggest?query=:' + input.value;
 
-	   $.ajax({url: requestUrl, success: function(result){
-    		createCompanyDropDown(input, result);
-  		}});
+	   $.get(requestUrl).done(function(data){
+	   		createCompanyDropDown(input, data);
+  		});
 	}
 
 	function requestPositions(input){
 		var requestUrl = 'http://api.dataatwork.org/v1/jobs/autocomplete?begins_with="' + input.value + '"';
 
-	   $.ajax({url: requestUrl, success: function(result){
-	   		createPositionDropDown(input, result);
-  		}, error: function (xhr, ajaxOptions, thrownError){
-  			if(xhr.status==404){
-  				console.log('No position for ' + input.value);
-  			}
-  		}});
+	   $.get(requestUrl).done(function(data){
+	   		createPositionDropDown(input, data);
+  		});
 	}
 
 	function requestCities(input){
 		var requestUrl = 'http://api.geonames.org/searchJSON?q=' + input.value + '&maxRows=5&fuzzy=.8&username=keefmanjack';
-
-	   $.ajax({url: requestUrl, success: function(result){
-	   		createCityDropDown(input, result.geonames);
-  		}, error: function (xhr, ajaxOptions, thrownError){
-  			if(xhr.status==404){
-  				console.log('No city for ' + input.value);
-  			}
-  		}});
+		$.get(requestUrl).done(function(data){
+	   		createCityDropDown(input, data);
+		});
 	}
 
 	function toggleFromTo(checkbox){
