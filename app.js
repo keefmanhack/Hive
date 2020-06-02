@@ -7,6 +7,7 @@ var express 			= require("express"),
     methodOverride  	= require('method-override'),
     flash				= require('connect-flash'),
     multer				= require('multer');
+    const {Client, Status} = require("@googlemaps/google-maps-services-js");
 
 var indexRoutes			= require('./routes/index');
 
@@ -54,6 +55,17 @@ app.use(express.static(__dirname + '/public')); //for js scripts
 app.use(methodOverride("_method"));
 
 app.use(indexRoutes);
+
+
+// app.get('/googleapi/:term', function(req, res){
+//     var options = {
+//       types: ['(cities)'],
+//       componentRestrictions: {country: "us"}
+//      };
+//      var autocomplete = new google.maps.places.Autocomplete('aust', options);
+//      console.log(autocomplete);
+//      res.send('autocomplete');
+// })
 
 let port = process.env.PORT;
 if (port == null || port == "") {
