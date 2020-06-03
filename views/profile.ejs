@@ -63,116 +63,7 @@
 							</div>
 						</form>
 					</div>
-					<div id="work" class="item">
-						<button onclick="showAddWorkForm()" id="add-work-place" class="btn btn-primary strip orange-color"><i style="color:inherit; margin-bottom:20px;" class="fas fa-plus-circle"></i>   Add a workplace</button>
-						<form  onsubmit="event.preventDefault(); checkForm(this);" action="/user/<%=currentUser._id%>/new/work" method="POST" autocomplete="off" id="new-work" novalidate>
-							<img id='selected-company' src="">
-							<input type="hidden" id="selected-company-hidden-input" name="companyLogo">
-							<div class="row form-group">
-								<div class="col autocomplete">
-									<input oninput="requestLogos(this);" id="company" type="text" class="form-control" name="company" placeholder="Company" required>
-									<div class="invalid-feedback">
-			 							<i class="fas fa-exclamation-circle"></i>
-									</div>
-									<div class="valid-feedback">
-									 	<i class="fas fa-check"></i>
-									</div>
-								</div>
-								<div class="col autocomplete">
-									<input type="text" oninput="requestPositions(this)" id="position" class="form-control" name="position" placeholder="Position" required>
-									<div class="invalid-feedback">
-			 							<i class="fas fa-exclamation-circle"></i>
-									</div>
-									<div class="valid-feedback">
-									 	<i class="fas fa-check"></i>
-									</div>
-								</div>
-							</div>
-							<div class="row form-group">
-								<div class="col">
-									<input type="text" oninput="requestCities(this)" id="city" class="form-control" name="city" placeholder="City/Town" required>
-									<div class="invalid-feedback">
-			 							<i class="fas fa-exclamation-circle"></i>
-									</div>
-									<div class="valid-feedback">
-									 	<i class="fas fa-check"></i>
-									</div>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col">
-									<textarea class="form-control" name="description" placeholder="Description"></textarea>
-								</div>
-							</div>
-							<div class="row form-group">
-								<div class="col">
-									<h2>Time Period</h2>
-								</div>
-							</div>
-							<div class="row form-group">
-								<div class="col form-check">
-									<input class="form-check-input" onchange="toggleFromTo(this)" type="checkbox" name="currentlyWorking" value="" id="defaultCheck1">
-  									<label class="form-check-label" style="color: white;" for="defaultCheck1">I currently work here</label>
-								</div>
-							</div>
-							<div class="row form-group timeFrame">
-								<div class="col-lg-2">
-									<select class="form-control" id="from" name="from"></select>
-									<div class="valid-feedback">
-        								Looks good!
-      								</div>
-      								<div class="invalid-feedback">
-        								Start date can't be before end date
-      								</div>
-								</div>
-								<div class="col-lg-1">
-									<label style="color: white;">to</label>
-								</div>
-								<div class="col-lg-2">
-									<select class="form-control" id="to" name="to"></select>
-								</div>
-								<div class="col-lg-7">
-									
-								</div>
-							</div>
-							<hr>
-							<button onclick="hideAddWorkForm();" type="button" class="btn btn-primary cancel">Cancel</button>
-							<button class="btn btn-primary save">Save</button>
-						</form>
-						<ul>
-							<% if(currentUser && currentUser.about && currentUser.about.work){%>
-								<%currentUser.about.work.forEach(function(o){%>
-									<li>
-										<div class="row workplace">
-											<div class="col-lg-1">
-												<img src="<%=o.companyLogo%>">
-											</div>
-											<div class="col-lg-9">
-												<div class="row">
-													<div class="col">
-														<h2><%=o.position%></h2>
-													</div>
-												</div>
-												<div class="row">
-													<div class="col">
-														<%if(o.currentlyWorking){%>
-															<p>Since <%=o.from%></p>
-														<%}else{%>
-															<p>From <%=o.from%> to <%=o.to%></p>
-														<%}%>
-														
-													</div>
-												</div>
-											</div>
-											<div class="col-lg-2">
-												<i class="fas fa-ellipsis-h"></i>
-											</div>
-										</div>
-									</li>
-								<%});%>
-							<%}%>
-						</ul>
-					</div>
+					<%- include('./profile_partials/work.ejs')%>
 					<div id="education">
 						
 					</div>
@@ -181,96 +72,14 @@
 		</div>
 	</div>
 </div>
-<div class="photo-selector" id="photo-new-or-edit">
-	<div class="row">
-		<div class="col-lg-10">
-			<h1>Update Profile Picture</h1>
-		</div>
-		<div class="col-lg-2">
-			<h1>
-				<i class="fas fa-times-circle"></i>
-			</h1>				
-		</div>
-	</div>	
-	<hr>
-	<div class="row">
-		<div class="col">
-			<button id="new-photo" class="btn btn-primary">+  Upload New Photo</button>
-		</div>
-		<div class="col">
-			<% if (currentUser.profile_image && currentUser.profile_image.cropped_profile_path) { -%>
-				<button onclick="editPhoto(<%=currentUser.profile_image%>);" id="edit-photo" class="btn btn-primary"><i class="fas fa-pen"></i></button>
-			<% } else { -%>
-				<button id="edit-photo" class="btn btn-primary" disabled><i class="fas fa-pen"></i></button>
-			<% } -%>
-		</div>
+<%- include('./profile_pic/new_or_edit')%>
+<%- include('./profile_pic/photo_editor')%>
 
-	</div>
-	<div class="row">
-		<div class="col">
-			<h2>Previous Photo</h2>
-		</div>
-	</div>
-</div>
-<div class="photo-selector" id="photo-editor">
-	<div class="row">
-		<div class="col-lg-10">
-			<h1>Update Profile Picture</h1>
-		</div>
-		<div class="col-lg-2">
-			<h1>
-				<i class="fas fa-times-circle"></i>
-			</h1>				
-		</div>
-	</div>	
-	<hr>
-	<div id="photo">
-		
-			<img id="profile_img" src="">
-
-			<div class="cut-out">
-				
-			</div>
-			<div class="loader">
-				<ul>
-					<li>
-						<i id=one class="far fa-circle"></i>
-					</li>
-					<li>
-						<i id=two class="far fa-circle"></i>
-					</li>
-					<li>
-						<i id=three class="far fa-circle"></i>
-					</li>
-					<li>
-						<i id=four class="far fa-circle"></i>
-					</li>
-					<li>
-						<i id=five class="far fa-circle"></i>
-					</li>
-				</ul>
-			</div>
-	</div>
-	<div class="slidecontainer">
-  		<input type="range" min="50" max="200" value="50" class="slider" id="myRange">
-	</div>
-	<hr>
-	<div class="row">
-		<div class="col-lg-6">
-			
-		</div>
-		<div class="col-lg-6">
-			<div onsubmit="changeVals()" id="myform">
-				<input type="hidden" name="orient[dimension]" id="dimension">
-				<input type="hidden" name="orient[top]" id="top_id">
-				<input type="hidden" name="orient[left]" id="left_id">
-				<input type="file" accept="image/x-png,image/gif,image/jpeg" onchange="readURL(this);" name="profile_image" id="profile_pic" style="display: none;">
-				<button onclick="changeVals()" style="width: 100%;" class="btn btn-primary">Save</button>
-			</div>
-		</div>
-	</div>
-</div>
-
+<script type="text/javascript" src='/scripts/work.js'></script>
+<script type="text/javascript" src='/scripts/editWork.js'></script>
+<script type="text/javascript" src='/scripts/photo_edit.js'></script>
+<script type="text/javascript" src='/scripts/autoFillAjax.js' userId='<%=currentUser._id%>'></script>
+<script type="text/javascript" src='/scripts/profileImage.js'></script>
 
 <script type="text/javascript">
 	var arr;
@@ -299,119 +108,12 @@
 	addYearsToDropDown(document.getElementById('from'));
 	addYearsToDropDown(document.getElementById('to'));
 
-	function checkForm(form){
-		var selectors = document.querySelectorAll('select');
-		var company = document.getElementById('company');
-		var position = document.getElementById('position');
-		var city = document.getElementById('city');
-		var returnVal = true;
-
-		removePreviousClassList(company, position, city, selectors[0]);
-
-		if(company.value === ''){
-			company.classList.add('is-invalid');
-			returnVal = false;
-		}else{
-			company.classList.add('is-valid');
-		}
-
-		if(city.value === ''){
-			city.classList.add('is-invalid');
-			returnVal = false;
-		}else{
-			city.classList.add('is-valid');
-		}
-
-		if(position.value === ''){
-			position.classList.add('is-invalid');
-			returnVal = false;
-		}else{
-			position.classList.add('is-valid');
-		}
-
-		if (selectors[0].style.display !== 'none'){
-			if(parseInt(selectors[0].value) > parseInt(selectors[1].value)){
-				selectors[0].classList.add('is-invalid');
-				returnVal = false;
-			}else{
-				selectors[0].classList.add('is-valid');
-			}
-		}
-
-		if(returnVal===true){
-			form.submit();
-		}
-
-		return returnVal;
-	}
-
-	function removePreviousClassList(company, position, city, selector){
-		company.classList.remove('is-valid');
-		company.classList.remove('is-invalid');
-		position.classList.remove('is-valid');
-		position.classList.remove('is-invalid');
-		city.classList.remove('is-valid');
-		city.classList.remove('is-invalid');
-		selector.classList.remove('is-valid');
-		selector.classList.remove('is-invalid');
-	}
-
-	function showAddWorkForm(){
-		$('#add-work-place').addClass('hide');
-		$('#new-work').addClass('show');
-	}
-
-	function hideAddWorkForm(){
-		$('#add-work-place').removeClass('hide');
-		$('#new-work').removeClass('show');
-	}
-
-	function addYearsToDropDown(dropDown){
-		years.forEach(function(year){
-			dropDown.innerHTML += "<option>" + year + "</option>"
-		});
-	}
-
-	function requestLogos(input){
-	  var requestUrl = 'https://autocomplete.clearbit.com/v1/companies/suggest?query=:' + input.value;
-
-	   $.get(requestUrl).done(function(data){
-	   		createCompanyDropDown(input, data);
-  		});
-	}
-
-	function requestPositions(input){
-		var requestUrl = 'http://api.dataatwork.org/v1/jobs/autocomplete?begins_with="' + input.value + '"';
+	//bio
+	$('#about .right #bio textarea').prop('disabled', true); 
 
 
-	   $.get(requestUrl).done(function(data){
-	   		createPositionDropDown(input, data);
-  		});
-	}
-
-	function requestCities(input){
-		var options = {
-	      types: ['(cities)'],
-	      componentRestrictions: {country: "us"}
-    	};
-     var autocomplete = new google.maps.places.Autocomplete(input, options);
-	}
-
-	function toggleFromTo(checkbox){
-
-		if(checkbox.checked){
-			document.querySelector('select').style.display = 'none';
-			document.querySelectorAll('label')[1].innerHTML = 'from';
-		}else{
-			document.querySelector('select').style.display = 'block';
-			document.querySelectorAll('label')[1].innerHTML = 'to';
-		}
-
-		document.querySelector('select').classList.remove('is-valid');
-		document.querySelector('select').classList.remove('is-invalid');
-	}
-
-
+	//create event listeners for drag event
+	dragElement(document.getElementById("photo"),document.getElementById("profile_img"));
 
 	function menuChange(li){
 		$('#about .left li').removeClass('active');
@@ -425,198 +127,6 @@
 			}
 		}
 	}
-
-	function buildYears(){
-		var currentDate = new Date();
-		var currentYear = currentDate.getFullYear();
-		var output = [];
-
-		for(var i = currentYear; i > 1800; i--){
-			output.push(i);
-		}
-
-		return output;
-	}
-
-	function createCityDropDown(input, arr){
-		var a, b, i, val = input.value;
-		currentFocus=-1;
-		/*close any already open lists of autocompleted values*/
-		closeAllLists(input);
-		if (!val) { return false;}
-		currentFocus = -1;
-
-		a = document.createElement("DIV");
-		a.setAttribute("id", input.id + "autocomplete-list");
-		a.setAttribute("class", "autocomplete-items");
-
-		input.parentNode.appendChild(a);
-		/*for each item in the array...*/
-		for (i = 0; i < arr.length; i++) {
-		  /*create a DIV element for each matching element:*/
-		  	b = document.createElement("DIV");
-		  /*make the matching letters bold:*/
-		  b.innerHTML = "<strong>" + arr[i].name.substr(0, val.length) + "</strong>";
-		  b.innerHTML += arr[i].name.substr(val.length) + ', ' + arr[i].adminName1;
-		  /*insert a input field that will hold the current array item's value:*/
-		  b.innerHTML += "<input type='hidden' value='" + arr[i].name + ', ' + arr[i].adminName1 + "'>";
-		  /*execute a function when someone clicks on the item value (DIV element):*/
-		      b.addEventListener("click", function(e) {
-		      /*insert the value for the autocomplete text field:*/
-		      input.value = this.childNodes[2].value;
-		      /*close the list of autocompleted values,
-		      (or any other open lists of autocompleted values:*/
-		      closeAllLists(input);
-		  });
-		  a.appendChild(b);
-		}
-	}
-
-	function createPositionDropDown(input, arr){
-		var a, b, i, val = input.value;
-		currentFocus=-1;
-		/*close any already open lists of autocompleted values*/
-		closeAllLists(input);
-		if (!val) { return false;}
-		currentFocus = -1;
-
-		a = document.createElement("DIV");
-		a.setAttribute("id", input.id + "autocomplete-list");
-		a.setAttribute("class", "autocomplete-items");
-
-		input.parentNode.appendChild(a);
-		/*for each item in the array...*/
-		for (i = 0; i < arr.length; i++) {
-		  /*create a DIV element for each matching element:*/
-		  	b = document.createElement("DIV");
-		  /*make the matching letters bold:*/
-		  arr[i].normalized_job_title = capitalizeFirstLetter(arr[i].normalized_job_title);
-		  b.innerHTML = "<strong>" + arr[i].normalized_job_title.substr(0, val.length) + "</strong>";
-		  b.innerHTML += arr[i].normalized_job_title.substr(val.length);
-		  /*insert a input field that will hold the current array item's value:*/
-		  b.innerHTML += "<input type='hidden' value='" + arr[i].normalized_job_title + "'>";
-		  /*execute a function when someone clicks on the item value (DIV element):*/
-		      b.addEventListener("click", function(e) {
-		      /*insert the value for the autocomplete text field:*/
-		      input.value = this.childNodes[2].value;
-		      /*close the list of autocompleted values,
-		      (or any other open lists of autocompleted values:*/
-		      closeAllLists(input);
-		  });
-		  a.appendChild(b);
-		}
-	}
-
-	function capitalizeFirstLetter(str){
-		var returnStr = '';
-		str.split(" ").forEach(function(o){
-			returnStr += o.substring(0,1).toUpperCase() + o.substring(1, o.length) + ' ';
-		});
-
-		return returnStr.trim();
-	}
-
-	function createCompanyDropDown(input, arr){
-		var a, b, i, val = input.value;
-		currentFocus=-1;
-		/*close any already open lists of autocompleted values*/
-		closeAllLists(input);
-		if (!val) { return false;}
-		currentFocus = -1;
-
-		a = document.createElement("DIV");
-		a.setAttribute("id", input.id + "autocomplete-list");
-		a.setAttribute("class", "autocomplete-items");
-
-		input.parentNode.appendChild(a);
-		/*for each item in the array...*/
-		for (i = 0; i < arr.length; i++) {
-		  /*create a DIV element for each matching element:*/
-		  	b = document.createElement("DIV");
-		  	b.innerHTML = "<img src=" + arr[i].logo + " onError=this.src='/photos/blankPhoto.png'>"
-		  /*make the matching letters bold:*/
-		  b.innerHTML += "<strong>" + arr[i].name.substr(0, val.length) + "</strong>";
-		  b.innerHTML += arr[i].name.substr(val.length);
-		  /*insert a input field that will hold the current array item's value:*/
-		  b.innerHTML += "<input type='hidden' value='" + arr[i].name + "'>";
-		  /*execute a function when someone clicks on the item value (DIV element):*/
-		      b.addEventListener("click", function(e) {
-		      /*insert the value for the autocomplete text field:*/
-		      input.value = this.childNodes[3].value;
-		      document.getElementById('selected-company').src = this.childNodes[0].src;
-		      document.getElementById('selected-company-hidden-input').value = this.childNodes[0].src;
-		      /*close the list of autocompleted values,
-		      (or any other open lists of autocompleted values:*/
-		      closeAllLists(input);
-		  });
-		  a.appendChild(b);
-		}
-	}
-
-	function initializeAutoFillEvenListeners(inp){
-	  inp.addEventListener("keydown", function(e) {
-	      var x = document.getElementById(this.id + "autocomplete-list");
-	      if (x) x = x.getElementsByTagName("div");
-	      if (e.keyCode == 40) {
-	        /*If the arrow DOWN key is pressed,
-	        increase the currentFocus variable:*/
-	        currentFocus++;
-	        /*and and make the current item more visible:*/
-	        addActive(x);
-	      } else if (e.keyCode == 38) { //up
-	        /*If the arrow UP key is pressed,
-	        decrease the currentFocus variable:*/
-	        currentFocus--;
-	        /*and and make the current item more visible:*/
-	        addActive(x);
-	      } else if (e.keyCode == 13) {
-	        /*If the ENTER key is pressed, prevent the form from being submitted,*/
-	        e.preventDefault();
-	        if (currentFocus > -1) {
-	          /*and simulate a click on the "active" item:*/
-	          if (x) x[currentFocus].click();
-	        }
-	      }
-	  });
-	}
-
-	function addActive(x) {
-		/*a function to classify an item as "active":*/
-		if (!x) return false;
-		/*start by removing the "active" class on all items:*/
-		removeActive(x);
-		if (currentFocus >= x.length) currentFocus = 0;
-		if (currentFocus < 0) currentFocus = (x.length - 1);
-		/*add class "autocomplete-active":*/
-		x[currentFocus].classList.add("autocomplete-active");
-	}
-	function removeActive(x) {
-		/*a function to remove the "active" class from all autocomplete items:*/
-		for (var i = 0; i < x.length; i++) {
-		  x[i].classList.remove("autocomplete-active");
-		}
-	}
-	function closeAllLists(elmnt, inp) {
-		/*close all autocomplete lists in the document,
-		except the one passed as an argument:*/
-		var x = document.getElementsByClassName("autocomplete-items");
-		for (var i = 0; i < x.length; i++) {
-		  	if (elmnt != x[i] && elmnt != inp) {
-		  		x[i].parentNode.removeChild(x[i]);
-			}
-		}
-	}
-
-
-	document.addEventListener("click", function (e) {
-	    closeAllLists(e.target);
-	});
-
-	//education
-	// $('#about .right #bio').addClass('active');
-
-	//bio
-	$('#about .right #bio textarea').prop('disabled', true); 
 
 	function bioEditable(){
 		$('#about .right #bio #edit').addClass('hide');
@@ -635,30 +145,7 @@
 
 		$('#about .right #bio textarea').removeClass('enabled');
 		location.reload();
-		// $('#about .right #bio textarea').prop('disabled', true); 
-
 	}
-
-
-
-	$('#user-info i').on('click', function(){
-		$('.page-container').addClass('hide');
-		$('#photo-new-or-edit').addClass('show');
-	})
-
-	$('.photo-selector i').on('click', function(){
-		showMainPage();
-	});
-
-	$('#new-photo').on('click', function(){
-		var input = $(document.getElementById("profile_pic"));
-        input.trigger("click"); // opening dialog
-        return false;
-	});
-
-	$('.slidecontainer input').on('input', function(){
-		$('#photo-editor img').attr('height', this.value + '%');
-	});
 
 	function showMainPage(){
 		$('.page-container').removeClass('hide');
@@ -666,189 +153,38 @@
 		$('#photo-editor').removeClass('show');
 	}
 
-	function editPhoto(imageData){
-		editMode = true;
-		$('#photo-editor').toggleClass('show');
-	  	$('#photo-editor img').attr('height', imageData.orient.dimension);
-		document.getElementById("profile_img").style.left = imageData.orient.left;
-		document.getElementById("profile_img").style.top = imageData.orient.top;
-		$('.slidecontainer input').val(parseInt(imageData.orient.dimension.substring(0, imageData.orient.dimension.length-1)));
-
-		// $("#profile_pic").val(imageData.profile_path);
-		// document.getElementById('profile_pic').files[0] = imageData.profile_path;
-		$('.loader').addClass('hide');
-		$('#profile_img').attr('src', imageData.profile_path);
-
-	}
-
-	//create event listeners for drag event
-	dragElement(document.getElementById("photo"),document.getElementById("profile_img"));
-
-
-	function changeVals(){
-		var reader = new FileReader();
-		var image = new Image();
-		image = document.getElementById('profile_img');
-  		var canvas = document.createElement('canvas');
-  		var profile_pic = document.getElementById('profile_pic').files[0];
- 		
-       	canvas.height = 250;
-    	canvas.width = 250;
-
-    	cropImage(canvas, image);
-
-    	if(editMode){
-    		var data = {
-    			'orient[dimension]': $('#profile_img').attr('height'),
-				'orient[top]': image.style.top,
-				'orient[left]': image.style.left,
-				'cropped_profile_image': canvas.toDataURL('image/png')
-    		}
-    		sendImage(data);
-    	}else{
-    		reader.readAsDataURL(profile_pic);
-
-			reader.onload = function (e) {
-				var data = {
-					'orient[dimension]': $('#profile_img').attr('height'),
-					'orient[top]': image.style.top,
-					'orient[left]': image.style.left,
-					'cropped_profile_image': canvas.toDataURL('image/png'),
-					'profile_image': e.target.result
-				}
-				sendImage(data);
-		    };
-    	}
-	}
-
-	function cropImage(canvas, image){
-		var ctx = canvas.getContext('2d');
-		var imageProp = image.style;
-
-		var widthFactor = image.naturalWidth / image.width;
-    	var heightFactor = image.naturalHeight / image.height;
-    	var topMove = parseInt(imageProp.top.substring(0, imageProp.top.length-2));
-    	var leftMove = parseInt(imageProp.left.substring(0, imageProp.left.length-2));
-
-		ctx.drawImage(image, (100 * widthFactor) - (leftMove * widthFactor), (37 * heightFactor) - (topMove * heightFactor), image.naturalWidth * widthFactor * (250/image.naturalHeight), 250 * heightFactor,0,0,image.naturalWidth * (250/image.naturalHeight), 250);
-	}
-
 	function sendImage(data) {
-	  let urlEncodedData = "",
-      urlEncodedDataPairs = [],
-      name;
+  let urlEncodedData = "",
+  urlEncodedDataPairs = [],
+  name;
 
-      for( name in data ) {
-    		urlEncodedDataPairs.push( encodeURIComponent( name ) + '=' + encodeURIComponent( data[name] ) );
-  	  }
-   	  urlEncodedData = urlEncodedDataPairs.join( '&' ).replace( /%20/g, '+' );
-
-	  var xmlHttpReq = false;
-
-	  if (window.XMLHttpRequest) {
-	    ajax = new XMLHttpRequest();
+  for( name in data ) {
+		urlEncodedDataPairs.push( encodeURIComponent( name ) + '=' + encodeURIComponent( data[name] ) );
 	  }
-	  else if (window.ActiveXObject) {
-	    ajax = new ActiveXObject("Microsoft.XMLHTTP");
-	  }
+	  urlEncodedData = urlEncodedDataPairs.join( '&' ).replace( /%20/g, '+' );
 
-	  ajax.open("POST", "/user/<%=currentUser._id%>/edit_profile_image/");
-	  ajax.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+  var xmlHttpReq = false;
 
-	  $('.loader').removeClass('hide');
-	  ajax.onreadystatechange = function() {
-		    if (this.readyState == 4 && this.status == 200) {
-		      showMainPage();
-		      location.reload();
-		    }
-  	  };
-
-	  ajax.send(urlEncodedData);
-	}
-
-
-
-	function readURL(input) {
-		editMode = false;
-	  if (input.files && input.files[0]) {
-	  	$('#photo-editor').toggleClass('show');
-	  	$('#photo-editor img').attr('height', '50%');
-
-		document.getElementById("profile_img").style.left = '0px';
-		document.getElementById("profile_img").style.top = '0px';
-
-	    var reader = new FileReader();
-	    reader.onload = function (e) {
-	      $('#profile_img')
-	        .attr('src', e.target.result);
-
-	      $('.loader').addClass('hide');
-	    };
-
-	    reader.readAsDataURL(input.files[0]);
-	  }
-	}
-
-function dragElement(cover, elmnt) {
-  var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
-  if (document.getElementById(elmnt.id + "header")) {
-    // if present, the header is where you move the DIV from:
-    document.getElementById(elmnt.id + "header").onmousedown = dragMouseDown;
-  } else {
-    // otherwise, move the DIV from anywhere inside the DIV:
-    cover.onmousedown = dragMouseDown;
+  if (window.XMLHttpRequest) {
+    ajax = new XMLHttpRequest();
+  }
+  else if (window.ActiveXObject) {
+    ajax = new ActiveXObject("Microsoft.XMLHTTP");
   }
 
-  function dragMouseDown(e) {
-    e = e || window.event;
-    e.preventDefault();
-    // get the mouse cursor position at startup:
-    pos3 = e.clientX;
-    pos4 = e.clientY;
-    document.onmouseup = closeDragElement;
-    // call a function whenever the cursor moves:
-    document.onmousemove = elementDrag;
-  }
+  ajax.open("POST", "/user/<%=currentUser._id%>/edit_profile_image");
+  ajax.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 
-  function elementDrag(e) {
-    e = e || window.event;
-    e.preventDefault();
-    // calculate the new cursor position:
-    pos1 = pos3 - e.clientX;
-    pos2 = pos4 - e.clientY;
-    pos3 = e.clientX;
-    pos4 = e.clientY;
-    // set the element's new position:
-    elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
-    elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
-  }
+  $('.loader').removeClass('hide');
+  ajax.onreadystatechange = function() {
+	    if (this.readyState == 4 && this.status == 200) {
+	      showMainPage();
+	      location.reload();
+	    }
+	  };
 
-  function closeDragElement() {
-    // stop moving when mouse button is released:
-    document.onmouseup = null;
-    document.onmousemove = null;
-  }
+  ajax.send(urlEncodedData);
 }
 
-// (function() {
-//   'use strict';
-//   window.addEventListener('load', function() {
-//     // Fetch all the forms we want to apply custom Bootstrap validation styles to
-//     var forms = document.getElementsByClassName('needs-validation');
-//     // Loop over them and prevent submission
-//     var validation = Array.prototype.filter.call(forms, function(form) {
-//       form.addEventListener('submit', function(event) {
-//       	if (checkTime()) {
-// 	        if (form.checkValidity() === false) {
-// 	          event.preventDefault();
-// 	          event.stopPropagation();
-// 	        }
-// 	        form.classList.add('was-validated');
-// 	    }
-//       }, false);
-//     });
-//   }, false);
-// })();
 </script>
-
 <%- include('./partials/footer')%>

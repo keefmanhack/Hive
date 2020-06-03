@@ -27,7 +27,72 @@ router.get('/user/:id', function(req, res){
 	})
 });
 
-router.post('/user/:id/new/work', function(req, res){
+router.get('/user/:id/work/:work_id', function(req, res){
+	User.findById(req.params.id, function(err, foundUser){
+		if(err){
+			flash('error', 'Can not find user');
+			res.redirect('/');
+		}else{
+			foundUser.about.work.forEach(function(o){
+				if(o._id == req.params.work_id){
+					res.send(o);
+				}
+			})
+			console.log('There was an error finding work');
+		}
+	})
+});
+
+router.put('/user/:id/work/:work_id', function(req, res){
+	User.findById(req.params.id, function(err, foundUser){
+		if(err){
+			flash('error', 'Can not find user');
+			res.redirect('/');
+		}else{
+			for(var i =0; i < foundUser.about.work.length; i++){
+				if(foundUser.about.work[i]._id == req.params.work_id){
+					foundUser.about.work[i] = req.body;
+					console.log(req.body);
+					foundUser.save(function(err){
+						if(err){
+							console.log('err saving user');
+						}else{
+							console.log(foundUser);
+							res.redirect('/user/' + foundUser._id);
+						}
+					})
+				}
+			}
+			console.log('There was an error finding work');
+		}
+	})
+})
+
+router.delete('/user/:id/work/:work_id', function(req, res){
+	User.findById(req.params.id, function(err, foundUser){
+		if(err){
+			flash('error', 'Can not find user');
+			res.redirect('/');
+		}else{
+			for(var i =0; i < foundUser.about.work.length; i++){
+				if(foundUser.about.work[i]._id == req.params.work_id){
+					foundUser.about.work.splice(i, 1);
+					foundUser.save(function(err){
+						if(err){
+							console.log('err saving user');
+						}else{
+							console.log(foundUser);
+							res.redirect('/user/' + foundUser._id);
+						}
+					})
+				}
+			}
+			console.log('There was an error finding work');
+		}
+	})
+})
+
+router.post('/user/:id/work/new', function(req, res){
 	User.findById(req.params.id, function(err, foundUser){
 		if (err){
 			console.log(err);
@@ -103,9 +168,9 @@ router.post('/user/:id/edit_profile_image', function(req, res){
 			foundUser.profile_image.cropped_profile_path = cropped_mongoPath;
 			foundUser.profile_image.orient = req.body.orient;
 			foundUser.save(function(err){
-				if(err){
-					console.log(err)
-				}
+					if(err){
+						console.log(err)
+					}
 				res.redirect('/user/' + foundUser._id);
 			});
 			

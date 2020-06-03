@@ -149,7 +149,7 @@
 	color: white;
 }
 
-#about .right #work button{
+#about .right #work #add-work-place{
     font-size: 22px;
     padding: 0;
     color: rgb(250,196,98);
@@ -163,6 +163,14 @@
 #about .right #work ul{
 	list-style: none;
 	padding: 0;
+}
+
+#about .right #work .workplace{
+    height: 100px;
+}
+
+#about .right #work .workplace.hide{
+    display: none;
 }
 
 #about .right #work .workplace img{
@@ -241,7 +249,33 @@
     background: white;
 }
 
-#new-work{
+#about .right #work .edit-delete{
+    background: white;
+    border-radius: 10px;
+    position: relative;
+    top: -68px;
+    left: 65px;
+    opacity: 1;
+    z-index: 1;
+    display: none;
+    border: 1px solid rgb(250,196,98);
+}
+
+#about .right #work .edit-delete.show{
+    display: block;
+}
+
+#about .right #work .edit-delete button.btn{
+    background: none;
+    border: none;
+    font-size: 18px;
+    font-weight: 400;
+    color: black;
+}
+
+
+
+.work{
 	margin: 0 0 30px 0;
     background: rgb(100,100,100);
     padding: 20px;
@@ -253,17 +287,22 @@
 	display: block;
 }
 
-#new-work h2{
+.update-work.show{
+    display: block;
+}
+
+.work h2{
 	color: white;
     margin: 15px 0 0 0;
 }
 
-#new-work .form-check{
+.work .form-check{
 	padding-left: 37px;
     color: white;
 }
 
-#about .right #work #new-work button.btn.cancel{
+
+#about .right #work .work button.btn.cancel{
 	background: transparent;
     border: none;
     color: white;
@@ -273,7 +312,7 @@
     text-decoration: none;
 }
 
-#about .right #work #new-work button.btn.save{
+#about .right #work .work button.btn.save{
 	color: white;
     width: 100px;
     background: rgb(250,196,98);
@@ -308,7 +347,7 @@
 	border-bottom: 3px solid black;
 }
 
-#selected-company{
+.selected-company{
 	margin: 10px 40%;
     border-radius: 100%;
 }
@@ -427,6 +466,15 @@ filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ffffff",endCo
 	to {opacity: 1;}
 }
 
+
+
+#about .right ul .update-work *{
+    color: black;
+}
+
+#about .right ul .update-work h2{
+    color: white;
+}
 
 
 
