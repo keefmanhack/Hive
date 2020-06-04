@@ -1,0 +1,171 @@
+#talents{
+	display: none;
+}
+
+#talents.active{
+	display: block;
+}
+
+#talents .availability{
+    background: #edfaeb;
+    padding: 20px;
+    margin-left: 25px;
+    border-radius: 1rem;
+}
+
+#talents .basic-user{
+    border-right: 2px solid rgb(250,196,98);
+    padding: 0 10px 10px 10px;
+}
+
+#talents .basic-user p{
+    padding: 5px;
+    background: rgb(225,225,225);
+    border-radius: .25rem;
+}
+
+#talents .company-logo img{
+	width: 50px;
+    border-radius: 100%;
+    height: 50px;
+    object-fit: contain;
+    position: relative;
+    top: 4px;
+}
+
+#talents .company-info .company{
+    font-size: 1.5rem;
+    color: rgb(50,50,50);
+}
+
+#talents .company-info .position{
+    font-size: 1rem;
+    color: rgb(100,100,100);
+}
+
+#talents .experiences{
+    background: rgb(245,245,245);
+    margin-top: 22px;
+    padding: 5px;
+    border-radius: 1rem;
+}
+
+#talents .experiences img{
+    height: 50px;
+    width: 50px;
+    border-radius: 100%;
+}
+
+#talents .description{
+    background: rgb(235,235,235);
+    border-radius: 1rem;
+    margin-top: 11px;
+}
+
+#talents .description .name-and-photo{
+    border-top-left-radius: .75rem;
+    padding: 10px;
+}
+
+#talents .description .name-and-photo h1{
+    font-size: 2rem;
+    margin-bottom: 0;
+    color: rgb(50,50,50);
+}
+
+#talents .description .name-and-photo h1:hover{
+    text-decoration: underline rgb(50,50,50);
+}
+
+#talents .description .name-and-photo img{
+    height: 100px;
+    width: 100px;
+    border-radius: 100%;
+    border: 3px solid white;
+}
+
+#talents .price{
+	font-size: 28px;
+}
+
+#talents .pricing-method{
+	font-size: 15px;
+}
+
+#talents .product-summary{
+	background: rgb(245,245,245);
+	padding: 10px;
+    height: 400px;
+    border-radius: 1rem;
+}
+
+#talents .profile-container{
+    padding-left: 0;
+}
+
+#talents .rating{
+	font-size: 10px;
+}
+
+#talents .talent-item{
+	margin: 21px;
+}
+
+#talents .title{
+	font-weight: 600;
+}
+
+#talents .showcase img{
+	height: 374px;
+    background: rgb(50,50,50);
+    padding: 10px;
+    object-fit: contain;
+    border-radius: 1rem;
+}
+
+#talents .selector-bar{
+	padding: 20px;
+    background: rgb(40,40,40);
+    border-radius: 18px;
+}
+
+#talents .skills h2{
+    display: inline;
+    font-size: 1rem;
+    padding: 10px;
+    border-radius: .25rem;
+    background: #b5a3a5;
+    margin-right: 10px;
+}
+
+#talents .social-links h1{
+    font-size: 22px;
+    color: white;
+
+    
+}
+
+#talents .social-links .fab{
+    padding: 5px;
+    border-radius: 100%;
+        margin-top: 2px;
+    margin-right: 5px;
+}
+
+#talents .social-links .fa-instagram{
+    background: #125688;
+}
+
+#talents .social-links .fa-facebook{
+   background: #3B5998;
+}
+
+#talents .social-links .fa-twitter{
+    background: #55ACEE;
+}
+
+#talents .user{
+    font-size: 12px;
+    color: black;
+    text-decoration: underline;
+}

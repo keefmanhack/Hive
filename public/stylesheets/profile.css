@@ -2,7 +2,13 @@
 	background: rgb(50,50,50);
     border-radius: 1.25rem;
     padding: 0 10px;
+    display: none;
 }
+
+#about.active{
+    display: block;
+}
+
 #about h1{
 	font-size: 2rem;
     display: inline;
@@ -245,7 +251,7 @@
 
 
 .content-section{
-	padding: 20px 13%;
+	padding: 20px 1%;
     background: white;
 }
 

@@ -16,10 +16,10 @@
 		<hr>
 		<div class="row" id='profile-nav'>
 			<div class="col-auto">
-				<button id="talents-button" class="active btn btn-primary">Talents</button>
+				<button onclick="switchToTalents(this);" id="talents-button" class="active btn btn-primary">Talents</button>
 			</div>
 			<div class="col-auto">
-				<button id="about-button" class='btn btn-primary'>About</button>
+				<button onclick="switchToAbout(this);" id="about-button" class='btn btn-primary'>About</button>
 			</div>
 			<div class="col-auto">
 				<button class='btn btn-primary'>Your Hive</button>
@@ -33,7 +33,112 @@
 		</div>
 	</div>
 	<div class="content-section">
-		<div id="about">
+		<div class="page active" id="talents">
+			<div class="selector-bar">
+				<div class="row">
+					<div class="col-lg-2">
+						<select>
+							<option>1</option>
+						</select>
+					</div>
+					<div class="col-lg-2">
+						<button class="btn btn-primary">Manage</button>
+					</div>
+					<div class="col-lg-6">
+						<!-- I'm intentionally empty -->
+					</div>
+					<div class="col-lg-2">
+						<button class="btn btn-primary">New Talent</button>
+					</div>
+				</div>
+			</div>
+			<div class="talent-item ">
+				<div class="row">
+					<div class="col-lg-8 product-summary">
+						<div class="row">
+							<div class="col">
+								<a class="user" href=""><%=currentUser.firstName%> <%=currentUser.lastName%></a>
+								<h1 class="title">Product</h1>
+								<h5 class="rating orange-color"><i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i></h5>
+								<h1 class="price">$100.67</h1>
+								<h2 class="pricing-method">/ per event</h2>
+								<hr>
+								<ul>
+									<li>Great at singing</li>
+									<li>Event better at dancing</li>
+									<li>Also really funny!!!</li>
+								</ul>
+							</div>
+							<div class="col showcase">
+								<img src="/photos/logo.jpeg">
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-3 availability">
+						<h1 class="price">$100.67</h1>
+						<%- include('./partials/calendar')%>
+					</div>
+				</div>
+				<div class="row description">
+					<div class="col-lg-4 profile-container">
+						<div class="name-and-photo orange-background">
+							<img src="<%=currentUser.profile_image.cropped_profile_path%>">
+						 	<a href=""><h1><%=currentUser.firstName%> <%=currentUser.lastName%></h1></a>
+						</div>
+						<div class="basic-user">
+							<div class="row social-links">
+								<div class="col-sm-3">
+									<a href="">Reviews</a>
+								</div>
+								<div class="col-sm-1">
+									<a href=""><h1><i class="fab fa-instagram"></i></h1></a>
+								</div>
+								<div class="col-sm-1">
+									<a href=""><h1><i class="fab fa-facebook"></i></h1></a>
+								</div>
+								<div class="col-sm-1">
+									<a href=""><h1><i class="fab fa-twitter"></i></h1></a>
+								</div>
+							</div>
+						 <p><%=currentUser.about.bio.text%></p>
+						 <div class="skills">
+						 	<h2>Skill 1</h2>
+						 	<h2>Skill 2</h2>
+						 	<h2>Skill 3</h2>
+						 </div>
+						 <div class="experiences">
+						 	<%currentUser.about.work.forEach(function(o){%>
+							 	<div class="row">
+							 		<div class="col-lg-3">
+							 			<img src="<%=o.companyLogo%>">
+							 		</div>
+							 		<div class="col-lg-9">
+							 			<div class="row company-info">
+							 				<div class="col">
+							 					<h2 class="company"><%=o.company%></h2>
+							 				</div>
+							 				<div class="col">
+							 					<h2 class="position"><%=o.position%></h2>
+							 				</div>
+							 			</div>
+							 		</div>
+							 	</div>
+							 <%})%>
+						 </div>
+						</div>
+					</div>
+					<div class="col-lg-7">
+						
+					</div>
+				</div>
+				<div class="row">
+					<div class="col">
+						<h1>Ratings</h1>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="page" id="about">
 			<div class="row">
 				<div class="col-lg-3 left">
 					<h1>About</h1>
@@ -80,6 +185,7 @@
 <script type="text/javascript" src='/scripts/photo_edit.js'></script>
 <script type="text/javascript" src='/scripts/autoFillAjax.js' userId='<%=currentUser._id%>'></script>
 <script type="text/javascript" src='/scripts/profileImage.js'></script>
+<script type="text/javascript" src='/scripts/calendar.js'></script>
 
 <script type="text/javascript">
 	var arr;
@@ -114,6 +220,22 @@
 
 	//create event listeners for drag event
 	dragElement(document.getElementById("photo"),document.getElementById("profile_img"));
+
+	function switchToAbout(button){
+		$('#profile-nav button').removeClass('active');
+		button.classList.add('active');
+
+		$('.content-section .page').removeClass('active');
+		$('.content-section #about').slice(0,1).addClass('active');
+	}
+
+	function switchToTalents(button){
+		$('#profile-nav button').removeClass('active');
+		button.classList.add('active');
+
+		$('.content-section .page').removeClass('active');
+		$('.content-section #talents').slice(0,1).addClass('active');
+	}
 
 	function menuChange(li){
 		$('#about .left li').removeClass('active');
