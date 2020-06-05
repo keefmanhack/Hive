@@ -1,0 +1,71 @@
+#talent-photo-form{
+	background: rgb(225,225,225);
+    width: 700px;
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 25%;
+    padding: 20px;
+    border-radius: .5rem;
+}
+
+#talent-photo-form.show{
+	display: block;
+}
+
+#talent-photo-form .exit{
+	cursor: pointer;
+}
+
+#talent-photo-form .display-image{
+	height: 351px;
+    width: 100%;
+    background: black;
+    margin-bottom: 20px;
+    display: none;
+}
+
+#talent-photo-form .display-image.show{
+	display: block;
+}
+
+#talent-photo-form .main-image{
+	height: inherit;
+    width: inherit;
+    object-fit: contain;
+    display: none;
+}
+
+#talent-photo-form .main-image.show{
+	display: block;
+}
+
+#talent-photo-form .main-image-overlay{
+	position: relative;
+    background: rgba(255,255,255,0.7);
+    padding: 157px 239px;
+    /* top: -400px; */
+    top: -351px;
+    height: 100%;
+    display: none;
+}
+
+#talent-photo-form .display-image:hover .main-image-overlay{
+	display: block;
+}
+
+#talent-photo-form .loader{
+	display: block;
+	position: relative;
+    background: black;
+    height: inherit;
+    width: inherit;
+    top: -351px;
+    height: 100%;
+    padding-left: 184px;
+    opacity: .9;
+}
+
+#talent-photo-form .loader.hide{
+	display: none;
+}

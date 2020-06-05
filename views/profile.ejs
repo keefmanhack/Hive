@@ -58,19 +58,33 @@
 						<div class="row">
 							<div class="col">
 								<a class="user" href=""><%=currentUser.firstName%> <%=currentUser.lastName%></a>
-								<h1 class="title">Product</h1>
+								<input type="text" name="product" class="title" value="Product" placeholder="Talent Name">
 								<h5 class="rating orange-color"><i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i></h5>
-								<h1 class="price">$100.67</h1>
-								<h2 class="pricing-method">/ per event</h2>
+								<div class="price-formatter">
+									<h1 class="price">$</h1>
+									<input type="number" min="0" class="price ones" name="price" placeholder="100">
+									<h1 class="price">.</h1>
+									<input type="number" class="price decimal" name="price" min="0" placeholder="00">
+								</div>
+								<div class="pricing-method-formatter">
+									<h2 class='pricing-method'>/</h2>
+									<input type="text" class="pricing-method" name="pricing_method" placeholder="per event">
+								</div>
+								
+								
 								<hr>
 								<ul>
-									<li>Great at singing</li>
-									<li>Event better at dancing</li>
-									<li>Also really funny!!!</li>
+									<li>
+										<textarea name="basic-info" class="description-bullet" onkeypress="addBullet(event, this);" placeholder="Summary information"></textarea>
+										<button onclick="removeLI(this)">X</button>
+									</li>
 								</ul>
 							</div>
 							<div class="col showcase">
 								<img src="/photos/logo.jpeg">
+								<div class="add-photo">
+									<button class="btn btn-primary add-edit" onclick="showAddEditPhotoForm()">Add/ Edit Photos</button>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -82,8 +96,12 @@
 				<div class="row description">
 					<div class="col-lg-4 profile-container">
 						<div class="name-and-photo orange-background">
-							<img src="<%=currentUser.profile_image.cropped_profile_path%>">
-						 	<a href=""><h1><%=currentUser.firstName%> <%=currentUser.lastName%></h1></a>
+							<div class="row">
+								<div class="col">
+									<img src="<%=currentUser.profile_image.cropped_profile_path%>">
+						 			<a href=""><h1><%=currentUser.firstName%> <%=currentUser.lastName%></h1></a>
+								</div>
+							</div>
 						</div>
 						<div class="basic-user">
 							<div class="row social-links">
@@ -108,7 +126,7 @@
 						 </div>
 						 <div class="experiences">
 						 	<%currentUser.about.work.forEach(function(o){%>
-							 	<div class="row">
+							 	<div class="row item">
 							 		<div class="col-lg-3">
 							 			<img src="<%=o.companyLogo%>">
 							 		</div>
@@ -127,8 +145,13 @@
 						 </div>
 						</div>
 					</div>
-					<div class="col-lg-7">
-						
+					<div class="col-lg-8">
+						<h1>Learn More</h1>
+						<div class="scroll-window">
+							<img src="/photos/logo.jpeg">
+							<img src="/photos/logo_invert.jpeg">
+							<img src="/photos/logo.jpeg">
+						</div>
 					</div>
 				</div>
 				<div class="row">
@@ -179,6 +202,7 @@
 </div>
 <%- include('./profile_pic/new_or_edit')%>
 <%- include('./profile_pic/photo_editor')%>
+<%- include('./talent_photos/add_edit')%>
 
 <script type="text/javascript" src='/scripts/work.js'></script>
 <script type="text/javascript" src='/scripts/editWork.js'></script>
@@ -186,6 +210,7 @@
 <script type="text/javascript" src='/scripts/autoFillAjax.js' userId='<%=currentUser._id%>'></script>
 <script type="text/javascript" src='/scripts/profileImage.js'></script>
 <script type="text/javascript" src='/scripts/calendar.js'></script>
+<script type="text/javascript" src='/scripts/talent_photo_form.js'></script>
 
 <script type="text/javascript">
 	var arr;
@@ -220,6 +245,28 @@
 
 	//create event listeners for drag event
 	dragElement(document.getElementById("photo"),document.getElementById("profile_img"));
+
+
+
+	function addBullet(e, input){
+		input.style.height = '1px';
+		input.style.height = (3+input.scrollHeight)+"px"
+		if(e.code == 'Enter'){
+			e.preventDefault();
+			console.log(input.parentNode.parentNode);
+			input.parentNode.parentNode.insertAdjacentHTML('beforeend', `<li>
+										<textarea name="basic-info" class="description-bullet" onkeypress="addBullet(event, this);" placeholder="Summary information"></textarea>
+										<button onclick="removeLI(this)">X</button>
+									</li>`);
+			$('ul li textarea').slice($('ul li textarea').length-1, $('ul li textarea').length).focus();
+		}
+	}
+
+	function removeLI(button){
+		if (button.parentNode.parentNode.childNodes.length -2 >1){
+			button.parentNode.remove();
+		}
+	}
 
 	function switchToAbout(button){
 		$('#profile-nav button').removeClass('active');
@@ -308,5 +355,37 @@
   ajax.send(urlEncodedData);
 }
 
+function sendTalentImage(data) {
+  let urlEncodedData = "",
+  urlEncodedDataPairs = [],
+  name;
+
+  for( name in data ) {
+		urlEncodedDataPairs.push( encodeURIComponent( name ) + '=' + encodeURIComponent( data[name] ) );
+	  }
+	  urlEncodedData = urlEncodedDataPairs.join( '&' ).replace( /%20/g, '+' );
+
+  var xmlHttpReq = false;
+
+  if (window.XMLHttpRequest) {
+    ajax = new XMLHttpRequest();
+  }
+  else if (window.ActiveXObject) {
+    ajax = new ActiveXObject("Microsoft.XMLHTTP");
+  }
+
+  ajax.open("POST", "/user/<%=currentUser._id%>/talent/newimage");
+  ajax.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+  $('.loader').removeClass('hide');
+  ajax.onreadystatechange = function() {
+	    if (this.readyState == 4 && this.status == 200) {
+	      showMainPage();
+	      location.reload();
+	    }
+	  };
+
+  ajax.send(urlEncodedData);
+}
 </script>
 <%- include('./partials/footer')%>

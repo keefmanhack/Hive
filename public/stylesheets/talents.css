@@ -44,8 +44,12 @@
 }
 
 #talents .experiences{
+    margin-top: 20px;
+}
+
+#talents .experiences .item{
     background: rgb(245,245,245);
-    margin-top: 22px;
+    margin: 10px 0;
     padding: 5px;
     border-radius: 1rem;
 }
@@ -86,6 +90,7 @@
 
 #talents .price{
 	font-size: 28px;
+    max-width: 80px;
 }
 
 #talents .pricing-method{
@@ -95,7 +100,7 @@
 #talents .product-summary{
 	background: rgb(245,245,245);
 	padding: 10px;
-    height: 400px;
+    height: 500px;
     border-radius: 1rem;
 }
 
@@ -113,6 +118,22 @@
 
 #talents .title{
 	font-weight: 600;
+    font-size: 2rem;
+}
+
+#talents .scroll-window{
+    overflow-y: auto;
+    width: 100%;
+    height: 400px;
+    background: rgb(50,50,50);
+    border-radius: 0.25rem;
+}
+
+#talents .scroll-window img{
+    height: 95%;
+    object-fit: contain;
+    width: inherit;
+   
 }
 
 #talents .showcase img{
@@ -168,4 +189,40 @@
     font-size: 12px;
     color: black;
     text-decoration: underline;
+}
+
+#talents .not-editable{
+    display: inline;
+    background: transparent;
+    border: none;
+    
+}
+
+#talents .price-formatter *{
+    display: inline;
+}
+
+#talents .pricing-method-formatter *{
+    display: inline;
+}
+
+#talents .description-bullet{
+        width: 90%;
+        vertical-align: top;
+        height: 31px;
+}
+
+#talents .add-photo{
+    position: relative;
+    background: rgba(0,0,0,.6);
+    top: -365px;
+    width: 91%;
+    height: 95%;
+    left: 10px;
+}
+
+#talents .add-photo .add-edit{
+    position: absolute;
+    left: 100px;
+    top: 152px;
 }

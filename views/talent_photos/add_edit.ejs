@@ -1,0 +1,60 @@
+<div id="talent-photo-form">
+	<div class="row">
+		<div class="col-lg-10">
+			<h1>Talent Photos</h1>
+		</div>
+		<div class="col-lg-2">
+			<h1>
+				<i onclick="closeTalentPhotoForm();" class="fas fa-times-circle exit"></i>
+			</h1>				
+		</div>
+	</div>	
+	<hr>
+	<div class="display-image">
+		<img class="main-image" src="">
+		<div class="loader">
+				<ul>
+					<li>
+						<i id=one class="far fa-circle"></i>
+					</li>
+					<li>
+						<i id=two class="far fa-circle"></i>
+					</li>
+					<li>
+						<i id=three class="far fa-circle"></i>
+					</li>
+					<li>
+						<i id=four class="far fa-circle"></i>
+					</li>
+					<li>
+						<i id=five class="far fa-circle"></i>
+					</li>
+				</ul>
+		</div>
+		<div class="main-image-overlay">
+			<div class="row">
+				<div class="col">
+					<button class="btn btn-primary">Edit</button>
+				</div>
+				<div class="col">
+					<button onclick="savePhoto();" class="btn btn-primary">Save</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col">
+			<button class="btn btn-primary" onclick="openPhotoDialog();">+  Upload New Photo</button>
+		</div>
+		<div class="col">
+
+		</div>
+
+	</div>
+	<div class="row">
+		<div class="col">
+			<h2>Photo Gallary</h2>
+		</div>
+	</div>
+	<input style="display: none;" class="image-dialog" onchange="readURLTalent(this);" type="file" name="">
+</div>

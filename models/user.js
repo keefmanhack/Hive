@@ -32,7 +32,11 @@ var UserSchema = new mongoose.Schema({
 			from: Number,
 			to: Number
 		}]
-	}
+	},
+	talents: [{
+		type: mongoose.Schema.Types.ObjectId,
+		ref: "Talent"
+	}]
 });
 
 UserSchema.plugin(passportLocalMongoose);

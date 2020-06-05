@@ -7,6 +7,7 @@ var express = require('express'),
 	clearbit = require('clearbit')('sk_ef5a2ccffe2f8e4e0a3aa0dd59e0df9d');
 
 var User = require("../models/user");
+var Talent = require("../models/talent");
 
 router.get('/', function(req, res){
 	res.render('home');
@@ -15,6 +16,60 @@ router.get('/', function(req, res){
 router.get('/searchResult', function(req, res){
 	res.render('results');
 });
+
+router.post('/user/:id/talent/:talent_id/newimage', verifyTalentUserRel(), function(req, res){
+	User.findById(req.params.id, function(err, foundUser){
+		if(err){
+			console.log(err);
+		}else{
+			var cropped_data = req.body.cropped_profile_image.replace(/^data:image\/\w+;base64,/, "");
+			
+			var directory = 'public/uploads/profiles/' + foundUser._id;
+			var cropped_path = 'public/uploads/profiles/' + foundUser._id +'/cropped_profile.jpg';
+			var cropped_mongoPath = '/uploads/profiles/' + foundUser._id +'/cropped_profile.jpg';
+
+
+			if (!fs.existsSync(directory)){
+				fs.mkdir(directory, { recursive: true }, (err) => {
+	  				if (err) throw err;
+				});
+			}
+
+			var buf = new Buffer(cropped_data, 'base64');
+			fs.writeFileSync(cropped_path, buf, (err) => {
+				if(err){
+					console.log(err);
+				}
+			});
+
+			//in case of edit mode
+			if( req.body && req.body.profile_image){
+				var profile_data = req.body.profile_image.replace(/^data:image\/\w+;base64,/, "");
+				var profile_path = 'public/uploads/profiles/' + foundUser._id +'/profile.jpg';
+				var profile_mongoPath = '/uploads/profiles/' + foundUser._id +'/profile.jpg';
+
+				var buf = new Buffer(profile_data, 'base64');
+				fs.writeFileSync(profile_path, buf, (err) => {
+					if(err){
+						console.log(err);
+					}
+				});
+				foundUser.profile_image.profile_path = profile_mongoPath;
+			}
+
+			
+			foundUser.profile_image.cropped_profile_path = cropped_mongoPath;
+			foundUser.profile_image.orient = req.body.orient;
+			foundUser.save(function(err){
+					if(err){
+						console.log(err)
+					}
+				res.redirect('/user/' + foundUser._id);
+
+			foundUser.talents.main_photos.push();
+		}
+	})
+})
 
 router.get('/user/:id', function(req, res){
 	User.findById(req.params.id, function(err, foundUser){
