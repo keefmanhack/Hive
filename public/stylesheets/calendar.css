@@ -13,6 +13,21 @@
 	padding: 5px;
     background: rgb(30,30,30);
     border-radius: .25rem;
+    position: absolute;
+}
+
+.calendar .availability-edit{
+	position: absolute;
+    height: inherit;
+    width: 97%;
+    top: 44px;
+    height: 82%;
+    padding: 79px 44px;
+    background: rgba(0,0,0,.6);
+}
+
+.calendar .availability-edit button{
+	background: blue;
 }
 
 .calendar button{

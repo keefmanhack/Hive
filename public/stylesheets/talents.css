@@ -6,6 +6,20 @@
 	display: block;
 }
 
+#talents .add-marketing-info{
+    position: relative;
+    background: rgba(0,0,0,.6);
+    top: -399px;
+    width: inherit;
+    height: inherit;
+}
+
+#talents .add-marketing-info button{
+    position: absolute;
+    left: 329px;
+    top: 152px;
+}
+
 #talents .availability{
     background: #edfaeb;
     padding: 20px;
@@ -108,6 +122,12 @@
     padding-left: 0;
 }
 
+#talents .marketing-photos{
+    width: 100%;
+    height: 400px;
+}
+}
+
 #talents .rating{
 	font-size: 10px;
 }
@@ -123,8 +143,8 @@
 
 #talents .scroll-window{
     overflow-y: auto;
-    width: 100%;
-    height: 400px;
+    height: inherit;
+    width: inherit;
     background: rgb(50,50,50);
     border-radius: 0.25rem;
 }

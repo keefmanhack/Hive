@@ -145,12 +145,15 @@
 						 </div>
 						</div>
 					</div>
-					<div class="col-lg-8">
+					<div class="col-lg-8 marketing-photos">
 						<h1>Learn More</h1>
 						<div class="scroll-window">
 							<img src="/photos/logo.jpeg">
 							<img src="/photos/logo_invert.jpeg">
 							<img src="/photos/logo.jpeg">
+						</div>
+						<div class="add-marketing-info">
+							<button class="btn btn-primary add-edit" onclick="showAddEditPhotoForm()">Add/ Edit Photos</button>
 						</div>
 					</div>
 				</div>
@@ -203,6 +206,7 @@
 <%- include('./profile_pic/new_or_edit')%>
 <%- include('./profile_pic/photo_editor')%>
 <%- include('./talent_photos/add_edit')%>
+<%- include('./partials/editAvailability')%>
 
 <script type="text/javascript" src='/scripts/work.js'></script>
 <script type="text/javascript" src='/scripts/editWork.js'></script>
@@ -211,6 +215,7 @@
 <script type="text/javascript" src='/scripts/profileImage.js'></script>
 <script type="text/javascript" src='/scripts/calendar.js'></script>
 <script type="text/javascript" src='/scripts/talent_photo_form.js'></script>
+<script type="text/javascript" src='/scripts/availability_calender.js'></script>
 
 <script type="text/javascript">
 	var arr;
@@ -245,6 +250,29 @@
 
 	//create event listeners for drag event
 	dragElement(document.getElementById("photo"),document.getElementById("profile_img"));
+
+
+	function showEditAvailabilityForm(){
+		$('.edit-availability').addClass('show');
+		$('.page-container').addClass('hide');
+	}
+
+	function closeAvailabilityForm(){
+		$('.edit-availability').removeClass('show');
+		$('.page-container').removeClass('hide');
+	}
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
