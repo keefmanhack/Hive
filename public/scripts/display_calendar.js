@@ -30,8 +30,8 @@ function showCalendar(year, month){
 	var ct =1;
 	var text = "";
 
-	$(".calendar h1")[0].textContent = Months[date.getMonth()];
-	$(".calendar h2")[0].textContent = date.getFullYear();
+	$(".display.calendar h1")[0].textContent = Months[date.getMonth()];
+	$(".display.calendar h2")[0].textContent = date.getFullYear();
 
 	for(var i =0; i< rows; i++){
 		var rowText =[];
@@ -52,7 +52,7 @@ function showCalendar(year, month){
 		}
 
 		text += `</tr>`;
-  		$(".calendar tbody").append(text);
+  		$(".display.calendar tbody").append(text);
 	}
 
 	NotInMonth(); //grey out unused dates
@@ -79,26 +79,26 @@ function numOfDaysInMonth(year, month){
 }
 
 function clearCalendar(){
-	$(".calendar tbody").empty();
+	$(".display.calendar tbody").empty();
 }
 
 function NotInMonth(){
 	var firstLast = [];
-	for(var i =0; i<$(".calendar tbody th").length; i++){
-		if($(".calendar tbody th span")[i].textContent == 1){
+	for(var i =0; i<$(".display.calendar tbody th").length; i++){
+		if($(".display.calendar tbody th span")[i].textContent == 1){
 			firstLast.push(i);
 		}
 	}
 
 	if(firstLast[0] >0){
-		$(".calendar tbody th").slice(0, firstLast[0]).addClass("muted");
+		$(".display.calendar tbody th").slice(0, firstLast[0]).addClass("muted");
 	}
 	if(firstLast[1]){
-		$(".calendar tbody th").slice(firstLast[1], $(".calendar tbody th").length).addClass("muted");
+		$(".display.calendar tbody th").slice(firstLast[1], $(".calendar tbody th").length).addClass("muted");
 	}
 }
 
-$(".calendar #month-back").click(function(){
+$(".display.calendar #month-back").click(function(){
 	if(currentMonth-1 < 0){
 		currentMonth = 11;
 		currentYear--;
@@ -109,7 +109,7 @@ $(".calendar #month-back").click(function(){
 	
 });
 
-$(".calendar #month-next").click(function(){
+$(".display.calendar #month-next").click(function(){
 	if(currentMonth+1 > 11){
 		currentMonth = 0;
 		currentYear++;

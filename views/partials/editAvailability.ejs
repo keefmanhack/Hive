@@ -15,63 +15,8 @@
 			<%- include('./calendar')%>
 		</div>
 		<div class="col-lg-4">
-			<form>
-				<div class="form-row">
-					<div class="col form-group">
-						<input type="text" class="form-control date" name="date" disabled>
-					</div>
-				</div>
-				<div class="form-row">
-					<div class="col-lg-2 form-group">
-						<input type="number" class="form-control" min="1" max="12" name="start-time-hour">
-					</div>
-					<div class="col-lg-1 form-group">
-						<label>:</label>
-					</div>
-					<div class="col-lg-2 form-group">
-						<input type="number" class="form-control" min="0" max="59" name="start-time-minute">
-					</div>
-					<div class="col-lg-2 form-group">
-						<select class="form-control">
-							<option>AM</option>
-							<option>PM</option>
-						</select>
-					</div>
-				</div>
-				<div class="form-row">
-					<div class="col-lg-2 form-group">
-						<input type="number" class="form-control" min="1" max="12" name="end-time-hour">
-					</div>
-					<div class="col-lg-1 form-group">
-						<label>:</label>
-					</div>
-					<div class="col-lg-2 form-group">
-						<input type="number" class="form-control" min="0" max="59" name="end-time-minute">
-					</div>
-					<div class="col-lg-2 form-group">
-						<select class="form-control">
-							<option>AM</option>
-							<option>PM</option>
-						</select>
-					</div>
-				</div>
-				<div class="form-row">
-					<div class="col form-group">
-						<input type="radio" name="">
-						<label>One Time</label>
-					</div>
-					<div class="col form-group">
-						<input type="radio" name="">
-						<label>Repeat</label>
-					</div>
-				</div>
-				<div class="form-row">
-					<div class="col form-group">
-						<button class="btn btn-primary">Save</button>
-					</div>
-				</div>
-			</form>
 		</div>
 	</div>
 	
 </div>
+<%- include('./add_new_form')%>

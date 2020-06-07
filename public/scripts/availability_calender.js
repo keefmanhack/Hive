@@ -3,13 +3,16 @@ var DaysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Frida
 var currentMonth;
 var currentYear;
 var classData;
-
+var thArr = [];
+$('#on').datepicker();
 
 initializeCalendar();
 addNewEventListeners();
 
 function showCalendar(year, month){
 	clearCalendar();
+	thArr.splice(0, thArr.length);
+
 
 	//DATE INFORMATION
 	var date = new Date(year, month, 1);
@@ -34,7 +37,9 @@ function showCalendar(year, month){
 	$(".edit-availability .calendar h1")[0].textContent = Months[date.getMonth()];
 	$(".edit-availability .calendar h2")[0].textContent = date.getFullYear();
 
+	var thCt = 0;
 	for(var i =0; i< rows; i++){
+
 		var rowText =[];
 		for(var j =0; j<cols; j++){
 			if (ct <= previousMonthDays){
@@ -49,8 +54,16 @@ function showCalendar(year, month){
 
 		text = `<tr>`;
 		for(var k =0; k<rowText.length; k++){
-			text += `<th>` + `<span>` + rowText[k] + `</span>` + `</th>`;
+			text += `<th id='`+ thCt +`'>` + `<span>` + rowText[k] + `</span>` + `</th>`;
+			thArr.push({
+				thID : thCt,
+				day: rowText[k],
+				month: Months[date.getMonth()],
+				year: date.getFullYear()
+			});
+			thCt++;
 		}
+		
 
 		text += `</tr>`;
   		$(".edit-availability .calendar tbody").append(text);
@@ -112,36 +125,77 @@ $(".edit-availability .calendar #month-back").click(function(){
 });
 
 $(".edit-availability .calendar #month-next").click(function(){
+	console.log(currentMonth);
 	if(currentMonth+1 > 11){
 		currentMonth = 0;
 		currentYear++;
 	}else{
 		currentMonth++;
 	}
+	console.log(currentMonth);
 	showCalendar(currentYear, currentMonth);
 	addNewEventListeners();
 	
 });
 
+function disableAfterandOn(){
+	$('#occurences').prop('disabled', true);
+	$('#on').prop('disabled', true);
+}
 
+function removeDisabledAfter(){
+	$('#occurences').prop('disabled', false);
+	$('#on').prop('disabled', true);
+}
 
+function removeDisabledOn(){
+	$('#on').prop('disabled', false);
+	$('#occurences').prop('disabled', true);
+}
 
+function showRepeatForm(){
+	$('.add-new-form').removeClass('show');
+	$('.edit-availability').removeClass('hide');
+}
 
+function toggleChecked(label){
+	console.log(label);
+	label.classList.toggle("dayChecked");
+}
 
+function showRepeat(){
+	$('.add-new-form .repeat').addClass('show');
+}
+
+function hideRepeat(){
+	$('.add-new-form .repeat').removeClass('show');
+}
 
 function addNewEventListeners(){
 	$('.edit-availability .calendar tbody th:not(.muted)').on('mouseenter', function(){
-		$(this).append(`<button onclick='showAddNewForm(this);' class='btn btn-primary add-new'>Add New...</button>`);
+		$(this).append(`<button onclick='showAddNewForm(this);' class='btn btn-primary add-new'><span>Add New...</span></button>`);
 	})
 
 	$('.edit-availability .calendar tbody th:not(.muted)').on('mouseleave', function(){
-		console.log($(this).find('.add-new'));
 		$(this).find('.add-new').remove();
 	})
 }
 
-function addNewForm(button){
-	button.parentNode.style.boxShadow = '0 10px rgb(200,200,200) inset';
+function showAddNewForm(button){
+	// button.parentNode.style.boxShadow = '0 10px rgb(200,200,200) inset';
+	var thID = button.parentNode.id;
 
-	$('.date').val(button.parentNode.childNodes[1].value + ' ' + Months[currentMonth] + ', ' + currentYear);
+	thArr.forEach(function(th){
+		if(thID == th.thID){
+			$('.date').val(th.day + ' ' + th.month + ', ' + th.year);
+			$('.add-new-form').addClass('show');
+			$('.edit-availability').removeClass('show');
+
+		}
+	});
+}
+
+function closeAddNewForm(){
+	$('.add-new-form').removeClass('show');
+	$('.edit-availability').addClass('show');
 }
