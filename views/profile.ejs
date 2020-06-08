@@ -3,14 +3,14 @@
 	<div id="top-section">
 		<div id="user-info">
 			<div id="profile-image">
-				<%if(currentUser && currentUser.profile_image && currentUser.profile_image.cropped_profile_path){%>
-					<img src="<%=currentUser.profile_image.cropped_profile_path%>">
+				<%if(user && user.profile_image && user.profile_image.cropped_profile_path){%>
+					<img src="<%=user.profile_image.cropped_profile_path%>">
 				<%}else{%>
 					<img src="/photos/generic_person.jpg">
 				<%}%>	
 			</div>
 			<i class="fas fa-camera"></i>
-			<h1 ><strong><%=currentUser.firstName%> <%=currentUser.lastName%></strong></h1>
+			<h1 ><strong><%=user.firstName%> <%=user.lastName%></strong></h1>
 		</div>
 
 		<hr>
@@ -37,132 +37,148 @@
 			<div class="selector-bar">
 				<div class="row">
 					<div class="col-lg-2">
-						<select>
-							<option>1</option>
-						</select>
+						<%if (user && user.talents && user.talents.length>0){%>
+							<select onchange="determineActive(this);" class="form-control">
+								<%user.talents.forEach(function(talent){%>
+									<option>
+										<%if (talent && talent.title){%>
+											<%=talent.title%>
+										<%}else{%>
+											Unnamed
+										<%}%>
+									</option>
+								<%})%>
+							</select>
+						<%}%>
 					</div>
 					<div class="col-lg-2">
-						<button class="btn btn-primary">Manage</button>
+						<%if (user && user.talents && user.talents.length>0){%>
+							<button onclick="toggleTalentEditable();" class="btn btn-primary">Manage</button>
+						<%}%>
 					</div>
 					<div class="col-lg-6">
 						<!-- I'm intentionally empty -->
 					</div>
 					<div class="col-lg-2">
-						<button class="btn btn-primary">New Talent</button>
+						<button onclick="showNewTalentForm();" class="btn btn-primary">New Talent</button>
 					</div>
 				</div>
 			</div>
-			<div class="talent-item ">
-				<div class="row">
-					<div class="col-lg-8 product-summary">
+			<%if (user && user.talents && user.talents.length>0){%>
+				<%user.talents.forEach(function(talent){%>
+					<div class="talent-item not-editable">
 						<div class="row">
-							<div class="col">
-								<a class="user" href=""><%=currentUser.firstName%> <%=currentUser.lastName%></a>
-								<input type="text" name="product" class="title" value="Product" placeholder="Talent Name">
-								<h5 class="rating orange-color"><i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i></h5>
-								<div class="price-formatter">
-									<h1 class="price">$</h1>
-									<input type="number" min="0" class="price ones" name="price" placeholder="100">
-									<h1 class="price">.</h1>
-									<input type="number" class="price decimal" name="price" min="0" placeholder="00">
+							<div class="col-lg-8 product-summary">
+								<div class="row">
+									<div class="col">
+										<a class="user" href=""><%=user.firstName%> <%=user.lastName%></a>
+										<input type="text" name="product" class="title" value="<%=talent.title%>" placeholder="Talent Name">
+										<h5 class="rating orange-color"><i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i></h5>
+										<div class="price-formatter">
+											<h1 class="price">$</h1>
+											<input type="number" min="0" class="price ones" name="price" placeholder="100">
+											<h1 class="price">.</h1>
+											<input type="number" class="price decimal" name="price" min="0" placeholder="00">
+										</div>
+										<div class="pricing-method-formatter">
+											<h2 class='pricing-method'>/</h2>
+											<input type="text" class="pricing-method" name="pricing_method" placeholder="per event">
+										</div>
+										
+										
+										<hr>
+										<ul>
+											<li>
+												<textarea name="basic-info" class="description-bullet" onkeypress="addBullet(event, this);" placeholder="Summary information"></textarea>
+												<button onclick="removeLI(this)">X</button>
+											</li>
+										</ul>
+									</div>
+									<div class="col showcase">
+										<img src="/photos/logo.jpeg">
+										<div class="add-photo">
+											<button class="btn btn-primary add-edit" onclick="showAddEditPhotoForm()">Add/ Edit Photos</button>
+										</div>
+									</div>
 								</div>
-								<div class="pricing-method-formatter">
-									<h2 class='pricing-method'>/</h2>
-									<input type="text" class="pricing-method" name="pricing_method" placeholder="per event">
-								</div>
-								
-								
-								<hr>
-								<ul>
-									<li>
-										<textarea name="basic-info" class="description-bullet" onkeypress="addBullet(event, this);" placeholder="Summary information"></textarea>
-										<button onclick="removeLI(this)">X</button>
-									</li>
-								</ul>
 							</div>
-							<div class="col showcase">
-								<img src="/photos/logo.jpeg">
-								<div class="add-photo">
+							<div class="col-lg-3 availability">
+								<h1 class="price">$100.67</h1>
+								<%- include('./partials/calendar')%>
+							</div>
+						</div>
+						<div class="row description">
+							<div class="col-lg-4 profile-container">
+								<div class="name-and-photo orange-background">
+									<div class="row">
+										<div class="col">
+											<img src="<%=user.profile_image.cropped_profile_path%>">
+								 			<a href=""><h1><%=user.firstName%> <%=user.lastName%></h1></a>
+										</div>
+									</div>
+								</div>
+								<div class="basic-user">
+									<div class="row social-links">
+										<div class="col-sm-3">
+											<a href="">Reviews</a>
+										</div>
+										<div class="col-sm-1">
+											<a href=""><h1><i class="fab fa-instagram"></i></h1></a>
+										</div>
+										<div class="col-sm-1">
+											<a href=""><h1><i class="fab fa-facebook"></i></h1></a>
+										</div>
+										<div class="col-sm-1">
+											<a href=""><h1><i class="fab fa-twitter"></i></h1></a>
+										</div>
+									</div>
+								 <p><%=user.about.bio.text%></p>
+								 <div class="skills">
+								 	<h2>Skill 1</h2>
+								 	<h2>Skill 2</h2>
+								 	<h2>Skill 3</h2>
+								 </div>
+								 <div class="experiences">
+								 	<%user.about.work.forEach(function(o){%>
+									 	<div class="row item">
+									 		<div class="col-lg-3">
+									 			<img src="<%=o.companyLogo%>">
+									 		</div>
+									 		<div class="col-lg-9">
+									 			<div class="row company-info">
+									 				<div class="col">
+									 					<h2 class="company"><%=o.company%></h2>
+									 				</div>
+									 				<div class="col">
+									 					<h2 class="position"><%=o.position%></h2>
+									 				</div>
+									 			</div>
+									 		</div>
+									 	</div>
+									 <%})%>
+								 </div>
+								</div>
+							</div>
+							<div class="col-lg-8 marketing-photos">
+								<h1>Learn More</h1>
+								<div class="scroll-window">
+									<img src="/photos/logo.jpeg">
+									<img src="/photos/logo_invert.jpeg">
+									<img src="/photos/logo.jpeg">
+								</div>
+								<div class="add-marketing-info">
 									<button class="btn btn-primary add-edit" onclick="showAddEditPhotoForm()">Add/ Edit Photos</button>
 								</div>
 							</div>
 						</div>
-					</div>
-					<div class="col-lg-3 availability">
-						<h1 class="price">$100.67</h1>
-						<%- include('./partials/calendar')%>
-					</div>
-				</div>
-				<div class="row description">
-					<div class="col-lg-4 profile-container">
-						<div class="name-and-photo orange-background">
-							<div class="row">
-								<div class="col">
-									<img src="<%=currentUser.profile_image.cropped_profile_path%>">
-						 			<a href=""><h1><%=currentUser.firstName%> <%=currentUser.lastName%></h1></a>
-								</div>
+						<div class="row">
+							<div class="col">
+								<h1>Ratings</h1>
 							</div>
 						</div>
-						<div class="basic-user">
-							<div class="row social-links">
-								<div class="col-sm-3">
-									<a href="">Reviews</a>
-								</div>
-								<div class="col-sm-1">
-									<a href=""><h1><i class="fab fa-instagram"></i></h1></a>
-								</div>
-								<div class="col-sm-1">
-									<a href=""><h1><i class="fab fa-facebook"></i></h1></a>
-								</div>
-								<div class="col-sm-1">
-									<a href=""><h1><i class="fab fa-twitter"></i></h1></a>
-								</div>
-							</div>
-						 <p><%=currentUser.about.bio.text%></p>
-						 <div class="skills">
-						 	<h2>Skill 1</h2>
-						 	<h2>Skill 2</h2>
-						 	<h2>Skill 3</h2>
-						 </div>
-						 <div class="experiences">
-						 	<%currentUser.about.work.forEach(function(o){%>
-							 	<div class="row item">
-							 		<div class="col-lg-3">
-							 			<img src="<%=o.companyLogo%>">
-							 		</div>
-							 		<div class="col-lg-9">
-							 			<div class="row company-info">
-							 				<div class="col">
-							 					<h2 class="company"><%=o.company%></h2>
-							 				</div>
-							 				<div class="col">
-							 					<h2 class="position"><%=o.position%></h2>
-							 				</div>
-							 			</div>
-							 		</div>
-							 	</div>
-							 <%})%>
-						 </div>
-						</div>
 					</div>
-					<div class="col-lg-8 marketing-photos">
-						<h1>Learn More</h1>
-						<div class="scroll-window">
-							<img src="/photos/logo.jpeg">
-							<img src="/photos/logo_invert.jpeg">
-							<img src="/photos/logo.jpeg">
-						</div>
-						<div class="add-marketing-info">
-							<button class="btn btn-primary add-edit" onclick="showAddEditPhotoForm()">Add/ Edit Photos</button>
-						</div>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col">
-						<h1>Ratings</h1>
-					</div>
-				</div>
-			</div>
+				<%})%>
+			<%}%>
 		</div>
 		<div class="page" id="about">
 			<div class="row">
@@ -176,8 +192,8 @@
 				</div>
 				<div class="col right">
 					<div id="bio" class="active">
-						<form on action="/user/<%=currentUser._id%>/edit/bio" method="POST">
-							<textarea name="text"><% if (currentUser && currentUser.about && currentUser.about.bio){%><%=currentUser.about.bio.text%><%}%></textarea>
+						<form on action="/user/<%=user._id%>/edit/bio" method="POST">
+							<textarea name="text"><% if (user && user.about && user.about.bio){%><%=user.about.bio.text%><%}%></textarea>
 							<div class="row">
 								<div class="col-lg-3">
 									<button type="button" onclick="bioEditable();" id="edit" class="strip btn btn-primary">Edit</button>
@@ -207,15 +223,16 @@
 <%- include('./profile_pic/photo_editor')%>
 <%- include('./talent_photos/add_edit')%>
 <%- include('./partials/editAvailability')%>
+<%- include('./partials/new_talent_form')%>
 
 <script type="text/javascript" src='/scripts/work.js'></script>
 <script type="text/javascript" src='/scripts/editWork.js'></script>
 <script type="text/javascript" src='/scripts/photo_edit.js'></script>
-<script type="text/javascript" src='/scripts/autoFillAjax.js' userId='<%=currentUser._id%>'></script>
+<script type="text/javascript" src='/scripts/autoFillAjax.js' userId='<%=user._id%>'></script>
 <script type="text/javascript" src='/scripts/profileImage.js'></script>
 <script type="text/javascript" src='/scripts/display_calendar.js'></script>
 <script type="text/javascript" src='/scripts/talent_photo_form.js'></script>
-<script type="text/javascript" src='/scripts/availability_calender.js'></script>
+<!-- <script type="text/javascript" src='/scripts/availability_calender.js'></script> -->
 
 <script type="text/javascript">
 	var arr;
@@ -262,13 +279,35 @@
 		$('.page-container').removeClass('hide');
 	}
 
+	function showNewTalentForm(){
+		$('.new-talent-form').addClass('show');
+		$('.page-container').addClass('hide');
+	}
+
+	function hideNewTalentForm(){
+		$('.new-talent-form').removeClass('show');
+		$('.page-container').removeClass('hide');
+	}
 
 
+	if($('.talent-item').length >0){
+		$('.talent-item').slice(0,1).addClass('active');
+	}
 
+	function determineActive(sel){
+		$('.talent-item').removeClass('active');
+		console.log(sel.selectedIndex)
+		for(var i =0; i<$('.talent-item').length; i++){
+			if(i===sel.selectedIndex){
+				$('.talent-item').slice(i, i+1).addClass('active');
+			}
+		}
 
+	}
 
-
-
+	function toggleTalentEditable(){
+		$('#talents .talent-item').toggleClass('not-editable');
+	}
 
 
 
@@ -369,7 +408,7 @@
     ajax = new ActiveXObject("Microsoft.XMLHTTP");
   }
 
-  ajax.open("POST", "/user/<%=currentUser._id%>/edit_profile_image");
+  ajax.open("POST", "/user/<%=user._id%>/edit_profile_image");
   ajax.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 
   $('.loader').removeClass('hide');
@@ -402,7 +441,7 @@ function sendTalentImage(data) {
     ajax = new ActiveXObject("Microsoft.XMLHTTP");
   }
 
-  ajax.open("POST", "/user/<%=currentUser._id%>/talent/newimage");
+  ajax.open("POST", "/user/<%=user._id%>/talent/newimage");
   ajax.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 
   $('.loader').removeClass('hide');

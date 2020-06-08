@@ -71,8 +71,35 @@ router.get('/searchResult', function(req, res){
 // 	})
 // })
 
-router.get('/user/:id', function(req, res){
+router.post('/user/:id/talent/new', function(req, res){
 	User.findById(req.params.id, function(err, foundUser){
+		if(err){
+			console.log(err);
+			req.flash('error', 'User not found');
+		}else{
+			Talent.create(req.body, function(err, newTalent){
+				if (err){
+					console.log(err);
+					req.flash('error', 'Could not create new talent');
+				}else{
+					newTalent.save(function(err){
+						if (err) {
+							console.log(err)
+						}else{
+							foundUser.talents.push(newTalent);
+							foundUser.save();
+							res.redirect('/user/' + foundUser._id);
+						}
+					});
+					
+				}
+			})
+		}
+	})
+})
+
+router.get('/user/:id', function(req, res){
+	User.findById(req.params.id).populate({path: 'talents'}).exec(function(err, foundUser){
 		if(err){
 			flash('error', 'Can not find user');
 			res.redirect('/');

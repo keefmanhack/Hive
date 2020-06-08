@@ -134,11 +134,61 @@
 
 #talents .talent-item{
 	margin: 21px;
+    display: none;
+}
+
+#talents .talent-item.active{
+    display: block;
 }
 
 #talents .title{
 	font-weight: 600;
     font-size: 2rem;
+}
+
+#talents .talent-item.not-editable .title{
+    background: transparent;
+    border: none;
+    pointer-events: none;
+    color: black;
+}
+
+#talents .talent-item.not-editable .price{
+    background: transparent;
+    border: none;
+    pointer-events: none;
+    color: black;
+}
+
+#talents .talent-item.not-editable .pricing-method{
+    background: transparent;
+    border: none;
+    pointer-events: none;
+    color: black;
+}
+
+#talents .talent-item.not-editable .description-bullet{
+    background: transparent;
+    border: none;
+    pointer-events: none;
+    color: black;
+    resize: none;
+}
+
+#talents .talent-item.not-editable li button{
+    display: none;
+}
+
+#talents .talent-item.not-editable .add-photo{
+    display: none;
+}
+
+#talents .talent-item.not-editable .availability-edit{
+    display: none;
+}
+
+#talents .talent-item.not-editable .add-marketing-info{
+    display: none;
 }
 
 #talents .scroll-window{
@@ -211,12 +261,12 @@
     text-decoration: underline;
 }
 
-#talents .not-editable{
+/*#talents .not-editable{
     display: inline;
     background: transparent;
     border: none;
     
-}
+}*/
 
 #talents .price-formatter *{
     display: inline;

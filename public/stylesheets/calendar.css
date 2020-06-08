@@ -16,6 +16,14 @@
     position: absolute;
 }
 
+.calendar .float-right{
+	float: right;
+}
+
+.calendar .month{
+	font-size: 2rem;
+}
+
 .calendar .availability-edit{
 	position: absolute;
     height: inherit;

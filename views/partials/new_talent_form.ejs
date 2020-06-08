@@ -1,0 +1,25 @@
+<div class="new-talent-form">
+	<div class="row">
+		<div class="col-lg-9">
+			<h1>New Talent</h1>
+		</div>
+		<div class="col-lg-2">
+			<h1>
+				<i onclick='hideNewTalentForm();' class="fas fa-times-circle exit"></i>
+			</h1>	
+		</div>
+	</div>
+	<hr>
+	<form action="/user/<%=currentUser._id%>/talent/new" method="POST">
+		<div class="form-row">
+			<div class="col form-group">
+				<input type="text" class="form-control" name="title" placeholder="Talent Name">
+			</div>
+		</div>
+		<div class="form-row">
+			
+		</div>
+		
+		<button style="width: 100%" class="btn btn-primary">Submit</button>
+	</form>
+</div>

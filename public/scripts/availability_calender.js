@@ -1,9 +1,8 @@
 var Months = ["January", "Febuary", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 var DaysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-var currentMonth;
-var currentYear;
-var classData;
-var thArr = [];
+var currentMonthAv;
+var currentYearAv;
+var thArrAv = [];
 $('#on').datepicker();
 
 initializeCalendar();
@@ -11,7 +10,7 @@ addNewEventListeners();
 
 function showCalendar(year, month){
 	clearCalendar();
-	thArr.splice(0, thArr.length);
+	thArrAv.splice(0, thArrAv.length);
 
 
 	//DATE INFORMATION
@@ -34,8 +33,8 @@ function showCalendar(year, month){
 	var ct =1;
 	var text = "";
 
-	$(".edit-availability .calendar h1")[0].textContent = Months[date.getMonth()];
-	$(".edit-availability .calendar h2")[0].textContent = date.getFullYear();
+	$(".edit-availability .availability.calendar h1")[0].textContent = Months[date.getMonth()];
+	$(".edit-availability .availability.calendar h2#yearAv")[0].textContent = date.getFullYear();
 
 	var thCt = 0;
 	for(var i =0; i< rows; i++){
@@ -55,7 +54,7 @@ function showCalendar(year, month){
 		text = `<tr>`;
 		for(var k =0; k<rowText.length; k++){
 			text += `<th id='`+ thCt +`'>` + `<span>` + rowText[k] + `</span>` + `</th>`;
-			thArr.push({
+			thArrAv.push({
 				thID : thCt,
 				day: rowText[k],
 				month: Months[date.getMonth()],
@@ -66,7 +65,7 @@ function showCalendar(year, month){
 		
 
 		text += `</tr>`;
-  		$(".edit-availability .calendar tbody").append(text);
+  		$(".edit-availability .availability.calendar tbody").append(text);
 	}
 
 	NotInMonth(); //grey out unused dates
@@ -77,9 +76,9 @@ function showCalendar(year, month){
 //*************************
 function initializeCalendar(){
 	var date = new Date();
-	currentMonth = date.getMonth();
-	currentYear = date.getFullYear();
-	showCalendar(currentYear, currentMonth);
+	currentMonthAv = date.getMonth();
+	currentYearAv = date.getFullYear();
+	showCalendar(currentYearAv, currentMonthAv);
 }
 
 function numOfDaysInMonth(year, month){
@@ -93,109 +92,47 @@ function numOfDaysInMonth(year, month){
 }
 
 function clearCalendar(){
-	$(".edit-availability .calendar tbody").empty();
+	$(".edit-availability .availability.calendar tbody").empty();
 }
 
 function NotInMonth(){
 	var firstLast = [];
-	for(var i =0; i<$(".edit-availability .calendar tbody th").length; i++){
-		if($(".edit-availability .calendar tbody th span")[i].textContent == 1){
+	for(var i =0; i<$(".edit-availability .availability.calendar tbody th").length; i++){
+		if($(".edit-availability .availability.calendar tbody th span")[i].textContent == 1){
 			firstLast.push(i);
 		}
 	}
 
 	if(firstLast[0] >0){
-		$(".edit-availability .calendar tbody th").slice(0, firstLast[0]).addClass("muted");
+		$(".edit-availability .availability.calendar tbody th").slice(0, firstLast[0]).addClass("muted");
 	}
 	if(firstLast[1]){
-		$(".edit-availability .calendar tbody th").slice(firstLast[1], $(".edit-availability .calendar tbody th").length).addClass("muted");
+		$(".edit-availability .availability.calendar tbody th").slice(firstLast[1], $(".edit-availability .calendar tbody th").length).addClass("muted");
 	}
 }
 
-$(".edit-availability .calendar #month-back").click(function(){
-	if(currentMonth-1 < 0){
-		currentMonth = 11;
-		currentYear--;
+$(".edit-availability .availability.calendar #month-back-availability").click(function(){
+	if(currentMonthAv-1 < 0){
+		currentMonthAv = 11;
+		currentYearAv--;
 	}else{
-		currentMonth--;
+		currentMonthAv--;
 	}
-	showCalendar(currentYear, currentMonth);
+	showCalendar(currentYearAv, currentMonthAv);
 	addNewEventListeners();
 	
 });
 
-$(".edit-availability .calendar #month-next").click(function(){
-	console.log(currentMonth);
-	if(currentMonth+1 > 11){
-		currentMonth = 0;
-		currentYear++;
+$(".edit-availability .availability.calendar #month-next-availability").click(function(){
+	console.log(currentMonthAv);
+	if(currentMonthAv+1 > 11){
+		currentMonthAv = 0;
+		currentYearAv++;
 	}else{
-		currentMonth++;
+		currentMonthAv++;
 	}
-	console.log(currentMonth);
-	showCalendar(currentYear, currentMonth);
+	showCalendar(currentYearAv, currentMonthAv);
 	addNewEventListeners();
 	
 });
 
-function disableAfterandOn(){
-	$('#occurences').prop('disabled', true);
-	$('#on').prop('disabled', true);
-}
-
-function removeDisabledAfter(){
-	$('#occurences').prop('disabled', false);
-	$('#on').prop('disabled', true);
-}
-
-function removeDisabledOn(){
-	$('#on').prop('disabled', false);
-	$('#occurences').prop('disabled', true);
-}
-
-function showRepeatForm(){
-	$('.add-new-form').removeClass('show');
-	$('.edit-availability').removeClass('hide');
-}
-
-function toggleChecked(label){
-	console.log(label);
-	label.classList.toggle("dayChecked");
-}
-
-function showRepeat(){
-	$('.add-new-form .repeat').addClass('show');
-}
-
-function hideRepeat(){
-	$('.add-new-form .repeat').removeClass('show');
-}
-
-function addNewEventListeners(){
-	$('.edit-availability .calendar tbody th:not(.muted)').on('mouseenter', function(){
-		$(this).append(`<button onclick='showAddNewForm(this);' class='btn btn-primary add-new'><span>Add New...</span></button>`);
-	})
-
-	$('.edit-availability .calendar tbody th:not(.muted)').on('mouseleave', function(){
-		$(this).find('.add-new').remove();
-	})
-}
-
-function showAddNewForm(button){
-	// button.parentNode.style.boxShadow = '0 10px rgb(200,200,200) inset';
-	var thID = button.parentNode.id;
-
-	thArr.forEach(function(th){
-		if(thID == th.thID){
-			$('.date').val(th.day + ' ' + th.month + ', ' + th.year);
-			$('.add-new-form').addClass('show');
-			$('.edit-availability').removeClass('show');
-
-		}
-	});
-}
-
-function closeAddNewForm(){
-	$('.add-new-form').removeClass('show');
-	$('.edit-availability').addClass('show');
-}
