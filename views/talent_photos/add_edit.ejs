@@ -31,25 +31,33 @@
 					</li>
 				</ul>
 		</div>
-		<div class="main-image-overlay">
+		<div style="display: none" class="main-image-overlay">
 			<div class="row">
 				<div class="col">
-					<button class="btn btn-primary">Edit</button>
+					<button onclick="editPhoto();" class="btn btn-primary">Edit</button>
 				</div>
 				<div class="col">
 					<button onclick="savePhoto();" class="btn btn-primary">Save</button>
 				</div>
 			</div>
 		</div>
+		<div class="main-image-cut-out">
+			
+		</div>
+	</div>
+	<div class="row">
+		<div class="slidecontainer col">
+  			<input oninput="updateMainImageHeight(this);" type="range" min="50" max="200" value="50" class="slider">
+		</div>
+	<hr>
 	</div>
 	<div class="row">
 		<div class="col">
 			<button class="btn btn-primary" onclick="openPhotoDialog();">+  Upload New Photo</button>
 		</div>
 		<div class="col">
-
+			<button class="btn btn-primary" onclick="saveEditedPhoto();">Save</button>
 		</div>
-
 	</div>
 	<div class="row">
 		<div class="col">

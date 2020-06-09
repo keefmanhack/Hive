@@ -212,6 +212,7 @@
     padding: 10px;
     object-fit: contain;
     border-radius: 1rem;
+    width: 96%;
 }
 
 #talents .selector-bar{

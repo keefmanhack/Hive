@@ -17,59 +17,56 @@ router.get('/searchResult', function(req, res){
 	res.render('results');
 });
 
-// router.post('/user/:id/talent/:talent_id/newimage', verifyTalentUserRel(), function(req, res){
-// 	User.findById(req.params.id, function(err, foundUser){
-// 		if(err){
-// 			console.log(err);
-// 		}else{
-// 			var cropped_data = req.body.cropped_profile_image.replace(/^data:image\/\w+;base64,/, "");
-			
-// 			var directory = 'public/uploads/profiles/' + foundUser._id;
-// 			var cropped_path = 'public/uploads/profiles/' + foundUser._id +'/cropped_profile.jpg';
-// 			var cropped_mongoPath = '/uploads/profiles/' + foundUser._id +'/cropped_profile.jpg';
+router.post('/user/:id/talent/:talent_id/new_main_photo', function(req, res){
+	User.findById(req.params.id, function(err, foundUser){
+		if (err){
+			console.log(err);
+			req.flash('error', 'Could not find user');
+		}else{
+			Talent.findById(req.params.talent_id, function(err, foundTalent){
+				if(err){
+					console.log(err);
+					req.flash('error', 'Could not find talent');
+				}else{
+					var index = 0;
+					if(foundTalent && foundTalent.mainPhotos && foundTalent.mainPhotos.length >0){
+						index = foundTalent.mainPhotos.length;
+					}
+
+					var directory = 'public/uploads/profiles/' + foundUser._id + '/' + foundTalent._id + '/';
+					var croppedName = index + '_cropped.jpg';
+					var name = index + '.jpg';
+
+					var cropped_mongoPath = '/uploads/profiles/' + foundUser._id + '/' + foundTalent._id + '/' + croppedName;
+					var mongoPath = '/uploads/profiles/' + foundUser._id + '/' + foundTalent._id + '/' + name;
+					
+
+					writeImage(directory, req.body.cropped_main_image, croppedName);
+
+					writeImage(directory, req.body.main_image, name);
+
+					var mainImagesObj = {
+						path: mongoPath,
+						croppedPath: cropped_mongoPath,
+						orient: req.body.orient
+					}
+
+					foundTalent.main_images.push(mainImagesObj);
+					foundTalent.save(function(err){
+						if(err){
+							console.log(err)
+						}else{
+							res.status(200).send();
+						}
+
+					});
+				}
+			})
+		}
+	})
+})
 
 
-// 			if (!fs.existsSync(directory)){
-// 				fs.mkdir(directory, { recursive: true }, (err) => {
-// 	  				if (err) throw err;
-// 				});
-// 			}
-
-// 			var buf = new Buffer(cropped_data, 'base64');
-// 			fs.writeFileSync(cropped_path, buf, (err) => {
-// 				if(err){
-// 					console.log(err);
-// 				}
-// 			});
-
-// 			//in case of edit mode
-// 			if( req.body && req.body.profile_image){
-// 				var profile_data = req.body.profile_image.replace(/^data:image\/\w+;base64,/, "");
-// 				var profile_path = 'public/uploads/profiles/' + foundUser._id +'/profile.jpg';
-// 				var profile_mongoPath = '/uploads/profiles/' + foundUser._id +'/profile.jpg';
-
-// 				var buf = new Buffer(profile_data, 'base64');
-// 				fs.writeFileSync(profile_path, buf, (err) => {
-// 					if(err){
-// 						console.log(err);
-// 					}
-// 				});
-// 				foundUser.profile_image.profile_path = profile_mongoPath;
-// 			}
-
-			
-// 			foundUser.profile_image.cropped_profile_path = cropped_mongoPath;
-// 			foundUser.profile_image.orient = req.body.orient;
-// 			foundUser.save(function(err){
-// 					if(err){
-// 						console.log(err)
-// 					}
-// 				res.redirect('/user/' + foundUser._id);
-
-// 			foundUser.talents.main_photos.push();
-// 		}
-// 	})
-// })
 
 router.post('/user/:id/talent/new', function(req, res){
 	User.findById(req.params.id, function(err, foundUser){
@@ -211,38 +208,19 @@ router.post('/user/:id/edit_profile_image', function(req, res){
 			flash('error', 'Can not find user');
 			res.redirect('/');
 		}else{
-			var cropped_data = req.body.cropped_profile_image.replace(/^data:image\/\w+;base64,/, "");
-			
-			var directory = 'public/uploads/profiles/' + foundUser._id;
-			var cropped_path = 'public/uploads/profiles/' + foundUser._id +'/cropped_profile.jpg';
+			var directory = 'public/uploads/profiles/' + foundUser._id + '/';
+			var croppedName = 'cropped_profile.jpg';
 			var cropped_mongoPath = '/uploads/profiles/' + foundUser._id +'/cropped_profile.jpg';
+			var profile_mongoPath = '/uploads/profiles/' + foundUser._id +'/profile.jpg';
 
-
-			if (!fs.existsSync(directory)){
-				fs.mkdir(directory, { recursive: true }, (err) => {
-	  				if (err) throw err;
-				});
-			}
-
-			var buf = new Buffer(cropped_data, 'base64');
-			fs.writeFileSync(cropped_path, buf, (err) => {
-				if(err){
-					console.log(err);
-				}
-			});
+			writeImage(directory, req.body.cropped_profile_image, croppedName);
 
 			//in case of edit mode
 			if( req.body && req.body.profile_image){
-				var profile_data = req.body.profile_image.replace(/^data:image\/\w+;base64,/, "");
-				var profile_path = 'public/uploads/profiles/' + foundUser._id +'/profile.jpg';
-				var profile_mongoPath = '/uploads/profiles/' + foundUser._id +'/profile.jpg';
+				var profileName = 'profile.jpg';
+				
+				writeImage(directory, req.body.profile_image, profileName);
 
-				var buf = new Buffer(profile_data, 'base64');
-				fs.writeFileSync(profile_path, buf, (err) => {
-					if(err){
-						console.log(err);
-					}
-				});
 				foundUser.profile_image.profile_path = profile_mongoPath;
 			}
 
@@ -250,12 +228,12 @@ router.post('/user/:id/edit_profile_image', function(req, res){
 			foundUser.profile_image.cropped_profile_path = cropped_mongoPath;
 			foundUser.profile_image.orient = req.body.orient;
 			foundUser.save(function(err){
-					if(err){
-						console.log(err)
-					}
-				res.redirect('/user/' + foundUser._id);
+				if(err){
+					console.log(err)
+				}else{
+					res.status(200).send();
+				}
 			});
-			
 		}
 	});
 });
@@ -319,5 +297,23 @@ router.get('/sign_out', function(req, res){
 	req.logout();
 	res.redirect('/');
 });
+
+function writeImage(directory, image, imageName){
+	var data = image.replace(/^data:image\/\w+;base64,/, "");
+	var path = directory + imageName
+
+	if (!fs.existsSync(directory)){
+		fs.mkdir(directory, { recursive: true }, (err) => {
+				if (err) throw err;
+		});
+	}
+
+	var buf = new Buffer(data, 'base64');
+	fs.writeFileSync(path, buf, (err) => {
+		if(err){
+			console.log(err);
+		}
+	});
+}
 
 module.exports = router;

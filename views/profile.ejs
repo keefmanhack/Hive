@@ -97,7 +97,7 @@
 									<div class="col showcase">
 										<img src="/photos/logo.jpeg">
 										<div class="add-photo">
-											<button class="btn btn-primary add-edit" onclick="showAddEditPhotoForm()">Add/ Edit Photos</button>
+											<button class="btn btn-primary add-edit" onclick="showAddEditPhotoForm('<%=talent._id%>')">Add/ Edit Photos</button>
 										</div>
 									</div>
 								</div>
@@ -310,8 +310,84 @@
 	}
 
 
+	$('.display-image img').attr('height', 50 + '%');
+	dragElement(document.querySelector('.main-image-cut-out'), document.querySelector(".main-image"));
+	function updateMainImageHeight(slider){
+		$('.display-image img').attr('height', slider.value + '%');
+	}
 
 
+	function saveEditedPhoto(){
+		var reader = new FileReader();
+		var image = document.querySelector('.main-image');
+		var canvas = document.createElement('canvas');
+		var photo = document.querySelector('.image-dialog').files[0];
+		
+	   	canvas.height = 373;
+		canvas.width = 373;
+
+		cropMainImage(canvas, image);
+
+		reader.readAsDataURL(photo);
+
+		reader.onload = function (e) {
+			var data = {
+				'orient[dimension]': $('.image-dialog').attr('height'),
+				'orient[top]': image.style.top,
+				'orient[left]': image.style.left,
+				'cropped_main_image': canvas.toDataURL('image/png'),
+				'main_image': e.target.result
+			}
+			sendMainImage(data);
+	    };
+	}
+
+	function sendMainImage(data){
+		let urlEncodedData = "",
+  			urlEncodedDataPairs = [],
+  			name;
+
+		for( name in data ) {
+			urlEncodedDataPairs.push( encodeURIComponent( name ) + '=' + encodeURIComponent( data[name] ) );
+		}
+
+		urlEncodedData = urlEncodedDataPairs.join( '&' ).replace( /%20/g, '+' );
+
+		var xmlHttpReq = false;
+
+		if (window.XMLHttpRequest) {
+			ajax = new XMLHttpRequest();
+		}else if (window.ActiveXObject) {
+			ajax = new ActiveXObject("Microsoft.XMLHTTP");
+		}
+
+		ajax.open("POST", "/user/<%=user._id%>/talent/"+ currentTalentId +"/new_main_photo");
+		ajax.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+		
+
+		ajax.onreadystatechange = function() {
+			if (this.status == 200) {
+				$('.loader').removeClass('hide');
+				showMainPage();
+				location.reload();
+			}
+		};
+
+		ajax.send(urlEncodedData);
+	}
+	
+	function cropMainImage(canvas, image){
+		var ctx = canvas.getContext('2d');
+		var imageProp = image.style;
+
+		var widthFactor = image.naturalWidth / image.width;
+		var heightFactor = image.naturalHeight / image.height;
+		var topMove = parseInt(imageProp.top.substring(0, imageProp.top.length-2));
+		var leftMove = parseInt(imageProp.left.substring(0, imageProp.left.length-2));
+
+		ctx.drawImage(image, (166 * widthFactor) - (leftMove * widthFactor), (heightFactor) - (topMove * heightFactor), image.naturalWidth * widthFactor * (373/image.naturalHeight), 373 * heightFactor,0,0,image.naturalWidth * (373/image.naturalHeight), 373);
+	}
 
 
 
@@ -411,42 +487,10 @@
   ajax.open("POST", "/user/<%=user._id%>/edit_profile_image");
   ajax.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 
-  $('.loader').removeClass('hide');
+  
   ajax.onreadystatechange = function() {
-	    if (this.readyState == 4 && this.status == 200) {
-	      showMainPage();
-	      location.reload();
-	    }
-	  };
-
-  ajax.send(urlEncodedData);
-}
-
-function sendTalentImage(data) {
-  let urlEncodedData = "",
-  urlEncodedDataPairs = [],
-  name;
-
-  for( name in data ) {
-		urlEncodedDataPairs.push( encodeURIComponent( name ) + '=' + encodeURIComponent( data[name] ) );
-	  }
-	  urlEncodedData = urlEncodedDataPairs.join( '&' ).replace( /%20/g, '+' );
-
-  var xmlHttpReq = false;
-
-  if (window.XMLHttpRequest) {
-    ajax = new XMLHttpRequest();
-  }
-  else if (window.ActiveXObject) {
-    ajax = new ActiveXObject("Microsoft.XMLHTTP");
-  }
-
-  ajax.open("POST", "/user/<%=user._id%>/talent/newimage");
-  ajax.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-
-  $('.loader').removeClass('hide');
-  ajax.onreadystatechange = function() {
-	    if (this.readyState == 4 && this.status == 200) {
+	    if (this.status == 200) {
+	    	$('.loader').removeClass('hide');
 	      showMainPage();
 	      location.reload();
 	    }

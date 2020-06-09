@@ -1,11 +1,15 @@
-function showAddEditPhotoForm(){
+var currentTalentId = undefined;
+
+function showAddEditPhotoForm(talentID){
 	$('#talent-photo-form').addClass('show');
 	$('.page-container').addClass('grey-out');
+	currentTalentId = talentID;
 }
 
 function closeTalentPhotoForm(){
 	$('#talent-photo-form').removeClass('show');
 	$('.page-container').removeClass('grey-out');
+	currentTalentId = undefined;
 }
 
 function openPhotoDialog(){
