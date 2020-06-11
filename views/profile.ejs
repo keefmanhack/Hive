@@ -221,7 +221,7 @@
 </div>
 <%- include('./profile_pic/new_or_edit')%>
 <%- include('./profile_pic/photo_editor')%>
-<%- include('./talent_photos/add_edit')%>
+<%- include('./talent_photos/talent_photo_form')%>
 <%- include('./partials/editAvailability')%>
 <%- include('./partials/new_talent_form')%>
 
@@ -268,6 +268,9 @@
 	//create event listeners for drag event
 	dragElement(document.getElementById("photo"),document.getElementById("profile_img"));
 
+	//for talent-photo-form
+	mainImageInitialize(100, 166, 12);
+
 
 	function showEditAvailabilityForm(){
 		$('.edit-availability').addClass('show');
@@ -309,15 +312,34 @@
 		$('#talents .talent-item').toggleClass('not-editable');
 	}
 
+	function editPhoto(){
+		addDisplayItems();
 
-	$('.display-image img').attr('height', 50 + '%');
+	}
+
+
+
+	function mainImageInitialize(height, leftPos, topPos){
+		$('.display-image img').attr('height', height + '%');
+		document.querySelector(".display-image img").style.left = leftPos + 'px';
+		document.querySelector(".display-image img").style.top = topPos + 'px';
+	}
+
+	
 	dragElement(document.querySelector('.main-image-cut-out'), document.querySelector(".main-image"));
 	function updateMainImageHeight(slider){
 		$('.display-image img').attr('height', slider.value + '%');
 	}
 
+	function cancelEditedPhoto(){
+		removeDisplayItems();
+		mainImageInitialize(100, 166, 12);
+	}
+
 
 	function saveEditedPhoto(){
+		$('#talent-photo-form .loader').removeClass('hide');
+
 		var reader = new FileReader();
 		var image = document.querySelector('.main-image');
 		var canvas = document.createElement('canvas');
@@ -332,13 +354,19 @@
 
 		reader.onload = function (e) {
 			var data = {
-				'orient[dimension]': $('.image-dialog').attr('height'),
+				'orient[dimension]': $('.main-image').attr('height'),
 				'orient[top]': image.style.top,
 				'orient[left]': image.style.left,
-				'cropped_main_image': canvas.toDataURL('image/png'),
+				'cropped_main_image': canvas.toDataURL('image/jpeg'),
 				'main_image': e.target.result
 			}
 			sendMainImage(data);
+			removeDisplayItems();
+
+			$('.display-image').removeClass('show');
+			$('.main-image').removeClass('show');
+			$('.main-image').attr('src', '');
+			$('#talent-photo-form .loader').addClass('hide');
 	    };
 	}
 
@@ -364,17 +392,52 @@
 		ajax.open("POST", "/user/<%=user._id%>/talent/"+ currentTalentId +"/new_main_photo");
 		ajax.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 
-		
+		var ct =0;		
 
 		ajax.onreadystatechange = function() {
 			if (this.status == 200) {
-				$('.loader').removeClass('hide');
-				showMainPage();
-				location.reload();
+				if(ct <1){
+					updatePhotoGallery();
+				}
+				ct++;
+				console.log(ct);
+				// showMainPage();
+				// location.reload();
 			}
 		};
 
 		ajax.send(urlEncodedData);
+	}
+
+	function updatePhotoGallery(){
+		var requestUrl = '/user/<%=user._id%>/talent/'+ currentTalentId +'/main_images';
+
+		$.get(requestUrl).done(function(data){
+   			console.log(data);
+   			appendPhotos(data);
+		});
+	}
+
+	function appendPhotos(images){
+		$('.photo-gallary').empty();
+		if(images && images.length >0){
+			for(var i = images.length-1; i >-1; i--){
+				$('.photo-gallary').append(`<div class='col-lg-3 image-container'>
+												<img  src='` + images[i].cropped_path + `'>
+												<div class='overlay'>
+													<button class='delete' onclick='deletePhotoFromGallary(` + images[i] + `);'><i class='fas fa-times-circle'></i></button>
+													<button class='edit' onclick='editPhotoFromGallary(` + images[i] + `);'><i class="fas fa-edit"></i></button>
+												</div>
+											</div`);
+			}
+		}
+		
+	}
+
+	function editPhotoFromGallary(image){
+		$('.display-image').addClass('show');
+		$('.main-image').addClass('show');
+		$('.main-image').attr('src', image.path);
 	}
 	
 	function cropMainImage(canvas, image){

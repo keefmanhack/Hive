@@ -4,6 +4,8 @@ function showAddEditPhotoForm(talentID){
 	$('#talent-photo-form').addClass('show');
 	$('.page-container').addClass('grey-out');
 	currentTalentId = talentID;
+
+	updatePhotoGallery();
 }
 
 function closeTalentPhotoForm(){
@@ -18,6 +20,20 @@ function openPhotoDialog(){
 	return false;
 }
 
+function addDisplayItems(){
+	$('#talent-photo-form .photo-options .edit-option').addClass('show');
+	$('#talent-photo-form .slidecontainer').addClass('show');
+	$('#talent-photo-form .photo-options .upload').addClass('hide');
+	$('#talent-photo-form .main-image-overlay').addClass('hide');
+}
+
+function removeDisplayItems(){
+	$('#talent-photo-form .photo-options .edit-option').removeClass('show');
+	$('#talent-photo-form .slidecontainer').removeClass('show');
+	$('#talent-photo-form .photo-options .upload').removeClass('hide');
+	$('#talent-photo-form .main-image-overlay').removeClass('hide');
+}
+
 function readURLTalent(input) {
 	console.log(input.files);
 
@@ -30,7 +46,7 @@ function readURLTalent(input) {
       $('.main-image')
         .attr('src', e.target.result);
         $('.main-image').addClass('show');
-        $('.loader').addClass('hide');
+        $('#talent-photo-form .loader').addClass('hide');
     };
 
     reader.readAsDataURL(input.files[0]);

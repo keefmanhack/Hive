@@ -9,7 +9,7 @@
 }
 
 .calendar{
-	size: 100%;
+	width: 88%;
 	padding: 5px;
     background: rgb(30,30,30);
     border-radius: .25rem;

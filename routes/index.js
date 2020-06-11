@@ -17,6 +17,16 @@ router.get('/searchResult', function(req, res){
 	res.render('results');
 });
 
+router.get('/user/:id/talent/:talent_id/main_images', function(req, res){
+	Talent.findById(req.params.talent_id, function(err, allTalents){
+		if(err){
+			console.log(err);
+		}else{
+			res.send(allTalents.main_images)
+		}
+	})
+})
+
 router.post('/user/:id/talent/:talent_id/new_main_photo', function(req, res){
 	User.findById(req.params.id, function(err, foundUser){
 		if (err){
@@ -29,25 +39,24 @@ router.post('/user/:id/talent/:talent_id/new_main_photo', function(req, res){
 					req.flash('error', 'Could not find talent');
 				}else{
 					var index = 0;
-					if(foundTalent && foundTalent.mainPhotos && foundTalent.mainPhotos.length >0){
-						index = foundTalent.mainPhotos.length;
+					if(foundTalent && foundTalent.main_images && foundTalent.main_images.length >0){
+						index = foundTalent.main_images.length;
 					}
 
-					var directory = 'public/uploads/profiles/' + foundUser._id + '/' + foundTalent._id + '/';
+					var directory = 'public/uploads/profiles/' + foundUser._id + '/talents/' + foundTalent._id + '/';
 					var croppedName = index + '_cropped.jpg';
 					var name = index + '.jpg';
 
-					var cropped_mongoPath = '/uploads/profiles/' + foundUser._id + '/' + foundTalent._id + '/' + croppedName;
-					var mongoPath = '/uploads/profiles/' + foundUser._id + '/' + foundTalent._id + '/' + name;
+					var cropped_mongoPath = '/uploads/profiles/' + foundUser._id + '/talents/' + foundTalent._id + '/' + croppedName;
+					var mongoPath = '/uploads/profiles/' + foundUser._id + '/talents/' + foundTalent._id + '/' + name;
 					
-
 					writeImage(directory, req.body.cropped_main_image, croppedName);
 
 					writeImage(directory, req.body.main_image, name);
 
 					var mainImagesObj = {
 						path: mongoPath,
-						croppedPath: cropped_mongoPath,
+						cropped_path: cropped_mongoPath,
 						orient: req.body.orient
 					}
 
@@ -300,20 +309,29 @@ router.get('/sign_out', function(req, res){
 
 function writeImage(directory, image, imageName){
 	var data = image.replace(/^data:image\/\w+;base64,/, "");
-	var path = directory + imageName
+	var path = directory + imageName;
+	var buf = new Buffer.from(data, 'base64');
 
-	if (!fs.existsSync(directory)){
-		fs.mkdir(directory, { recursive: true }, (err) => {
-				if (err) throw err;
-		});
-	}
-
-	var buf = new Buffer(data, 'base64');
-	fs.writeFileSync(path, buf, (err) => {
-		if(err){
-			console.log(err);
+	fs.existsSync(directory, (exists)=> {
+		if(!exists){
+			fs.mkdirSync(directory, { recursive: true }, (err) => {
+				if (err){
+					console.log(err);
+				}
+			});
+			console.log('no directory');
+			console.log(directory)
 		}
+
 	});
+	fs.writeFileSync(path, buf, (err) => {
+			if(err){
+				console.log(err);
+			}else{
+				console.log('fileCreated')
+			}
+	});
+
 }
 
 module.exports = router;
