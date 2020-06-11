@@ -317,17 +317,13 @@ function writeImage(directory, image, imageName){
 			if (err){
 				console.log(err);
 			}else{
-fs.writeFileSync(path, buf, (err) => {
-			if(err){
-				console.log(err);
-			}else{
-				console.log('fileCreated')
-			}
-	});
+				fs.writeFileSync(path, buf, (err) => {
+					if(err){
+						console.log(err);
+					}
+				});
 			}
 		});
-		console.log('no directory');
-		console.log(directory)
 	}else{
 		fs.writeFileSync(path, buf, (err) => {
 			if(err){

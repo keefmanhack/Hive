@@ -33,6 +33,7 @@ function editPhoto(imageData){
 }
 
 function changeVals(){
+	$('.loader').removeClass('hide');
 	var reader = new FileReader();
 	var image = new Image();
 	image = document.getElementById('profile_img');

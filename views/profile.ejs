@@ -553,7 +553,7 @@
   
   ajax.onreadystatechange = function() {
 	    if (this.status == 200) {
-	    	$('.loader').removeClass('hide');
+	    	$('.loader').addClass('hide');
 	      showMainPage();
 	      location.reload();
 	    }
