@@ -217,7 +217,7 @@ router.post('/user/:id/edit_profile_image', function(req, res){
 			flash('error', 'Can not find user');
 			res.redirect('/');
 		}else{
-			var directory = 'public/uploads/profiles/' + foundUser._id + '/';
+			var directory =  'public/uploads/profiles/' + foundUser._id + '/';
 			var croppedName = 'cropped_profile.jpg';
 			var cropped_mongoPath = '/uploads/profiles/' + foundUser._id +'/cropped_profile.jpg';
 			var profile_mongoPath = '/uploads/profiles/' + foundUser._id +'/profile.jpg';
@@ -312,25 +312,32 @@ function writeImage(directory, image, imageName){
 	var path = directory + imageName;
 	var buf = new Buffer.from(data, 'base64');
 
-	fs.existsSync(directory, (exists)=> {
-		if(!exists){
-			fs.mkdirSync(directory, { recursive: true }, (err) => {
-				if (err){
-					console.log(err);
-				}
-			});
-			console.log('no directory');
-			console.log(directory)
-		}
-
-	});
-	fs.writeFileSync(path, buf, (err) => {
+	if(!fs.existsSync(directory)){
+		fs.mkdir(directory, { recursive: true }, (err) => {
+			if (err){
+				console.log(err);
+			}else{
+fs.writeFileSync(path, buf, (err) => {
 			if(err){
 				console.log(err);
 			}else{
 				console.log('fileCreated')
 			}
 	});
+			}
+		});
+		console.log('no directory');
+		console.log(directory)
+	}else{
+		fs.writeFileSync(path, buf, (err) => {
+			if(err){
+				console.log(err);
+			}else{
+				console.log('fileCreated')
+			}
+	});
+	}
+	
 
 }
 
