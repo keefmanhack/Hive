@@ -1,8 +1,8 @@
 .new-talent-form{
 	width: 25vw;
-    top: -500px;
+    top: 500px;
     left: 37%;
-    position: relative;
+    position: absolute;
     background: rgb(50,50,50);
     border-radius: .25rem;
     padding: 20px;
