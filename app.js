@@ -6,14 +6,22 @@ var express 			= require("express"),
     bodyParser			= require('body-parser'),
     methodOverride  	= require('method-override'),
     flash				= require('connect-flash'),
-    multer				= require('multer');
+    multer				= require('multer'),
+    aws                 = require('aws-sdk');
+
+    if (process.env.NODE_ENV !== 'production') {
+        require('dotenv').config();
+        console.log('configured');
+    }
+
     const {Client, Status} = require("@googlemaps/google-maps-services-js");
 
 var indexRoutes			= require('./routes/index');
 
 var User = require("./models/user");
 
-
+//aws region
+aws.config.region = 'us-east-2';
 
 //Mongoose random things
 mongoose.set('useNewUrlParser', true);

@@ -4,7 +4,14 @@ var express = require('express'),
 	multer	 = require('multer'),
 	upload   = multer({storage: multer.memoryStorage()}),
 	fs 		 = require('fs'),
-	clearbit = require('clearbit')('sk_ef5a2ccffe2f8e4e0a3aa0dd59e0df9d');
+	clearbit = require('clearbit')('sk_ef5a2ccffe2f8e4e0a3aa0dd59e0df9d'),
+	aws                 = require('aws-sdk');
+
+const s3 = new aws.S3(
+	{
+	 accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+	 secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
+	});
 
 var User = require("../models/user");
 var Talent = require("../models/talent");
@@ -217,32 +224,37 @@ router.post('/user/:id/edit_profile_image', function(req, res){
 			flash('error', 'Can not find user');
 			res.redirect('/');
 		}else{
-			var directory =  'public/uploads/profiles/' + foundUser._id + '/';
-			var croppedName = 'cropped_profile.jpg';
-			var cropped_mongoPath = '/uploads/profiles/' + foundUser._id +'/cropped_profile.jpg';
-			var profile_mongoPath = '/uploads/profiles/' + foundUser._id +'/profile.jpg';
+			var directory =  'uploads/profiles/' + foundUser._id + '/';
+			writeImage(directory, req.body.cropped_profile_image, 'cropped_profile.jpg', process.env.S3_BUCKET_NAME);
 
-			writeImage(directory, req.body.cropped_profile_image, croppedName);
+  			res.status(200).send();
 
-			//in case of edit mode
-			if( req.body && req.body.profile_image){
-				var profileName = 'profile.jpg';
+			// var directory =  'public/uploads/profiles/' + foundUser._id + '/';
+			// var croppedName = 'cropped_profile.jpg';
+			// var cropped_mongoPath = '/uploads/profiles/' + foundUser._id +'/cropped_profile.jpg';
+			// var profile_mongoPath = '/uploads/profiles/' + foundUser._id +'/profile.jpg';
+
+			// writeImage(directory, req.body.cropped_profile_image, croppedName);
+
+			// //in case of edit mode
+			// if( req.body && req.body.profile_image){
+			// 	var profileName = 'profile.jpg';
 				
-				writeImage(directory, req.body.profile_image, profileName);
+			// 	writeImage(directory, req.body.profile_image, profileName);
 
-				foundUser.profile_image.profile_path = profile_mongoPath;
-			}
+			// 	foundUser.profile_image.profile_path = profile_mongoPath;
+			// }
 
 			
-			foundUser.profile_image.cropped_profile_path = cropped_mongoPath;
-			foundUser.profile_image.orient = req.body.orient;
-			foundUser.save(function(err){
-				if(err){
-					console.log(err)
-				}else{
-					res.status(200).send();
-				}
-			});
+			// foundUser.profile_image.cropped_profile_path = cropped_mongoPath;
+			// foundUser.profile_image.orient = req.body.orient;
+			// foundUser.save(function(err){
+			// 	if(err){
+			// 		console.log(err)
+			// 	}else{
+			// 		res.status(200).send();
+			// 	}
+			// });
 		}
 	});
 });
@@ -307,32 +319,24 @@ router.get('/sign_out', function(req, res){
 	res.redirect('/');
 });
 
-function writeImage(directory, image, imageName){
+function writeImage(directory, image, imageName, bucket_name){
 	var data = image.replace(/^data:image\/\w+;base64,/, "");
-	var path = directory + imageName;
 	var buf = new Buffer.from(data, 'base64');
 
-	if(!fs.existsSync(directory)){
-		fs.mkdir(directory, { recursive: true }, (err) => {
-			if (err){
-				console.log(err);
-			}else{
-				fs.writeFileSync(path, buf, (err) => {
-					if(err){
-						console.log(err);
-					}
-				});
-			}
-		});
-	}else{
-		fs.writeFileSync(path, buf, (err) => {
-			if(err){
-				console.log(err);
-			}else{
-				console.log('fileCreated')
-			}
-	});
-	}
+	var path = directory + imageName;
+
+	const params = {
+        Bucket: bucket_name,
+        Key: path, // File name you want to save as in S3
+        Body: buf
+    };
+
+	s3.upload(params, function(err, data) {
+        if (err) {
+            throw err;
+        }
+        console.log(`File uploaded successfully. ${data.Location}`);
+    });
 	
 
 }
