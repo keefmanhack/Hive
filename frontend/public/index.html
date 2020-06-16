@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"> 
+	<link rel="stylesheet" type="text/css" href="/stylesheets/landing.css">
+	<link rel="stylesheet" type="text/css" href="/stylesheets/all.css">
+	<link rel="stylesheet" type="text/css" href="/stylesheets/newProfilePage.css">
+
+	<!-- <link rel="stylesheet" type="text/css" href="/stylesheets/results.css">
+	<link rel="stylesheet" type="text/css" href="/stylesheets/profile.css">
+	<link rel="stylesheet" type="text/css" href="/stylesheets/photo-editor.css">
+	<link rel="stylesheet" type="text/css" href="/stylesheets/photo-selector.css">
+	<link rel="stylesheet" type="text/css" href="/stylesheets/talents.css">
+	<link rel="stylesheet" type="text/css" href="/stylesheets/calendar.css">
+	<link rel="stylesheet" type="text/css" href="/stylesheets/talent-photo-form.css">
+	<link rel="stylesheet" type="text/css" href="/stylesheets/edit-availability.css">
+	<link rel="stylesheet" type="text/css" href="/stylesheets/new-talent-form.css"> -->
+
+
+	<!-- FONT LIST -->
+	<link href="https://fonts.googleapis.com/css2?family=Patua+One&family=Source+Sans+Pro:ital,wght@0,400;0,600;0,700;1,600&display=swap" rel="stylesheet">
+
+	<!-- End Of FONT LIST -->
+
+
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAzmt_OlSBL4auTSYvK7FdR7tYZg2_04js&libraries=places"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+		  integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
+		  crossorigin="anonymous"></script>
+
+	<title>HYVE</title>
+</head>
+<body>
+	<div id="top-bar">
+		<div class="row" id="logo">
+			<div class="col-sm-1">
+				<a href="/">
+					<img src="/photos/just_logo.jpeg">
+				</a>
+			</div>
+			<div class="col-sm-1">
+				<h1>HYVE</h1>
+			</div>
+		</div>
+	</div>
+
+	<div id="profile-page" class="page-container">
+		<div class="row">
+			<div class="col-lg-5">
+				<h1 class="title">Contractor</h1>
+				<h3 class="location">New York City, New York United States</h3>
+				<div class="row stars-price-row">
+					<div class="col" style="padding-right: 0">
+						<h2 class="stars">
+							<i class="fas fa-star"></i>
+							<i class="fas fa-star"></i>
+							<i class="fas fa-star"></i>
+							<i class="fas fa-star"></i>
+							<i class="fas fa-star"></i>
+						</h2>
+					</div>
+					<div class="col">
+						<h2 class='price'>$100.00</h2>
+					</div>
+				</div>
+				<button class="more-info-button" id="reviews" >35 Reviews</button>
+				<div class="row name-talent-row">
+					<div class="col-lg-9">
+						<a href=""><h2 class="name">Keefer Gregoire</h2></a>
+					</div>
+					<div class="col-lg-1">
+						<i class="fas fa-hammer"></i>
+					</div>
+					<div class="col-lg-1">
+						<i class="fas fa-brush" style="opacity: .5;"></i>
+					</div>
+					<div class="col-lg-1">
+						<i class="fas fa-ruler" style="opacity: .5;"></i>
+					</div>
+				</div>
+				<p class="description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+				tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+				quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+				consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+				cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+				proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+
+				<h1 class="availability">Availability</h1>
+				<button class="more-info-button" id="see-full-calendar">See Full Calendar</button>
+				<div class="three-day-calendar">
+					<div class="item" style="color: #CCFBFE;">
+						<h4 class="day">Fri.</h4>
+						<h4 class="date">Jun. 12th</h4>
+					</div>
+					<div class="item" style="background: rgba(104, 80, 68, 0.75);">
+						<h4 class="day">Sat.</h4>
+						<h4 class="date">Jun. 13th</h4>
+					</div>
+					<div class="item" style="background: rgba(104, 80, 68, 0.75);">
+						<h4 class="day">Sun.</h4>
+						<h4 class="date">Jun. 14th</h4>
+					</div>
+				</div>
+				<button class="request-hyver">Request Hyver</button>
+				<button id="contact-me" class="more-info-button">Contact Me</button>
+			</div>
+			<div class="col-lg-7" id="image-gallary">
+
+			</div>
+		</div>
+	</div>
+
+	
+</body>
+</html>

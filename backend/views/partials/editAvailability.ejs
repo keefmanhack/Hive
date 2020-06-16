@@ -1,0 +1,22 @@
+<div class="edit-availability">
+	<div class="row">
+		<div class="col-lg-10">
+			<h1>Availability</h1>
+		</div>
+		<div class="col-lg-2">
+			<h1>
+				<i onclick='closeAvailabilityForm();' class="fas fa-times-circle exit"></i>
+			</h1>	
+		</div>
+	</div>
+	<hr>
+	<div class="row">
+		<div class="col-lg-8 calendar-container">
+			<%- include('./availability_calendar')%>
+		</div>
+		<div class="col-lg-4">
+		</div>
+	</div>
+	
+</div>
+<%- include('./add_new_availability_form')%>

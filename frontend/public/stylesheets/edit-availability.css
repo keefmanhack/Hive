@@ -1,0 +1,172 @@
+.add-new-form{
+    display: none;
+    background: rgb(50,50,50);
+    top: 40%;
+    left: 20%;
+    width: 600px;
+    padding: 20px;
+    border-radius: .25rem;
+    position: absolute;
+}
+
+.add-new-form.show{
+    display: block;
+}
+
+.add-new-form .left-section{
+    border-right: 1px solid white;
+}
+
+.add-new-form h1{
+    color: white;
+}
+
+.add-new-form label, i{
+    color: white;
+}
+
+.add-new-form i{
+    cursor: pointer;
+}
+
+.add-new-form button{
+    width: 100%;
+}
+
+.add-new-form input[type="number"]{
+    padding-right: 2px;
+}
+
+.add-new-form .repeat{
+    display: none;
+}
+
+.add-new-form .repeat.show{
+    display: block;
+}
+
+.ui-datepicker{
+            padding: 10px;
+            background: rgb(235, 235, 235);
+            color:black;
+        }
+
+        .ui-datepicker-prev{
+            cursor: pointer;
+            margin-right: 98px;
+        }
+
+        .ui-datepicker-next{
+            cursor: pointer;
+        }
+
+        .ui-datepicker-title{
+            text-align: center;
+        }
+
+.edit-availability{
+    width: 92%;
+    height: 600px;
+    position: absolute;
+    top: 40%;
+    padding: 20px;
+    left: 4%;
+    background: rgb(225,225,225);
+    border: 1px solid;
+    border-radius: .25rem;
+
+    display: none;
+}
+
+.edit-availability.show{
+    display: block;
+}
+
+.edit-availability i{
+    color: black;
+}
+
+.edit-availability .calendar-container{
+    height: 470px;
+}
+
+.edit-availability .calendar .availability-edit{
+    display: none;
+}
+
+.edit-availability .calendar{
+    height: 93%;
+    background: rgb(30,30,30);
+    border-radius: .25rem;
+    position: absolute;
+    padding: 0;
+}
+
+.edit-availability .calendar table{
+    height: 100%;
+    table-layout: fixed;
+}
+
+.edit-availability .calendar table tbody th{
+    height: 72px;
+}
+
+.edit-availability .calendar table tbody th:not(.muted):hover{
+    -webkit-box-shadow: inset 0px 0px 26px -9px rgba(250,197,98,1);
+    -moz-box-shadow: inset 0px 0px 26px -9px rgba(250,197,98,1);
+    box-shadow: inset 0px 0px 26px -9px rgba(250,197,98,1);
+}
+
+.edit-availability .calendar table th{
+    width: 100%;
+}
+
+.edit-availability .calendar .add-new{
+    width: 100%;
+    background: rgb(100,100,100);
+    color: white;
+    position: relative;
+    font-size: .5rem;
+    height: 20%;
+}
+
+.edit-availability .calendar .add-new span{
+    position: absolute;
+    top: 0;
+    left: 20px;
+}
+
+.select-Days{
+  margin-top: 10px; 
+  margin-left: 13px;
+  margin-bottom: 10px;
+}
+
+.select-Days  input{
+  display: none;
+}
+
+
+.select-Days label {
+    display: inline-block;
+    height: 27px;
+    width: 30px;
+    text-align: center;
+    border: 1px solid #ddd;
+    cursor: pointer;
+    background-color: rgb(100,100,112);
+    color: #E8F7EE;
+    border-radius: 25px;
+    transition: .3s;
+}
+
+.select-Days label.dayChecked{
+  background: rgb(250,196,98);
+    color: #171D1C;
+    transition: .3s;
+}
+
+.select-Days label::selection {
+    color: none;
+    background: none;
+}

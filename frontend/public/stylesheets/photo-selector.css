@@ -1,0 +1,25 @@
+.photo-selector{
+	z-index: 3;
+    position: absolute;
+    background: #424242;
+    top: 25%;
+    left: 36%;
+    padding: 20px;
+    border-radius: 25px;
+    border: 2px solid;
+    display: none;
+}
+
+.photo-selector.show{
+	display: block;
+}
+
+.photo-selector h1{
+	color: white;
+    font-size: 25px;
+}
+
+.photo-selector h1 i{
+	color: rgba(255,255,255,.6);
+	cursor: pointer;
+}

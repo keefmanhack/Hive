@@ -1,0 +1,45 @@
+{
+  "name": "hive",
+  "version": "1.0.0",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@googlemaps/google-maps-services-js": "^2.6.1",
+    "aws-sdk": "^2.694.0",
+    "babel-cli": "^6.26.0",
+    "babel-preset-react-app": "^3.1.2",
+    "body-parser": "^1.19.0",
+    "clearbit": "^1.3.5",
+    "connect-flash": "^0.1.1",
+    "dotenv": "^8.2.0",
+    "ejs": "^3.1.3",
+    "express": "^4.17.1",
+    "express-session": "^1.17.1",
+    "l": "^0.6.0",
+    "latest": "^0.2.0",
+    "method-override": "^3.0.0",
+    "mongoose": "^5.9.18",
+    "multer": "^1.4.2",
+    "n": "^6.5.1",
+    "passport": "^0.4.1",
+    "passport-local": "^1.0.0",
+    "passport-local-mongoose": "^6.0.1",
+    "stable": "^0.1.8"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/keefmanhack/Hive.git"
+  },
+  "keywords": [],
+  "bugs": {
+    "url": "https://github.com/keefmanhack/Hive/issues"
+  },
+  "homepage": "https://github.com/keefmanhack/Hive#readme",
+  "description": ""
+}

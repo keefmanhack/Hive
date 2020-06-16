@@ -1,0 +1,24 @@
+function requestLogos(input){
+	  var requestUrl = 'https://autocomplete.clearbit.com/v1/companies/suggest?query=:' + input.value;
+
+	   $.get(requestUrl).done(function(data){
+	   		createCompanyDropDown(input, data);
+  		});
+	}
+
+	function requestPositions(input){
+		var requestUrl = 'http://api.dataatwork.org/v1/jobs/autocomplete?begins_with="' + input.value + '"';
+
+
+	   $.get(requestUrl).done(function(data){
+	   		createPositionDropDown(input, data);
+  		});
+	}
+
+	function requestCities(input){
+		var options = {
+	      types: ['(cities)'],
+	      componentRestrictions: {country: "us"}
+    	};
+     var autocomplete = new google.maps.places.Autocomplete(input, options);
+	}
