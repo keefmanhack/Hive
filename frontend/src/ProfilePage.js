@@ -27,13 +27,18 @@ class ProfilePage extends React.Component{
       this.setState({
       		isEditMode: true,
       })
-      console.log(this.state.images)
+    }
+
+    handleCloseClick(){
+    	this.setState({
+    		isEditMode: false,
+    	})
     }
 
 	render(){
 		let imageEditor = null
 		if(this.state.isEditMode){
-			imageEditor = <ImageEditor images={this.state.images}/>;
+			imageEditor = <ImageEditor handleCloseClick={() => this.handleCloseClick()} images={this.state.images}/>;
 		}
 		return(
 			<div style={{height: 'inherit'}}>

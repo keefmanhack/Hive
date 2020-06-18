@@ -266,30 +266,5 @@
     height: 90%;
 }
 
-.overlay{
-    margin: 0 15px;
-    width: -webkit-fill-available;
-    height: 100%;
-    background: rgba(0,0,0,.6);
-    position: absolute;
-    top: 0px;
-    left: 0;
-    z-index: 2;
-}
 
-.overlay button{
-    border: none;
-    background: none;
-    font-size: 24px;
-    font-weight: 700;
-    color: rgb(204, 251, 254);
-    position: relative;
-    top: 47%;
-    left: 44%;
-    cursor: pointer;
-}
-
-.overlay button:hover{
-    opacity: .5;
-}
 
