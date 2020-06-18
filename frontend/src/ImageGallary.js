@@ -1,104 +1,52 @@
 import React from "react";
-import ReactDOM from 'react-dom';
-import circularLinkedList from './CircularLinkedList';
-
-
+// import circularLinkedList from './CircularLinkedList';
 
 class ImageGallary extends React.Component {
   constructor(props){
     super(props);
+    this.handleClick = this.handleClick.bind(this);
+    this.handleMouseEnter = this.handleMouseEnter.bind(this);
+    this.handleMouseLeave = this.handleMouseLeave.bind(this);
 
     this.state = {
-      images: new circularLinkedList(),
-      display_images : Array(3).fill(null),
-      relative_head : null,
+      selectedIndex: 0,
+      showEdit: false
     }
-
-    
-    
-  }
-
-  componentDidMount() {    
-    let arr = ["https://images.pexels.com/photos/224924/pexels-photo-224924.jpeg", "https://images.pexels.com/photos/159306/construction-site-build-construction-work-159306.jpeg", "https://images.pexels.com/photos/3862135/pexels-photo-3862135.jpeg", "https://images.pexels.com/photos/3760529/pexels-photo-3760529.jpeg", "https://images.pexels.com/photos/224924/pexels-photo-224924.jpeg", "https://images.pexels.com/photos/1078879/pexels-photo-1078879.jpeg"];
-    let tempCLL = new circularLinkedList();
-
-    for(let i =0; i< arr.length; i++){
-      tempCLL.addNode(arr[i]);
-    }
-
-    let tempDisplayImages = [];
-    let tempHead = tempCLL.getHead();
-
-
-    for(let i =0; i < 5; i++){
-      tempDisplayImages[i] = tempHead.content;
-      tempHead = tempHead.nextNode;
-    }
-  
-    this.setState({
-      display_images: tempDisplayImages,
-      images: tempCLL,
-      relative_head: tempCLL.getHead(),
-    });
-
   }
 
   handleClick(i){
-    let imagesCopy = this.state.display_images.slice();
-    let temp;
-
-    temp = imagesCopy[0];
-    imagesCopy[0] = imagesCopy[i];
-    imagesCopy[i] = temp;
-
-
     this.setState({
-      display_images: imagesCopy,
+      selectedIndex: i,
     });
   }
 
-  up(){
-    let tempDisplayImages = [];
-    let tempHead = this.state.relative_head.nextNode;
-
-
-    for(let i =0; i < 5; i++){
-      tempDisplayImages[i] = tempHead.content;
-      tempHead = tempHead.nextNode;
-    }
-
+  handleMouseEnter(){
     this.setState({
-      display_images: tempDisplayImages,
-      relative_head: this.state.relative_head.nextNode,
+      showEdit: true
     })
   }
 
-  down(){
-    let tempDisplayImages = [];
-    let tempHead = this.state.relative_head.prevNode;
-
-
-    for(let i =0; i < 5; i++){
-      tempDisplayImages[i] = tempHead.content;
-      tempHead = tempHead.nextNode;
-    }
-
+  handleMouseLeave(){
     this.setState({
-      display_images: tempDisplayImages,
-      relative_head: this.state.relative_head.prevNode,
+      showEdit: false
     })
   }
 
   render() {
-
+    const selectedIndex = this.state.selectedIndex;
     return (
       <div className='image-gallary'>
-        <LargeImage src={this.state.display_images[0]} />
+        <LargeImage
+          src={this.props.images[selectedIndex]} 
+          handleMouseEnter={() => this.handleMouseEnter()}
+          handleMouseLeave={() => this.handleMouseLeave()}
+          showEdit={this.state.showEdit}
+          handleClick={() => this.props.handleImageEditClick()}
+        />
         <ImageBanner 
-          imageClicked={(i) => this.handleClick(i)} 
-          images={this.state.display_images}
-          buttonUp={() => this.up()}
-          buttonDown={() => this.down()}
+          imageClicked={(i) => this.handleClick(i)}
+          selectedIndex={this.state.selectedIndex}
+          images={this.props.images}
         />
       </div>
     );
@@ -107,9 +55,31 @@ class ImageGallary extends React.Component {
 
 class LargeImage extends React.Component{
   render(){
+    let overlay = null;
+    if(this.props.showEdit){
+      overlay = <Overlay handleClick={() => this.props.handleClick()} text={'Update'}/>
+    }
+
     return(
-      <div className="large-image">
-        <img className="main-image" src={this.props.src} alt={'unable to display'}/>
+      <div 
+        onMouseEnter={() => this.props.handleMouseEnter()}
+        onMouseLeave={() => this.props.handleMouseLeave()} 
+        className="large-image row"
+      >
+        {overlay}
+        <img className="main-image col-lg-12" src={this.props.src} alt={'unable to display'}/>
+      </div>
+    );
+  }
+}
+
+class Overlay extends React.Component{
+  render(){
+    return(
+      <div style={this.props.style} className='overlay'>
+        <button onClick={() => this.props.handleClick()}>
+          {this.props.text}
+        </button>
       </div>
     );
   }
@@ -118,16 +88,28 @@ class LargeImage extends React.Component{
 class ImageBanner extends React.Component{
 
   render(){
+    const style_Selected = {opacity: 1}
     const images = this.props.images.map((image, index) =>
-      <Image key={index} src={image} onClick={() => this.props.imageClicked(index)}/>
+      <div key={index} className='col-lg-2'>
+        <Image 
+          key={index} 
+          src={image} 
+          onClick={() => this.props.imageClicked(index)}
+          style={index===this.props.selectedIndex ? style_Selected: null}
+        />
+      </div>
+      
+      
     );
 
 
     return( 
-        <div className="image-gallary-col">
-          <button onClick={() =>this.props.buttonUp()} className='gallary-move up'><i className="fas fa-angle-up"></i></button>
-            {images}
-          <button onClick={() => this.props.buttonDown()} className='gallary-move down'><i className="fas fa-angle-down"></i></button>            
+        <div className="row">
+          <div className='col-lg-12'>
+            <div className='row' style={{marginTop: 27}}>
+              {images}
+            </div>
+          </div>
         </div>
 
     );
@@ -137,54 +119,15 @@ class ImageBanner extends React.Component{
 class Image extends React.Component{
   render(){
     return(
-      <div style={this.props.style} className="small-image">
-        <img onClick={this.props.onClick} src={this.props.src} alt={'Unable to display_images'}/>
+      <div className="small-image">
+        <img style={this.props.style} onClick={this.props.onClick} src={this.props.src} alt={'Unable to display_images'}/>
       </div>
     );
   }
 }
 
+export {Image, Overlay,};
 export default ImageGallary;
-
-
-
-// class circularLinkedList{
-//   constructor(){
-//     this.head = null;
-//     this.tail = null;
-//   }
-
-//   getHead(){
-//     return this.head;
-//   }
-
-//   addNode(node){
-//     if (this.head === null){
-//       this.head = new ListNode(node);
-//       this.tail = this.head;
-
-//       this.head.nextNode = this.tail;
-//       this.head.prevNode = this.tail;
-//       this.tail.nextNode = this.head;
-//       this.tail.prevNode = this.tail;
-//     }else{
-//       this.tail.nextNode = new ListNode(node);
-//       this.tail.nextNode.prevNode = this.tail;
-//       this.tail = this.tail.nextNode;
-//       this.tail.nextNode= this.head;
-//     }
-//   }
-// }
-
-// class ListNode{
-//   constructor(content){
-//     this.nextNode =null;
-//     this.prevNode = null;
-//     this.content =  content;
-//   }
-// }
-
-
 
 
 

@@ -1,0 +1,9 @@
+.image-editor{
+	background: #212020;
+    z-index: 3;
+    padding: 20px;
+    border-radius: 10px;
+    position: absolute;
+    height: 97%;
+    width: 91%;
+}

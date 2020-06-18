@@ -1,5 +1,5 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import ImageGallary from './ImageGallary';
+import ProfilePage from './ProfilePage'
 
-ReactDOM.render(<ImageGallary />, document.getElementById("image-gallary"));
+ReactDOM.render(<ProfilePage />, document.getElementById("profile-page"));
