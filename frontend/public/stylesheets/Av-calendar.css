@@ -1,0 +1,138 @@
+.calendar{
+	background: white;
+    border-radius: 14px;
+    position: relative;
+}
+
+.calendar .table{
+	background: rgba(204, 251, 254, 0.5);
+    border-radius: 14px;
+}
+
+.calendar .table thead th{
+	border: none;
+    padding: 0;
+    padding-left: 5px;
+    padding-top: 10px;
+}
+
+.calendar .table tbody th{
+    padding: 5px;
+    font-size: 10px;
+    font-weight: 600;
+    height: 70px;
+    border: 1px solid rgba(204, 251, 254, .3);
+    border-radius: 10px;
+    background: rgba(104, 80, 68, .85);
+    widows: 30px;
+    cursor: pointer;
+}
+
+.calendar .table{
+	table-layout: fixed;
+}
+
+.calendar .table tbody{
+	background: 
+
+}
+
+.calendar .next-btn-cont{
+	position: absolute;
+
+    height: 83px;
+	width: 40px;
+	background: rgba(0,0,0, .5);
+	font-size: 30px;
+	border: none;
+
+	border-top-right-radius: 21%;
+	border-bottom-right-radius: 21%;
+	border-top-left-radius: 100%;
+	border-bottom-left-radius: 100%;
+}
+
+.calendar .next-detector{
+	position: absolute;
+	top: 40%;
+	left: 92.3%;
+    height: 83px;
+	width: 40px;
+	background: transparent;
+}
+
+.calendar .next-btn-cont i{
+	position: relative;
+	top: 40%
+	left: 60%;
+	color: white;
+}
+
+button{
+	cursor: pointer;
+}
+
+.calendar .prev-btn-cont{
+	position: absolute;
+    height: 83px;
+	width: 40px;
+	background: rgba(0,0,0, .5);
+	font-size: 30px;
+	border: none;
+
+	border-top-left-radius: 21%;
+	border-bottom-left-radius: 21%;
+	border-top-right-radius: 100%;
+	border-bottom-right-radius: 100%;
+}
+
+.calendar .prev-detector{
+	position: absolute;
+	top: 40%;
+    height: 83px;
+	width: 40px;
+	background: transparent;
+}
+
+.calendar .prev-btn-cont i{
+	position: relative;
+	top: 40%
+	left: 60%;
+	color: white;
+}
+
+.rev-av .day{
+	display: inline; 
+	padding-right: 10px; 
+	font-family: Source Sans Pro; 
+	font-style: normal;
+	font-weight: bold; 
+	font-size: 42px;
+}
+
+.rev-av .date{
+	display: inline;
+	font-family: Source Sans Pro;
+	font-style: normal;
+	font-weight: normal;
+	font-size: 34px;
+}
+
+
+.prev-enter {
+  opacity: 0.01;
+}
+
+.prev-enter.prev-enter-active {
+  opacity: 1;
+  transition: opacity 5000ms ease-in;
+}
+
+.prev-leave {
+  opacity: 1;
+}
+
+.prev-leave.prev-leave-active {
+  opacity: 0.01;
+  transition: opacity 5000ms ease-in;
+}
