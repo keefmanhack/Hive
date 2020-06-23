@@ -5,6 +5,7 @@ import ImageEditor from './ImageEditor';
 
 class ImageHandler extends React.Component{
   constructor(props){
+    this.handleImageEditClick = this.handleImageEditClick.bind(this);
 
     this.state ={
       images: Array(0),
@@ -22,7 +23,6 @@ class ImageHandler extends React.Component{
   }
 
     handleImageEditClick(){
-      alert('clicked');
       this.setState({
         isEditImagesMode: true
       })

@@ -16,6 +16,8 @@ class ImageEditor extends React.Component{
 		this.handleMouseDown = this.handleMouseDown.bind(this);
 		this.handleMouseMove = this.handleMouseMove.bind(this);
 		this.handleMouseUp = this.handleMouseUp.bind(this);
+		this.uploadClicked = this.uploadClicked.bind(this);
+		this.uploadPhoto = this.uploadPhoto.bind(this);
 
 
 		this.state = {
@@ -102,16 +104,27 @@ class ImageEditor extends React.Component{
   	})
   }
 
+  uploadClicked = (e) => {
+    this.inputElement.click();
+  }
+
+  uploadPhoto(input){ 
+  	var reader = new FileReader();
+    reader.onload = function (e) {
+    	this.props.insertImage(e.target.result);
+    	this.setState({
+    		selectedIndex: 0,
+    	})
+		
+    }.bind(this);
+
+    reader.readAsDataURL(input.files[0]);
+  }
+  
 
   render(){
 	const images = this.props.images.map((image, index) =>
-      <div key={index} className='col-lg-2' style={{height: '50%'}}>
-        <Image 
-          key={index} 
-          src={image} 
-          onClick={(i) => this.imageClicked(index)}
-        />
-      </div>
+		<EditorImage key={index} src={image} imageClicked={() => this.imageClicked(index)}/>
     );
 	
 	let overlay, slider = null;
@@ -127,6 +140,19 @@ class ImageEditor extends React.Component{
     }else{
     	imageEditStyle={height: "inherit", position: 'relative'}
     }
+
+    const uploadButton = <button
+    						onClick={this.uploadClicked} 
+    						className='upload'
+    					>Upload
+    						<input 
+	    						onChange={() => this.uploadPhoto(this.inputElement)} 
+	    						ref={input => this.inputElement = input} 
+	    						type='file' 
+	    						style={{display: 'none'}}
+	    						accept="image/*"
+    						/>
+    					</button>;
 
     return(
       <div className='image-editor'>
@@ -164,7 +190,7 @@ class ImageEditor extends React.Component{
 			</div>
 			<div className='col-lg-4'>
 				<div className='button-container'>
-					{this.state.editMode ? <button className='save'>Save</button> : <button className='upload'>Upload</button>}
+					{this.state.editMode ? <button className='save'>Save</button> : uploadButton}
 					{this.state.editMode ? <button onClick={() => this.editModeOff()} className='cancel'>Cancel</button>: null}
 				</div>
 			</div>
@@ -173,16 +199,21 @@ class ImageEditor extends React.Component{
 		<div className='row'>
 			{images}
 		</div>
-			<FileInput />
+
       </div>
     );
   }
 }
 
-class FileInput extends React.Component{
+class EditorImage extends React.Component{
 	render(){
 		return(
-			<input type='file' style={{display: none}} />
+			<div className='col-lg-2' style={{height: 100, marginBottom: 10}}>
+		        <Image 
+		          src={this.props.src} 
+		          onClick={this.props.imageClicked}
+		        />
+      		</div>
 		);
 	}
 }

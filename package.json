@@ -15,6 +15,7 @@
   "license": "ISC",
   "homepage": "https://github.com/keefmanhack/Hive#readme",
   "dependencies": {
-    "concurrently": "^5.2.0"
+    "concurrently": "^5.2.0",
+    "react-draggable": "^4.4.3"
   }
 }
