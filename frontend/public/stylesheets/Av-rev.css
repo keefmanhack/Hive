@@ -1,0 +1,8 @@
+.time-selector{
+	background: white;
+    border-radius: 10px;
+    height: 40%;
+    overflow: scroll;
+    padding: 10px 20px;
+    margin-top: 10px;
+}

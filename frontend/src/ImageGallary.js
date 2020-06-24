@@ -1,5 +1,5 @@
 import React from "react";
-// import circularLinkedList from './CircularLinkedList';
+import {FadeInOut} from './CustomTransitions'
 
 class ImageGallary extends React.Component {
   constructor(props){
@@ -59,7 +59,7 @@ class LargeImage extends React.Component{
     if(this.props.showEdit){
       overlay = <Overlay handleClick={() => this.props.handleClick()} text={'Update'}/>
     }
-
+    
     return(
       <div 
         onMouseEnter={() => this.props.handleMouseEnter()}
@@ -67,9 +67,13 @@ class LargeImage extends React.Component{
         className="large-image row"
       >
         {overlay}
-        <img className="main-image col-lg-12" src={this.props.src} alt={'unable to display'}/>
+        <FadeInOut nonsense={this.props.src}>
+          <img className="main-image col-lg-12" src={this.props.src} alt={'unable to display'}/>
+        </FadeInOut>
       </div>
     );
+
+
   }
 }
 

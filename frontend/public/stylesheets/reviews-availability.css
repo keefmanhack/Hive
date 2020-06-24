@@ -6,3 +6,38 @@
     padding: 10px 55px;
     position: relative;
 }
+
+#reviews-availability .rev-av{
+	position: relative;
+}
+
+.time-selector{
+	background: rgb(250, 250, 250);
+    border-radius: 10px;
+    height: 28%;
+    overflow: scroll;
+    padding: 10px 20px;
+    margin-top: 10px;
+    height: auto;
+}
+
+.time-av{
+	display: inline-block;
+    background: #CCFBFC;
+    padding: 4px;
+    border-radius: 4px;
+    margin-right: 5px;
+    margin-bottom: 10px;
+}
+
+.time-av button{
+	background: none;
+	border: none;
+	display: inline;
+    font-size: 18px;
+    font-weight: 400;
+}
+
+.time-av .start, .end{
+	font-weight: 800;
+}

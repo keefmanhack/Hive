@@ -1,5 +1,5 @@
 import React from "react";
-import {ReactCSSTransitionGroup} from 'react-transition-group';
+import {RotateInOutLeft, RotateInOutRight} from './CustomTransitions'
 
 
 class RevAv extends React.Component{
@@ -15,6 +15,7 @@ class RevAv extends React.Component{
 
 		}
 	}
+
 
 	componentDidMount(){
 		let today = new Date();
@@ -62,8 +63,8 @@ class RevAv extends React.Component{
 	render(){
 		const date = this.Months[this.state.month] + ' 1st, ' +  this.state.year;
 		return(
-			<div className='row rev-av' style={{height: '100%'}}>
-				<div className='col-lg-6' style={{borderRight: '1px solid white'}}>
+			<div className='row rev-av' style={{height: '-webkit-fill-available'}}>
+				<div className='col-lg-6' style={{borderRight: '1px solid white', height: 'initial'}}>
 					<Calendar 
 						year={this.state.year} 
 						month={this.state.month} 
@@ -82,11 +83,37 @@ class RevAv extends React.Component{
 							</span>
 						</h1>
 					</div>
+					
+					<TimeSelector />
+					
 
 				</div>
 			</div>
 		);
 	}
+}
+
+
+function TimeSelector(props){
+	return(
+		<div style={props.style} className='time-selector'>
+			<TimeAv />
+			<TimeAv />
+			<TimeAv style={{background: '#CACACA', cursor: 'normal'}}/>
+			<TimeAv />
+			<TimeAv />
+		</div>
+	);
+}
+
+function TimeAv(props){
+	return(
+		<div style={props.style} className='time-av' >
+			<button style={{display: 'inline'}}>
+				<span className='start'>10 PM</span> to <span className='end'>11 PM</span>
+			</button>
+		</div>
+	);
 }
 
 
@@ -120,10 +147,9 @@ class Calendar extends React.Component{
 			<CellRow greyOutZone={index===0 || index===rowData.length-1 ? findGreyOut(rowData, index) : null} cellText={data}/>
 		);
 
-
 		return(
-			<div className='calendar' style={{position:'relavtive'}}>
-				<table class="table">
+			<div style={this.props.style}  className='calendar' style={{position:'relavtive'}}>
+				<table className="table">
 						<thead>
 						    <tr>
 						      <th scope="col">Sun.</th>
@@ -140,29 +166,26 @@ class Calendar extends React.Component{
 						</tbody>
 				</table>
 				<div className='prev-detector' onMouseEnter={() => this.setShowLeft(true)} onMouseLeave={() => this.setShowLeft(false)}>
-					{this.state.showLeft ?
-						<ReactCSSTransitionGroup
-					        transitionName="prev"
-					        transitionEnterTimeout={300}
-					        transitionLeaveTimeout={300}>
-							<button  onClick={() => this.props.decrementMonth()} className='prev-btn-cont animate__animated animate__fadeInLeft animate__faster'>
-								<i class="fas fa-arrow-left"></i>
-							</button>
-						</ReactCSSTransitionGroup>
-					: null}
+					<RotateInOutLeft condition={this.state.showLeft}>
+						<button  onClick={() => this.props.decrementMonth()} className='prev-btn-cont'>
+							<i className="fas fa-arrow-left"></i>
+						</button>
+					</RotateInOutLeft>
 				</div>
 
 				<div className='next-detector' onMouseEnter={() => this.setShowRight(true)} onMouseLeave={() => this.setShowRight(false)}>
-					{this.state.showRight ?
+					<RotateInOutRight condition={this.state.showRight}>
 						<button onClick={() => this.props.incrementMonth()} className='next-btn-cont'>
 							<i class="fas fa-arrow-right"></i>
 						</button>
-					: null}
+					</RotateInOutRight>
 				</div>
 			</div>
 		);
 	}
 }
+
+
 
 class CellRow extends React.Component{
 

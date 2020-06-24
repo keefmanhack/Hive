@@ -39,6 +39,7 @@
 
 .calendar .next-btn-cont{
 	position: absolute;
+	    left: -31px;
 
     height: 83px;
 	width: 40px;
@@ -55,9 +56,9 @@
 .calendar .next-detector{
 	position: absolute;
 	top: 40%;
-	left: 92.3%;
+	left: 98.3%;
     height: 83px;
-	width: 40px;
+	width: 10px;
 	background: transparent;
 }
 
@@ -90,7 +91,7 @@ button{
 	position: absolute;
 	top: 40%;
     height: 83px;
-	width: 40px;
+	width: 10px;
 	background: transparent;
 }
 
@@ -116,23 +117,4 @@ button{
 	font-style: normal;
 	font-weight: normal;
 	font-size: 34px;
-}
-
-
-.prev-enter {
-  opacity: 0.01;
-}
-
-.prev-enter.prev-enter-active {
-  opacity: 1;
-  transition: opacity 5000ms ease-in;
-}
-
-.prev-leave {
-  opacity: 1;
-}
-
-.prev-leave.prev-leave-active {
-  opacity: 0.01;
-  transition: opacity 5000ms ease-in;
 }
