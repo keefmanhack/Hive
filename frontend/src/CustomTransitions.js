@@ -41,8 +41,8 @@ function FadeInOut(props){
 	return(
 		<TransitionGroup component={null}>
 			<CSSTransition
-				key={props.nonsense}
-				timeout={1000}
+				key={props.changeVal}
+				timeout={500}
 				classNames={{
 					enter: 'animate__animated animate__faster',
 					enterActive: 'animate__fadeIn',

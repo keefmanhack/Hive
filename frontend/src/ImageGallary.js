@@ -66,8 +66,8 @@ class LargeImage extends React.Component{
         onMouseLeave={() => this.props.handleMouseLeave()} 
         className="large-image row"
       >
-        {overlay}
-        <FadeInOut nonsense={this.props.src}>
+          {overlay}
+        <FadeInOut changeVal={this.props.src}>
           <img className="main-image col-lg-12" src={this.props.src} alt={'unable to display'}/>
         </FadeInOut>
       </div>

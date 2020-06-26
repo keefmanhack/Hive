@@ -26,6 +26,7 @@
     background: rgba(104, 80, 68, .85);
     widows: 30px;
     cursor: pointer;
+    overflow: hidden;
 }
 
 .calendar .table{
@@ -117,4 +118,33 @@ button{
 	font-style: normal;
 	font-weight: normal;
 	font-size: 34px;
+}
+
+.calendar .grey-out{
+	background: lightgrey;
+	cursor: none;
+}
+
+.calendar th:not(.grey-out):hover{
+	-webkit-box-shadow: inset 0px 0px 26px -9px #E5FDFE;
+    -moz-box-shadow: inset 0px 0px 26px -9px #E5FDFE;
+    box-shadow: inset 0px 0px 26px -9px #E5FDFE;
+}
+
+.calendar .cell-data{
+	height: 15%;
+    margin-bottom: 2px;
+    background: lightblue;
+    border-radius: 1px;
+}
+
+.calendar .cell-data h1{
+	font-size: 7px;
+    font-weight: 800;
+    text-align: center;
+    margin: 0;
+}
+
+button:hover{
+	opacity: .7;
 }
