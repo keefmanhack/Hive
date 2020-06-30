@@ -42,11 +42,14 @@ class ImageGallary extends React.Component {
           handleMouseLeave={() => this.handleMouseLeave()}
           showEdit={this.state.showEdit}
           handleClick={() => this.props.handleImageEditClick()}
+          imageHeight={this.props.largeImageHeight}
+          showOverlay={this.props.editable}
         />
         <ImageBanner 
           imageClicked={(i) => this.handleClick(i)}
           selectedIndex={this.state.selectedIndex}
           images={this.props.images}
+          gallarySpacing={this.props.gallarySpacing}
         />
       </div>
     );
@@ -56,7 +59,7 @@ class ImageGallary extends React.Component {
 class LargeImage extends React.Component{
   render(){
     let overlay = null;
-    if(this.props.showEdit){
+    if(this.props.showEdit  && this.props.showOverlay){
       overlay = <Overlay handleClick={() => this.props.handleClick()} text={'Update'}/>
     }
     
@@ -65,10 +68,11 @@ class LargeImage extends React.Component{
         onMouseEnter={() => this.props.handleMouseEnter()}
         onMouseLeave={() => this.props.handleMouseLeave()} 
         className="large-image row"
+        style={{height: this.props.imageHeight}}
       >
           {overlay}
         <FadeInOut changeVal={this.props.src}>
-          <img className="main-image col-lg-12" src={this.props.src} alt={'unable to display'}/>
+          <img style={{height: 'inherit'}} className="main-image col-lg-12" src={this.props.src} alt={'unable to display'}/>
         </FadeInOut>
       </div>
     );
@@ -94,7 +98,7 @@ class ImageBanner extends React.Component{
   render(){
     const style_Selected = {opacity: 1}
     const images = this.props.images.map((image, index) =>
-      <div key={index} className='col-lg-2'>
+      <div key={index} className={this.props.gallarySpacing}>
         <Image 
           key={index} 
           src={image} 
@@ -123,8 +127,8 @@ class ImageBanner extends React.Component{
 class Image extends React.Component{
   render(){
     return(
-      <div className="small-image">
-        <img style={this.props.style} onClick={this.props.onClick} src={this.props.src} alt={'Unable to display_images'}/>
+      <div className="small-image" style={{width: 'inherit'}}>
+        <img style={this.props.style, {width: 'inherit'}} onClick={this.props.onClick} src={this.props.src} alt={'Unable to display_images'}/>
       </div>
     );
   }

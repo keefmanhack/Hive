@@ -1,0 +1,53 @@
+.dashboard-container{
+	background: #3D3F45;
+    margin: 0 57px;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.dashboard-container .dashboard-nav{
+	background: #CCFBFE;
+    margin: 0 433px;
+    margin-top: -10px;
+    margin-bottom: 20px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+.dashboard-nav button{
+	background: none;
+    border: none;
+    margin-top: -2px;
+    text-align: center;
+    font-size: 20px;
+}
+
+.dashboard-nav h5{
+	font-size: 12px;
+	text-align: center;
+}
+
+.event-list .this-week, .this-month, .previous{
+	color: black;
+    background: white;
+    height: 250px;
+    border-radius: 5px;
+    padding: 10px;
+    font-weight: 200;
+}
+
+.event-list h1{
+	font-weight: 800;
+}
+
+.event-list .this-week{
+	box-shadow: 5px 28px 50px #E5A4A4 inset;
+}
+
+.event-list .this-month{
+	box-shadow: 5px 28px 50px #E5CBA4 inset;
+}
+
+.event-list .previous{
+	box-shadow: 5px 28px 50px #A4E5B2 inset;
+}

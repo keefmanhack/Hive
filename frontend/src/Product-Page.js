@@ -3,7 +3,7 @@ import ImageGallary from './ImageGallary';
 import ImageEditor from './ImageEditor';
 import RevAv from './Reviews-Availability'
 
-class ProfilePage extends React.Component{
+class ProductPage extends React.Component{
 	constructor(props){
 		super(props);
 
@@ -117,6 +117,7 @@ class ProfilePage extends React.Component{
 						<ImageGallary 
 							images={this.state.images}
 							handleImageEditClick={() => this.handleImageEditClick()}
+							gallarySpacing={'col-lg-2'}
 						/>
 					</div>
 				</div>
@@ -128,4 +129,4 @@ class ProfilePage extends React.Component{
 	}
 }
 
-export default ProfilePage;
+export default ProductPage;

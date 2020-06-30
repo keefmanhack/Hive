@@ -1,5 +1,5 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import ProfilePage from './ProfilePage'
+import Dashboard from './Dashboard'
 
-ReactDOM.render(<ProfilePage />, document.getElementById("root"));
+ReactDOM.render(<Dashboard />, document.getElementById("root"));

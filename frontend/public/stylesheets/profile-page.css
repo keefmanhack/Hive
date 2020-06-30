@@ -1,0 +1,131 @@
+.profile-page-container{
+	margin: 0 74px;
+}
+
+.hyve-section, .text-section{
+	padding: 10px;
+    background: rgba(204, 251, 254, .25);
+    border-radius: 5px;
+}
+
+.name-location img{
+	height: 80px;
+    width: 80px;
+    object-fit: cover;
+    border-radius: 100%;
+    border: 1px solid;
+}
+
+.name-location h1{
+	position: absolute;
+    top: 4px;
+    left: 94px;
+}
+
+.name-location h2{
+	position: absolute;
+    top: 47px;
+    left: 94px;
+    font-size: 20px;
+    font-weight: 200;
+}
+
+.skills{
+	margin-top: 20px;
+}
+
+.skills *{
+	text-align: center;
+}
+
+.skills button{
+	background: none;
+    border: none;
+}
+
+.skills button.selected{
+	font-weight: 800;
+    font-style: italic;
+}
+
+.skills button:hover{
+	text-decoration: underline;
+}
+
+.skill-section{
+    margin-top: 20px;
+}
+
+.skill-section h1{
+	background: #F9C36A;
+    text-align: center;
+    font-weight: 800;
+    font-size: 2rem;
+    margin: 0;
+    border-radius: 5px;
+}
+
+.skill-section h2{
+	font-size: 20px;
+    font-weight: 600;
+    margin: 0;
+}
+
+.skill-section li{
+    margin-right: 24px;
+    background: rgba(104, 80, 68, 0.9);
+    font-size: 18px;
+    font-weight: 600;
+    padding: 5px;
+    border: 1px solid;
+    border-radius: 5px;
+    display: inline-block;
+    color: white;
+}
+
+.skill-section h5{
+	font-size: 14px;
+    font-weight: 200;
+    margin: 0;
+}
+
+.text-section p{
+	font-weight: 600;
+    text-align: justify;
+}
+
+.experience img{
+    height: 40px;
+    width: 40px;
+    border-radius: 100%;
+    border: 1px solid;
+}
+
+.experience h1{
+	position: absolute;
+    top: -5px;
+    left: 45px;
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.experience h2{
+    position: absolute;
+    top: 18px;
+    left: 46px;
+    font-size: 18px;
+}
+
+.experience h3{
+    font-size: 14px;
+    font-weight: 200;
+    position: absolute;
+    top: 22px;
+    left: 119px;
+}
+
+.profile-page-container .main-image{
+	object-fit: contain;
+	background: white;
+	margin-right: 10px;
+}
