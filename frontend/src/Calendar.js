@@ -7,7 +7,7 @@ class Calendar extends React.Component{
 
 		this.state ={
 			showLeft: false,
-			showRight: false
+			showRight: false,
 		}
 	}
 
@@ -21,28 +21,25 @@ class Calendar extends React.Component{
 		this.setState({
 			showRight: show,
 		})
-	}
+	}	
 
-	
-
-	render(){
+	render(){		
 		let rowData = getCalendarData(this.props.year, this.props.month);
 		let greyOut =[];
 
-
-
 		const rows = rowData.map((data, index) =>
 			<CellRow  
-			handleTHClick={(cellNum) => this.props.handleTHClick(cellNum)} 
-			greyOutZone={index===0 || index===rowData.length-1 ? findGreyOut(rowData, index) : null} 
-			cellText={data}
-			selectedCell={this.props.day}
-			monthData={this.props.monthData}
+				handleTHClick={(cellNum) => this.props.handleTHClick(cellNum)} 
+				greyOutZone={index===0 || index===rowData.length-1 ? findGreyOut(rowData, index) : null} 
+				cellText={data}
+				selectedCell={this.props.day}
+				monthData={this.props.monthData}
+				height={this.props.height/rowData.length}
 			/>
 		);
 
 		return(
-			<div style={this.props.style}  className='calendar' style={{position:'absolute', marginRight: 18}}>
+			<div style={this.props.style}  className='calendar' style={this.props.style}>
 				<table className="table" style={{margin: 0}}>
 						<thead>
 						    <tr>
@@ -89,11 +86,12 @@ class CellRow extends React.Component{
 		const cells = this.props.cellText.map((cell, index) =>
 			<Cell 
 				handleTHClick={() => this.props.handleTHClick(cell)} 
+				height={this.props.height}
 				greyOut={shouldGreyOut(cell, greyOutZone)} 
 				key={index} 
 				text={cell}
 				style={this.props.selectedCell == cell ? selectedStyle : null}
-				cellData={!shouldGreyOut(cell, greyOutZone) ? findCellData(this.props.monthData, cell) : null}
+				cellData={!shouldGreyOut(cell, greyOutZone) && this.props.monthData ? findCellData(this.props.monthData, cell) : null}
 			/>
 		);
 			
@@ -128,7 +126,7 @@ class Cell extends React.Component{
 			)
 		}
 		return(
-			<th onClick={!greyOut ? () => this.props.handleTHClick() : null} style={this.props.style} className={greyOut}> 
+			<th onClick={!greyOut ? () => this.props.handleTHClick() : null} style={this.props.style, {height: this.props.height}} className={greyOut}> 
 				<span>
 					{this.props.text}
 				</span>

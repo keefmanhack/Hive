@@ -9,20 +9,60 @@ class RevAv extends React.Component{
 
 		this.Months = ["January", "Febuary", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 		this.DaysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-		
+
+
 		this.state ={
-			year: null,
+			calendarData: Array(0),
 			month: null,
 			day: null,
-			calendarData: Array(0),
-
+			year: null,
 		}
+	}
+
+	incrementMonth(){
+		let monthCopy = this.state.month;
+		let yearCopy = this.state.year;
+
+		if(monthCopy+1 > 11){
+			monthCopy = 0;
+			yearCopy++;
+		}else{
+			monthCopy++;
+		}
+
+		this.setState({
+			month: monthCopy,
+			year: yearCopy,
+			day: 1,
+		})
+	}
+
+	decrementMonth(){
+		let monthCopy = this.state.month;
+		let yearCopy = this.state.year;
+
+		if(monthCopy-1 < 0){
+			monthCopy = 11;
+			yearCopy--;
+		}else{
+			monthCopy--;
+		}
+
+		this.setState({
+			month: monthCopy,
+			year: yearCopy,
+			day: 1
+		})
+	}
+
+	handleTHClick(cellNum){
+		this.setState({
+			day: cellNum,
+		});
 	}
 
 
 	componentDidMount(){
-		let today = new Date();
-		
 		let newCalData = [{
 			year: 2020,
 			month: 5,
@@ -99,55 +139,21 @@ class RevAv extends React.Component{
 			]
 		}]
 
+		let today = new Date();
+
 
 		this.setState({
-			year: today.getFullYear(),
-			month: today.getMonth(),
-			day: today.getDate(),
 			calendarData: newCalData,
+			month: today.getMonth(),
+			year: today.getFullYear(),
+			day: today.getDate(),
 		})
 	}
 
-	incrementMonth(){
-		let monthCopy = this.state.month;
-		let yearCopy = this.state.year;
-
-		if(monthCopy+1 > 11){
-			monthCopy = 0;
-			yearCopy++;
-		}else{
-			monthCopy++;
-		}
-
+	setDayData(dayData){
 		this.setState({
-			month: monthCopy,
-			year: yearCopy,
-			day: 1,
-		})
-	}
-
-	decrementMonth(){
-		let monthCopy = this.state.month;
-		let yearCopy = this.state.year;
-
-		if(monthCopy-1 < 0){
-			monthCopy = 11;
-			yearCopy--;
-		}else{
-			monthCopy--;
-		}
-
-		this.setState({
-			month: monthCopy,
-			year: yearCopy,
-			day: 1
-		})
-	}
-
-	handleTHClick(cellNum){
-		this.setState({
-			day: cellNum,
-		})
+			dayData: dayData,
+		});
 	}
 
 	render(){
@@ -155,38 +161,36 @@ class RevAv extends React.Component{
 		const day = this.DaysOfWeek[new Date(this.state.year, this.state.month, this.state.day).getDay()];
 
 		let monthData = [];
+		if(this.state.calendarData){
+			this.state.calendarData.forEach(function(o){
+				if(o.month == this.state.month  && o.year == this.state.year){
+					monthData.push(o);
 
-		this.state.calendarData.forEach(function(o){
-			if(o.month == this.state.month  && o.year == this.state.year){
-				monthData.push(o);
-
-			}
-
-		}.bind(this));
-
-		let dayData;
-
+				}
+			}.bind(this));
+		}
+		
+		let dayData
 		if(monthData){
 			monthData.forEach(function(o){
 				if(o.day === this.state.day){
-					dayData = o.events;
+					dayData = o.events
 				}
 			}.bind(this))
 		}
-
 
 		return(
 			<div className='row rev-av' style={{height: '-webkit-fill-available'}}>
 				<div className='col-lg-6' style={{borderRight: '1px solid white', height: 'initial'}}>
 					<FadeInOut changeVal={this.state.month}>
-						<Calendar 
-							year={this.state.year} 
-							month={this.state.month}
-							day={this.state.day}
-							incrementMonth={() => this.incrementMonth()}
-							decrementMonth={() => this.decrementMonth()}
-							handleTHClick={(cellNum) => this.handleTHClick(cellNum)}
+						<Calendar
 							monthData={monthData}
+							handleTHClick={(cellNum) => this.handleTHClick(cellNum)}
+							decrementMonth={() => this.decrementMonth()}
+							incrementMonth={() => this.incrementMonth()}
+							day={this.state.day}
+							month={this.state.month}
+							year={this.state.year}
 						/>
 					</FadeInOut>
 
@@ -204,7 +208,7 @@ class RevAv extends React.Component{
 						</FadeInOut>
 					</div>
 					
-					<FadeInOut changeVal={dayData}>
+					<FadeInOut changeVal={this.state.dayData}>
 						<TimeSelector 
 							style={{position: 'absolute', top: '82%', marginRight: 18 }}
 							dayData={dayData}
@@ -228,14 +232,7 @@ class RevAv extends React.Component{
 	}
 }
 
-function getDateSuffix(val){
-	switch(val){
-		case 1: return 'st'
-		case 2: return 'nd'
-		case 3: return 'rd'
-		default: return 'th'
-	}
-}
+
 
 function Review(props){
 	return(
@@ -303,5 +300,14 @@ function TimeAv(props){
 			</button>
 		</div>
 	);
+}
+
+function getDateSuffix(val){
+	switch(val){
+		case 1: return 'st'
+		case 2: return 'nd'
+		case 3: return 'rd'
+		default: return 'th'
+	}
 }
 export default RevAv;
